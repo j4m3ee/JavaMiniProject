@@ -205,7 +205,7 @@ public class MiniProject extends Application {
         
         launch(args);
         
-        //fix from git
+        //Comment name below if you can edit project.
         //test editing
     }
 }
