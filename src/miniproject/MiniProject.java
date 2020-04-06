@@ -48,6 +48,7 @@ public class MiniProject extends Application {
         //Layout Option
         Button ExitBtn = new Button("Exit");
         Button TranferBtn = new Button("Tranfer");
+        Button TransactionBtn = new Button("Show Transaction");
         TranferBtn.setOnAction((t) -> {
             stage.setScene(tranfer);
         });
@@ -55,6 +56,10 @@ public class MiniProject extends Application {
             OTbox.getChildren().clear();
             stage.setScene(login);
             System.out.println("Submit Press.");
+        });
+        TransactionBtn.setOnAction((t) -> {
+            acDataList.get(AccId).showTransaction();
+            System.out.println("TraTransaction Press.");
         });
         
         //Layout Tranfer
@@ -105,10 +110,6 @@ public class MiniProject extends Application {
             for (Account account1 : acDataList) {
                 String thisUser = usernameField.getText(),thisPass = passField.getText();
                 String chkUser = account1.getName(),chkPass = account1.getPassword();
-                /*System.out.println("Username : " + thisUser);
-                System.out.println(chkUser);
-                System.out.println("Password : " + thisPass);
-                System.out.println(chkPass);*/
                 if(thisUser.equals(chkUser) && thisPass.equals(chkPass)){
                     AccId = account1.getId()-1;
                     System.out.println("Math! : " + account1.getId());
@@ -116,7 +117,7 @@ public class MiniProject extends Application {
                     Text userText = new Text("Username : " + account1.getName());
                     Text balanceText = new Text("Balance : " + account1.getBalance());
                     
-                    OTbox.getChildren().addAll(userText,balanceText,TranferBtn,ExitBtn);
+                    OTbox.getChildren().addAll(userText,balanceText,TranferBtn,TransactionBtn,ExitBtn);
 
                     break;
                 }
@@ -129,14 +130,14 @@ public class MiniProject extends Application {
             stage.setScene(register);
             System.out.println("Register Press.");
         });
-        Button CLBtn = new Button("Check list");
-        CLBtn.setOnAction((ActionEvent t) -> {
-            System.out.println(acDataList);
+        Button ChkListBtn = new Button("Check list");
+        ChkListBtn.setOnAction((ActionEvent t) -> {
+            showList(acDataList);
             System.out.println("Size : " + acDataList.size());
         });
         //vbox.setAlignment(Pos.CENTER);
         LIbox.getChildren().addAll(idTopic, usernameField, passTopic, 
-                passField, LIBtn, RGBtn,CLBtn);
+                passField, LIBtn, RGBtn,ChkListBtn);
 
         //Layout Register
         
@@ -190,6 +191,17 @@ public class MiniProject extends Application {
         out.writeObject(acNew);
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         return (ArrayList<Account>) in.readObject();
+    }
+    
+    public static void showList(ArrayList<Account> ac){
+        for (Account acc : ac) {
+            System.out.println("Id <" + acc.getId() + ">");
+            System.out.println("Username : " + acc.getName());
+            System.out.println("Password : " + acc.getPassword());
+            System.out.println("Balance : " + acc.getBalance());
+            System.out.println("Date created : " + acc.getDateCreated());
+            System.out.println("");
+        }
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
