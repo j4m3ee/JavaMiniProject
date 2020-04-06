@@ -201,11 +201,7 @@ public class MiniProject extends Application {
         
         out.writeObject(ac);
         
-        System.out.println("Finish");
-        
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
-        ArrayList<Account> acin = (ArrayList<Account>) in.readObject();
-        System.out.println(acin.get(0).getName());*/
+        System.out.println("Finish");*/
         
         launch(args);
         
