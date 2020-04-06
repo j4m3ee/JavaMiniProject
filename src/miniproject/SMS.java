@@ -8,6 +8,7 @@ public interface SMS {
     String text = new String();
     String showSMS(String SMS);
     String reciveSMS(String SMS);
+    //hi jamee
     
     
 }
