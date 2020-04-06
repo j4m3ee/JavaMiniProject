@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -18,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -26,7 +25,7 @@ import javafx.stage.Stage;
 public class MiniProject extends Application {
     static File f = new File("Accout.dat");
     int AccId;
-    Scene login, option, tranfer, register;
+    Scene login, option, tranfer, register,fixPassword;
     ArrayList<Account> acDataList = new ArrayList<>();
 
     @Override
@@ -39,16 +38,39 @@ public class MiniProject extends Application {
             System.out.println(iOException);
         }
         
-        //Layout
+        //All Pane Layout
         VBox LIbox = new VBox(10);//Login
         VBox OTbox = new VBox(10);//User
         VBox RGbox = new VBox(10);//Register
         VBox TFbox = new VBox(10);//Tranfer
+        VBox FPbox = new VBox(10);//fix Password
         
-        //Layout Option
+        //Layout Scene fixPassword
+        Text oldPassText = new Text("Enter old password.");
+        TextField oldPassTextField = new PasswordField();
+        Text newPassText = new Text("Enter new password.");
+        TextField newPassTextField = new PasswordField();    
+        Text CFnewPassText = new Text("Enter new password.");
+        TextField CFnewPassTextField = new PasswordField();  
+        Button SMFixPassBtn = new Button("Submit");
+        SMFixPassBtn.setOnAction((t) -> {
+            stage.setScene(option);
+            System.out.println("Submit Press.");
+        });
+        Button CancelFixPassBtn = new Button("Cancel");
+        CancelFixPassBtn.setOnAction((t) -> {
+            stage.setScene(option);
+            System.out.println("Cancel Press.");
+        });
+        FPbox.getChildren().addAll(oldPassText,oldPassTextField,newPassText,
+            newPassTextField,CFnewPassText,CFnewPassTextField,SMFixPassBtn,
+            CancelFixPassBtn);
+        
+        //Layout Scene Option
         Button ExitBtn = new Button("Exit");
         Button TranferBtn = new Button("Tranfer");
         Button TransactionBtn = new Button("Show Transaction");
+        Button fixPassBtn = new Button("Change Password");
         TranferBtn.setOnAction((t) -> {
             stage.setScene(tranfer);
         });
@@ -61,8 +83,12 @@ public class MiniProject extends Application {
             acDataList.get(AccId).showTransaction();
             System.out.println("TraTransaction Press.");
         });
+        fixPassBtn.setOnAction((t) -> {
+            stage.setScene(fixPassword);
+            System.out.println("Fix Password Press.");
+        });
         
-        //Layout Tranfer
+        //Layout Scene Tranfer
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
         Text accountText = new Text("Tranfer to (name) : ");
@@ -100,11 +126,11 @@ public class MiniProject extends Application {
         });
         TFbox.getChildren().addAll(accountText,accountField,amountText,amountField,confirmBtn,cancelBtn);
         
-        //Layout Login
+        //Layout Scene Login
         Text idTopic = new Text("Username : ");
         TextField usernameField = new TextField();
         Text passTopic = new Text("Password : ");
-        TextField passField = new TextField();
+        TextField passField = new PasswordField();
         Button LIBtn = new Button("Login");
         LIBtn.setOnAction((var t) -> {
             for (Account account1 : acDataList) {
@@ -117,7 +143,8 @@ public class MiniProject extends Application {
                     Text userText = new Text("Username : " + account1.getName());
                     Text balanceText = new Text("Balance : " + account1.getBalance());
                     
-                    OTbox.getChildren().addAll(userText,balanceText,TranferBtn,TransactionBtn,ExitBtn);
+                    OTbox.getChildren().addAll(userText,balanceText,TranferBtn,
+                            TransactionBtn,fixPassBtn,ExitBtn);
 
                     break;
                 }
@@ -135,16 +162,14 @@ public class MiniProject extends Application {
             showList(acDataList);
             System.out.println("Size : " + acDataList.size());
         });
-        //vbox.setAlignment(Pos.CENTER);
         LIbox.getChildren().addAll(idTopic, usernameField, passTopic, 
                 passField, LIBtn, RGBtn,ChkListBtn);
 
-        //Layout Register
-        
+        //Layout Scene Register  
         TextField usernameField2 = new TextField();
-        TextField passField2 = new TextField();
+        PasswordField passField2 = new PasswordField();
         Button SMBtn = new Button("Submit");
-        
+        Button CancelBtn = new Button("Cancel");
         SMBtn.setOnAction((ActionEvent t) -> {
             ArrayList<Account> addDataList = new ArrayList<>();
             try {
@@ -164,14 +189,19 @@ public class MiniProject extends Application {
             stage.setScene(login);
             System.out.println("Submit Press.");
         });
+        CancelBtn.setOnAction((t) -> {
+            stage.setScene(login);
+            System.out.println("Cancel Press.");
+        });
         RGbox.getChildren().addAll(new Text("Username : "), usernameField2,
                  new Text("Password : "), passField2,
-                 SMBtn);
+                 SMBtn,CancelBtn);
 
         login = new Scene(LIbox, 600, 400);
         register = new Scene(RGbox, 600, 400);
         option = new Scene(OTbox, 600, 400);
         tranfer = new Scene(TFbox, 600, 400);
+        fixPassword = new Scene(FPbox,600,400);
         stage.setScene(login);
         stage.show();
     }
@@ -210,17 +240,9 @@ public class MiniProject extends Application {
         Account a1 = new Account("Jame","Jame.011",1);
         ac.add(a1);
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
-        
         out.writeObject(ac);
-        
         System.out.println("Finish");*/
         
         launch(args);
-        
-        //Comment name below if you can edit project.
-        //test editing
-        //KUY I NAHAA
-        //fsdfsdfsfdf
-        //hi jame nut
     }
 }
