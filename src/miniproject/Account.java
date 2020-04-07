@@ -41,7 +41,7 @@ public class Account implements Encryption,Serializable{
     }
     
     public void showTransaction(){
-        System.out.println("\nTransaction ID : " + id);
+        System.out.println("\nTransaction ID <" + id + "> Name : " + name);
         for (Transaction transaction : tr) {
             System.out.println("Date : " + transaction.getDate());
             System.out.println("Type : " + transaction.getType());
@@ -117,6 +117,10 @@ public class Account implements Encryption,Serializable{
     
     public String SMS(String sms){
         return new String(encrypt(sms.getBytes()));
+    }
+
+    public ArrayList<Transaction> getTr() {
+        return tr;
     }
     
     public static void menu(){
