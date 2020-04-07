@@ -18,7 +18,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -30,7 +33,7 @@ public class MiniProject extends Application {
 
     @Override
     public void start(Stage stage) throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
-        stage.setTitle("O-Bank");   
+        stage.setTitle("O+ O PLUS");   
         
         try {
             acDataList = readFile(f);
@@ -39,18 +42,29 @@ public class MiniProject extends Application {
         }
         
         //All Pane Layout
-        VBox LIbox = new VBox(10);//Login
-        VBox OTbox = new VBox(10);//User
-        VBox RGbox = new VBox(10);//Register
-        VBox TFbox = new VBox(10);//Tranfer
-        VBox FPbox = new VBox(10);//fix Password
+        VBox LIbox = new VBox(15);//Login
+        VBox OTbox = new VBox(15);//User
+        VBox RGbox = new VBox(15);//Register
+        VBox TFbox = new VBox(15);//Tranfer
+        VBox FPbox = new VBox(15);//fix Password
+        LIbox.setStyle("-fx-background-color: rgb(139,255,37);");
+        OTbox.setStyle("-fx-background-color: rgb(139,255,37);");
+        RGbox.setStyle("-fx-background-color: rgb(139,255,37);");
+        TFbox.setStyle("-fx-background-color: rgb(139,255,37);");
+        FPbox.setStyle("-fx-background-color: rgb(139,255,37);");
         
         //Layout Scene fixPassword
+        Image logo5 = new Image(new FileInputStream("Logo.png"));
+        ImageView LOGO = new ImageView(logo5);
+        LOGO.setFitHeight(60);
+        LOGO.setFitWidth(60);
+        LOGO.setPreserveRatio(true); 
+        
         Text oldPassText = new Text("Enter old password.");
         TextField oldPassTextField = new PasswordField();
         Text newPassText = new Text("Enter new password.");
         TextField newPassTextField = new PasswordField();    
-        Text CFnewPassText = new Text("Enter new password.");
+        Text CFnewPassText = new Text("Re-new password.");
         TextField CFnewPassTextField = new PasswordField();  
         Button SMFixPassBtn = new Button("Submit");
         SMFixPassBtn.setOnAction((t) -> {
@@ -62,13 +76,18 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel Press.");
         });
-        FPbox.getChildren().addAll(oldPassText,oldPassTextField,newPassText,
+        FPbox.getChildren().addAll(LOGO,oldPassText,oldPassTextField,newPassText,
             newPassTextField,CFnewPassText,CFnewPassTextField,SMFixPassBtn,
             CancelFixPassBtn);
         
         //Layout Scene Option
-        Button ExitBtn = new Button("Exit");
-        Button TranferBtn = new Button("Tranfer");
+        Image logo2 = new Image(new FileInputStream("Logo.png"));
+        ImageView LOGO2 = new ImageView(logo2);
+        LOGO2.setFitHeight(60);
+        LOGO2.setFitWidth(60);
+        LOGO2.setPreserveRatio(true); 
+        Button ExitBtn = new Button("Logout");
+        Button TranferBtn = new Button("Transfer");
         Button TransactionBtn = new Button("Show Transaction");
         Button fixPassBtn = new Button("Change Password");
         TranferBtn.setOnAction((t) -> {
@@ -88,7 +107,13 @@ public class MiniProject extends Application {
             System.out.println("Fix Password Press.");
         });
         
-        //Layout Scene Tranfer
+        //Layout Scene Tranfer  
+        Image logo3 = new Image(new FileInputStream("Logo.png"));
+        ImageView LOGO3 = new ImageView(logo3);
+        LOGO3.setFitHeight(60);
+        LOGO3.setFitWidth(60);
+        LOGO3.setPreserveRatio(true); 
+        
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
         Text accountText = new Text("Tranfer to (name) : ");
@@ -124,13 +149,26 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel press.");
         });
-        TFbox.getChildren().addAll(accountText,accountField,amountText,amountField,confirmBtn,cancelBtn);
+        TFbox.getChildren().addAll(LOGO3,accountText,accountField,amountText,amountField,confirmBtn,cancelBtn);
         
         //Layout Scene Login
+        Label labell3 = new Label("WELCOME TO O PLUS SERVICE\n             Please sign in.");
+        labell3.setMinSize(50, 0);
+        labell3.setScaleX(1.5);  labell3.setScaleY(1.5);
+        labell3.setStyle("-fx-font-size:16px;");
+        labell3.setAlignment(Pos.TOP_CENTER); 
+        
+        Label labell4 = new Label("Don't have an account?");
+        labell4.setScaleX(1);  labell4.setScaleY(1);
+        labell4.setTextFill(Color.RED);
+        labell4.setAlignment(Pos.TOP_CENTER); 
+        
         Text idTopic = new Text("Username : ");
         TextField usernameField = new TextField();
+        usernameField.setMaxWidth(300);
         Text passTopic = new Text("Password : ");
         TextField passField = new PasswordField();
+        passField.setMaxWidth(300);
         Button LIBtn = new Button("Login");
         LIBtn.setOnAction((var t) -> {
             for (Account account1 : acDataList) {
@@ -143,14 +181,15 @@ public class MiniProject extends Application {
                     Text userText = new Text("Username : " + account1.getName());
                     Text balanceText = new Text("Balance : " + account1.getBalance());
                     
-                    OTbox.getChildren().addAll(userText,balanceText,TranferBtn,
+                    OTbox.getChildren().addAll(LOGO,userText,balanceText,TranferBtn,
                             TransactionBtn,fixPassBtn,ExitBtn);
 
                     break;
                 }
             }
-            System.out.println("Wrong id or password!");
-            System.out.println("Login Press.\n");
+//            AlertBox.display("O+ O PLUS","Wrong unsername or password.\n             Please try again.");
+//            System.out.println("Wrong id or password!");
+//            System.out.println("Login Press.\n");
         });
         Button RGBtn = new Button("Register");
         RGBtn.setOnAction((ActionEvent t) -> {
@@ -162,12 +201,20 @@ public class MiniProject extends Application {
             showList(acDataList);
             System.out.println("Size : " + acDataList.size());
         });
-        LIbox.getChildren().addAll(idTopic, usernameField, passTopic, 
-                passField, LIBtn, RGBtn,ChkListBtn);
+        LIbox.setAlignment(Pos.CENTER);
+        LIbox.getChildren().addAll(LOGO2,labell3,idTopic, usernameField, passTopic, 
+                passField, LIBtn, labell4, RGBtn);
 
-        //Layout Scene Register  
+        //Layout Scene Register 
+        Image logo4 = new Image(new FileInputStream("Logo.png"));
+        ImageView LOGO4 = new ImageView(logo4);
+        LOGO4.setFitHeight(60);
+        LOGO4.setFitWidth(60);
+        LOGO4.setPreserveRatio(true); 
         TextField usernameField2 = new TextField();
+        usernameField2.setMaxWidth(300);
         PasswordField passField2 = new PasswordField();
+        passField2.setMaxWidth(300);
         Button SMBtn = new Button("Submit");
         Button CancelBtn = new Button("Cancel");
         SMBtn.setOnAction((ActionEvent t) -> {
@@ -193,7 +240,8 @@ public class MiniProject extends Application {
             stage.setScene(login);
             System.out.println("Cancel Press.");
         });
-        RGbox.getChildren().addAll(new Text("Username : "), usernameField2,
+        RGbox.setAlignment(Pos.CENTER);
+        RGbox.getChildren().addAll(LOGO4,new Text("Username : "), usernameField2,
                  new Text("Password : "), passField2,
                  SMBtn,CancelBtn);
 
