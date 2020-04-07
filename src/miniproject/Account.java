@@ -110,9 +110,12 @@ public class Account implements Encryption,Serializable{
         this.name = name;
     }
 
-    public void setPassword(String oldPassword,String password) {
-        if(this.password == oldPassword) this.password = password;
-        else System.out.println("Wrong old password!");
+    public void setPassword(String oldPassword,String npassword,String cfPassword) throws Exception{
+        if(this.password.equals(oldPassword)){
+            if(npassword.equals(cfPassword)){
+                this.password = npassword;
+            }else throw new Exception("Wrong confirm password.");
+        }else throw new Exception("Wrong old password.");
     }
     
     public String SMS(String sms){
