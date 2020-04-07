@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -24,16 +26,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.print.attribute.standard.Fidelity;
 
 public class MiniProject extends Application {
 
     static File f = new File("Accout.dat"); //Data
+    static File fbu = new File("backup.dat"); //Backup file
     int AccId = -1;
     Scene login, option, tranfer, register, fixPassword;
     ArrayList<Account> acDataList = new ArrayList<>();
-    
-    String bgColor = "-fx-background-color: rgb(181,234,215);"; 
+
+    String bgColor = "-fx-background-color: rgb(181,234,215);";
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
     //(#B5EAD7) 181,234,215 pastel green
@@ -49,6 +51,7 @@ public class MiniProject extends Application {
             acDataList = readFile(f);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex);
+            acDataList = readFile(fbu);
         }
 
         //All Pane Layout
@@ -57,7 +60,7 @@ public class MiniProject extends Application {
         VBox RGbox = new VBox(15);//Register
         VBox TFbox = new VBox(15);//Tranfer
         VBox FPbox = new VBox(15);//fix Password
-       
+
         LIbox.setStyle(bgColor);
         OTbox.setStyle(bgColor);
         RGbox.setStyle(bgColor);
@@ -72,10 +75,18 @@ public class MiniProject extends Application {
         Text CFnewPassText = new Text("Re-new password.");
         TextField CFnewPassTextField = new PasswordField();
         Button SMFixPassBtn = new Button("Submit");
-        SMFixPassBtn.setOnAction((t) -> {
-            stage.setScene(option);
-            System.out.println("Submit Press.");
-        });
+        SMFixPassBtn.setOnAction((var t) -> {
+            try {
+                acDataList.get(AccId).setPassword(oldPassTextField.getText(), 
+                        newPassTextField.getText(), CFnewPassTextField.getText());
+                acDataList = updateFile(f, acDataList);
+                stage.setScene(option);
+                System.out.println("Submit Press.");
+            } catch (Exception ex) {
+                System.out.println(ex);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+            }
+       });
         Button CancelFixPassBtn = new Button("Cancel");
         CancelFixPassBtn.setOnAction((t) -> {
             stage.setScene(option);
@@ -94,6 +105,12 @@ public class MiniProject extends Application {
             stage.setScene(tranfer);
         });
         ExitBtn.setOnAction((t) -> {
+            try {
+                backupFile(fbu,acDataList);
+                acDataList = updateFile(f, acDataList);
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println(ex);
+            }
             OTbox.getChildren().clear();
             AccId = -1;
             stage.setScene(login);
@@ -101,7 +118,7 @@ public class MiniProject extends Application {
         });
         TransactionBtn.setOnAction((t) -> {
             acDataList.get(AccId).showTransaction();
-            informationBox.displayTransactionBox(acDataList.get(AccId),logo);
+            informationBox.displayTransactionBox(acDataList.get(AccId), logo);
             System.out.println("TraTransaction Press.");
         });
         fixPassBtn.setOnAction((t) -> {
@@ -157,7 +174,7 @@ public class MiniProject extends Application {
         labell3.setStyle("-fx-font-size:16px;");
         labell3.setAlignment(Pos.TOP_CENTER);
 
-        Label labell4 = new Label("Don't have an account?");
+        Label labell4 = new Label("Please logout after make transaction!");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
         labell4.setTextFill(Color.RED);
@@ -182,7 +199,7 @@ public class MiniProject extends Application {
                     Text balanceText = new Text("Balance : " + account1.getBalance());
 
                     OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
-                                TransactionBtn, fixPassBtn, ExitBtn);
+                            TransactionBtn, fixPassBtn, ExitBtn);
 
                     break;
                 }
@@ -190,7 +207,7 @@ public class MiniProject extends Application {
             if (AccId == -1) //If didn't have id in account list.
             {
                 informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.\n"
-                        + "             Please try again.",logo);
+                        + "             Please try again.", logo);
             }
             System.out.println("Login Press.\n");
         });
@@ -258,14 +275,20 @@ public class MiniProject extends Application {
     }
 
     public static void writeFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
-        out.writeObject(acNew);
-        out.close();
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
+            out.writeObject(acNew);
+        }
     }
 
     public static ArrayList<Account> updateFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException, ClassNotFoundException {
-        writeFile(f,acNew);
+        writeFile(f, acNew);
         return readFile(f);
+    }
+    
+    public static void backupFile(File f,ArrayList<Account> acNew) throws FileNotFoundException, IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
+            out.writeObject(acNew);
+        }
     }
 
     public static void showList(ArrayList<Account> ac) {
@@ -280,7 +303,6 @@ public class MiniProject extends Application {
     }
 
     public static ImageView getLogoImage(Image logo) throws FileNotFoundException {
-        
         ImageView LOGO = new ImageView(logo);
         LOGO.setFitHeight(60);
         LOGO.setFitWidth(60);
