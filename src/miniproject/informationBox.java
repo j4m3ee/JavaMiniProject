@@ -29,15 +29,14 @@ public class informationBox {
         window.setMinWidth(300);
         window.setMinHeight(150);
         
-        Label label = new Label();
+        Label label = new Label(message);
+        Label lebel2 = new Label("Please try again.");
         VBox layout = new VBox(10);
-        
-        label.setText(message);
         
         Button closeBT = new Button("OK");
         closeBT.setOnAction(e -> window.close());
         
-        layout.getChildren().addAll(label, closeBT);
+        layout.getChildren().addAll(label,lebel2, closeBT);
         layout.setStyle("-fx-background-color: rgb(255,154,162);");
         layout.setAlignment(Pos.CENTER);
         

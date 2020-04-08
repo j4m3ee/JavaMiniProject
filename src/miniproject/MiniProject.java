@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -18,10 +16,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -46,9 +48,22 @@ public class MiniProject extends Application {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
         stage.getIcons().add(logo);
-
+        /*
+        //File menu
+        Menu fileMenu = new Menu("Tools");
+        //Menu items
+        MenuItem adminMenu = new MenuItem("Admin");
+        adminMenu.setOnAction((t) -> {
+            System.out.println("Admin pless.");
+        });
+        fileMenu.getItems().add(adminMenu);
+        //Main menu bar
+        MenuBar menubar = new MenuBar();
+        menubar.getMenus().addAll(fileMenu);
+         */
         try {
             acDataList = readFile(f);
+            updateFile(fbu, acDataList);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex);
             acDataList = readFile(fbu);
@@ -77,7 +92,7 @@ public class MiniProject extends Application {
         Button SMFixPassBtn = new Button("Submit");
         SMFixPassBtn.setOnAction((var t) -> {
             try {
-                acDataList.get(AccId).setPassword(oldPassTextField.getText(), 
+                acDataList.get(AccId).setPassword(oldPassTextField.getText(),
                         newPassTextField.getText(), CFnewPassTextField.getText());
                 acDataList = updateFile(f, acDataList);
                 stage.setScene(option);
@@ -86,7 +101,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
                 informationBox.displayAlertBox("Error", ex.getMessage(), logo);
             }
-       });
+        });
         Button CancelFixPassBtn = new Button("Cancel");
         CancelFixPassBtn.setOnAction((t) -> {
             stage.setScene(option);
@@ -106,7 +121,7 @@ public class MiniProject extends Application {
         });
         ExitBtn.setOnAction((t) -> {
             try {
-                backupFile(fbu,acDataList);
+                backupFile(fbu, acDataList);
                 acDataList = updateFile(f, acDataList);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
@@ -200,14 +215,12 @@ public class MiniProject extends Application {
 
                     OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
                             TransactionBtn, fixPassBtn, ExitBtn);
-
                     break;
                 }
             }
             if (AccId == -1) //If didn't have id in account list.
             {
-                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.\n"
-                        + "             Please try again.", logo);
+                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo);
             }
             System.out.println("Login Press.\n");
         });
@@ -222,6 +235,7 @@ public class MiniProject extends Application {
             System.out.println("Size : " + acDataList.size());
         });
         LIbox.setAlignment(Pos.CENTER);
+
         LIbox.getChildren().addAll(getLogoImage(logo), labell3, idTopic, usernameField, passTopic,
                 passField, LIBtn, labell4, RGBtn);
 
@@ -260,6 +274,11 @@ public class MiniProject extends Application {
                 new Text("Password : "), passField2,
                 SMBtn, CancelBtn);
 
+        /*LIbox.setMaxWidth(600);
+        LIbox.setMaxHeight(400);
+        BorderPane BdPane = new BorderPane();
+        BdPane.setTop(menubar);
+        BdPane.getChildren().add(LIbox);*/
         login = new Scene(LIbox, 600, 400);
         register = new Scene(RGbox, 600, 400);
         option = new Scene(OTbox, 600, 400);
@@ -284,11 +303,19 @@ public class MiniProject extends Application {
         writeFile(f, acNew);
         return readFile(f);
     }
-    
-    public static void backupFile(File f,ArrayList<Account> acNew) throws FileNotFoundException, IOException {
+
+    public static void backupFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
             out.writeObject(acNew);
         }
+    }
+    
+    public static int findData(ArrayList<Account> ac){
+        int id = -1;
+        for (Account account : ac) {
+            id = account.getId();
+        }
+        return id;
     }
 
     public static void showList(ArrayList<Account> ac) {
