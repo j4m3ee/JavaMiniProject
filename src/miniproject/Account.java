@@ -14,7 +14,7 @@ import java.util.Date;
  * @author ASUS
  */
 public class Account implements Encryption,Serializable{
-    private String name,password;
+    private String name,password = "0000";
     private int id;
     private double balance;
     private double annualInterestRate;
@@ -27,11 +27,16 @@ public class Account implements Encryption,Serializable{
         balance = 500;
     }
     
-    Account(String name,String password,int id){
+    Account(String name,String password,int id) throws Exception{
         this();
         this.name = name;
         this.id = id;
-        this.password = password;
+        try {
+            setPassword("0000", password, password);
+        } catch (Exception ex) {
+            System.out.println(ex);
+            throw ex;
+        }
     }
     
     
@@ -112,9 +117,11 @@ public class Account implements Encryption,Serializable{
 
     public void setPassword(String oldPassword,String npassword,String cfPassword) throws Exception{
         if(this.password.equals(oldPassword)){
-            if(npassword.equals(cfPassword)){
-                this.password = npassword;
-            }else throw new Exception("Wrong confirm password.");
+            if(npassword.length()>=4 && npassword.length() <=16){
+                if(npassword.equals(cfPassword)){
+                    this.password = npassword;
+                }else throw new Exception("Wrong confirm password.");
+            }else throw new Exception("Please input between 4-16 character.");
         }else throw new Exception("Wrong old password.");
     }
     

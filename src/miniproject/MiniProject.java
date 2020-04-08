@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -155,23 +157,28 @@ public class MiniProject extends Application {
                             acDataList.get(AccId).withdraw(Integer.parseInt(amountField.getText()));
                             account.deposit(Integer.parseInt(amountField.getText()));
                             acDataList = updateFile(f, acDataList);
+                            OTbox.getChildren().clear();
+                            Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                            Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
+                            OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
+                            stage.setScene(option);
                             break;
                         }
                     }
                 } else {
-                    System.out.println("Not money enough or Wrong account.");
+                    throw new Exception("Not money enough or Wrong account.");
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
+            } catch (Exception ex) {
+                System.out.println(ex);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
             }
-            OTbox.getChildren().clear();
-            Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-            Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
-            OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
-            stage.setScene(option);
+            
             System.out.println("Confirm press.");
         });
         Button cancelBtn = new Button("Cancel");
@@ -250,19 +257,19 @@ public class MiniProject extends Application {
             ArrayList<Account> addDataList = new ArrayList<>();
             try {
                 addDataList = readFile(f);
-                addDataList.add(new Account(usernameField2.getText(), passField2.getText(), addDataList.size() + 1));
+                addDataList.add(new Account(usernameField2.getText(), passField2.getText(),
+                        addDataList.get(addDataList.size()-1).getId() + 1));
                 writeFile(f, addDataList);
-            } catch (IOException | ClassNotFoundException ex) {
-                System.out.println(ex);
-            }
-
-            try {
                 acDataList = readFile(f);
+                stage.setScene(login);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
+            } catch (Exception ex) {
+                System.out.println(ex);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
             }
 
-            stage.setScene(login);
+            
             System.out.println("Submit Press.");
         });
         CancelBtn.setOnAction((t) -> {
