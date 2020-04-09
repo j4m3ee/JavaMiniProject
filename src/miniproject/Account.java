@@ -14,7 +14,7 @@ import java.util.Date;
  * @author ASUS
  */
 public class Account implements Encryption,Serializable{
-    private String name,password = "0000";
+    private String Username,password = "0000";
     private int id;
     private double balance;
     private double annualInterestRate;
@@ -29,7 +29,7 @@ public class Account implements Encryption,Serializable{
     
     Account(String name,String password,int id) throws Exception{
         this();
-        this.name = name;
+        this.Username = name;
         this.id = id;
         try {
             setPassword("0000", password, password);
@@ -50,7 +50,7 @@ public class Account implements Encryption,Serializable{
     }
     
     public void showTransaction(){
-        System.out.println("\nTransaction ID <" + id + "> Name : " + name);
+        System.out.println("\nTransaction ID <" + id + "> Name : " + Username);
         for (Transaction transaction : tr) {
             System.out.println("Date : " + transaction.getDate());
             System.out.println("Type : " + transaction.getType());
@@ -112,11 +112,11 @@ public class Account implements Encryption,Serializable{
     }
 
     public String getName() {
-        return name;
+        return Username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Username = name;
     }
 
     public void setPassword(String oldPassword,String npassword,String cfPassword) throws Exception{
@@ -177,7 +177,7 @@ public class Account implements Encryption,Serializable{
 
     @Override
     public String toString() {
-        return "Account{" + "name=" + name + "id=" + id + ", balance=" + balance+ "$" + ", annualInterestRate=" + annualInterestRate + ", dateCreated=" + dateCreated + '}';
+        return "Account{" + "name=" + Username + "id=" + id + ", balance=" + balance+ "$" + ", annualInterestRate=" + annualInterestRate + ", dateCreated=" + dateCreated + '}';
     }
 
     @Override

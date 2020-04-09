@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -245,6 +243,7 @@ public class MiniProject extends Application {
 
         LIbox.getChildren().addAll(getLogoImage(logo), labell3, idTopic, usernameField, passTopic,
                 passField, LIBtn, labell4, RGBtn);
+        //Layout Scene Login
 
         //Layout Scene Register 
         TextField usernameField2 = new TextField();
@@ -277,9 +276,10 @@ public class MiniProject extends Application {
             System.out.println("Cancel Press.");
         });
         RGbox.setAlignment(Pos.CENTER);
-        RGbox.getChildren().addAll(getLogoImage(logo), new Text("Username : "), usernameField2,
+        RGbox.getChildren().addAll(new Text("Username : "), usernameField2,
                 new Text("Password : "), passField2,
                 SMBtn, CancelBtn);
+        //Layout Scene Register 
 
         /*LIbox.setMaxWidth(600);
         LIbox.setMaxHeight(400);
@@ -344,7 +344,7 @@ public class MiniProject extends Application {
         return LOGO;
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
         /*File f = new File("Accout.dat");
         ArrayList<Account> ac = new ArrayList<>();
         Account a1 = new Account("Jame","Jame.011",1);
