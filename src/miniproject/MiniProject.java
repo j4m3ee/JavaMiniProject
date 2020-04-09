@@ -250,6 +250,15 @@ public class MiniProject extends Application {
         usernameField2.setMaxWidth(300);
         PasswordField passField2 = new PasswordField();
         passField2.setMaxWidth(300);
+        TextField realnameTextField = new TextField();
+        realnameTextField.setMaxWidth(300);
+        TextField surnameField = new TextField();
+        surnameField.setMaxWidth(300);
+        TextField qtPassHintField = new TextField();
+        qtPassHintField.setMaxWidth(300);
+        TextField ansPassHintField = new TextField();
+        ansPassHintField.setMaxWidth(300);
+        
         Button SMBtn = new Button("Submit");
         Button CancelBtn = new Button("Cancel");
         SMBtn.setOnAction((ActionEvent t) -> {
@@ -257,7 +266,11 @@ public class MiniProject extends Application {
             try {
                 addDataList = readFile(f);
                 addDataList.add(new Account(usernameField2.getText(), passField2.getText(),
-                        addDataList.get(addDataList.size()-1).getId() + 1));
+                        addDataList.size() + 1,
+                        realnameTextField.getText(),
+                        surnameField.getText(),
+                        qtPassHintField.getText(),
+                        ansPassHintField.getText()));
                 writeFile(f, addDataList);
                 acDataList = readFile(f);
                 stage.setScene(login);
@@ -267,8 +280,6 @@ public class MiniProject extends Application {
                 System.out.println(ex);
                 informationBox.displayAlertBox("Error", ex.getMessage(), logo);
             }
-
-            
             System.out.println("Submit Press.");
         });
         CancelBtn.setOnAction((t) -> {
@@ -278,6 +289,10 @@ public class MiniProject extends Application {
         RGbox.setAlignment(Pos.CENTER);
         RGbox.getChildren().addAll(new Text("Username : "), usernameField2,
                 new Text("Password : "), passField2,
+                new Text("Name : "), realnameTextField,
+                new Text("Surname : "), surnameField,
+                new Text("Question : "), qtPassHintField,
+                new Text("Answer :"), ansPassHintField,
                 SMBtn, CancelBtn);
         //Layout Scene Register 
 
@@ -287,7 +302,7 @@ public class MiniProject extends Application {
         BdPane.setTop(menubar);
         BdPane.getChildren().add(LIbox);*/
         login = new Scene(LIbox, 600, 400);
-        register = new Scene(RGbox, 600, 400);
+        register = new Scene(RGbox, 600, 600);
         option = new Scene(OTbox, 600, 400);
         tranfer = new Scene(TFbox, 600, 400);
         fixPassword = new Scene(FPbox, 600, 400);
@@ -347,7 +362,7 @@ public class MiniProject extends Application {
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
         /*File f = new File("Accout.dat");
         ArrayList<Account> ac = new ArrayList<>();
-        Account a1 = new Account("Jame","Jame.011",1);
+        Account a1 = new Account("Jame","Jame.011",1,"Surawit","Yosaeng","My Name","Jame");
         ac.add(a1);
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
         out.writeObject(ac);

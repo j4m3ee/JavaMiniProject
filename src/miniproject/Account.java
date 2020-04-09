@@ -15,6 +15,7 @@ import java.util.Date;
  */
 public class Account implements Encryption,Serializable{
     private String Username,password = "0000";
+    private String QTPassHint,ASWPasshint,Surname,realName;
     private int id;
     private double balance;
     private double annualInterestRate;
@@ -38,12 +39,25 @@ public class Account implements Encryption,Serializable{
             throw ex;
         }
     }
-    
-    Account(String name,String password,int id,String QTPassHint,String ASWPasshint) throws Exception{
+
+    /**
+     *
+     * @param name
+     * @param password
+     * @param id
+     * @param QTPassHint
+     * @param ASWPasshint
+     * @param Surname
+     * @param realName
+     * @throws Exception
+     */
+    public Account(String name,String password,int id,String realName, String Surname, String QTPassHint, String ASWPasshint) throws Exception {
         this(name,password,id);
+        this.QTPassHint = QTPassHint;
+        this.ASWPasshint = ASWPasshint;
+        this.Surname = Surname;
+        this.realName = realName;
     }
-    
-    
     
     public void addTransaction(Transaction tr){
         this.tr.add(tr);
@@ -117,6 +131,14 @@ public class Account implements Encryption,Serializable{
 
     public void setName(String name) {
         this.Username = name;
+    }
+    
+    public String getSurname() {
+        return Surname;
+    }
+
+    public String getRealName() {
+        return realName;
     }
 
     public void setPassword(String oldPassword,String npassword,String cfPassword) throws Exception{
