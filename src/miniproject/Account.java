@@ -141,6 +141,14 @@ public class Account implements Encryption,Serializable{
         return realName;
     }
 
+    public String getQTPassHint() {
+        return QTPassHint;
+    }
+
+    public String getASWPasshint() {
+        return ASWPasshint;
+    }
+    
     public void setPassword(String oldPassword,String npassword,String cfPassword) throws Exception{
         if(this.password.equals(oldPassword)){
             if(npassword.length()>=4 && npassword.length() <=16){
@@ -151,6 +159,12 @@ public class Account implements Encryption,Serializable{
                 }else throw new Exception("Wrong confirm password.");
             }else throw new Exception("Please input between 4-16 character.");
         }else throw new Exception("Wrong old password.");
+    }
+    
+    public void setForgotPassword(String ans,String npassword,String cfPassword) throws Exception{
+        if(ans.equals(ASWPasshint)){
+            setPassword(password, npassword, cfPassword);
+        }else throw new Exception("Wrong Answer.");
     }
     
     public String SMS(String sms){

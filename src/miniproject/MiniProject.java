@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -33,8 +35,8 @@ public class MiniProject extends Application {
 
     static File f = new File("Accout.dat"); //Data
     static File fbu = new File("backup.dat"); //Backup file
-    int AccId = -1;
-    Scene login, option, tranfer, register, fixPassword;
+    int AccId = -1,tfToAcc = -1;
+    Scene login, option, tranfer, register, fixPassword, forgotPassword;
     ArrayList<Account> acDataList = new ArrayList<>();
 
     String bgColor = "-fx-background-color: rgb(181,234,215);";
@@ -48,7 +50,7 @@ public class MiniProject extends Application {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
         stage.getIcons().add(logo);
-        
+
         //File menu
         Menu fileMenu = new Menu("Tools");
         //Menu items
@@ -60,7 +62,7 @@ public class MiniProject extends Application {
         //Main menu bar
         MenuBar menubar = new MenuBar();
         menubar.getMenus().addAll(fileMenu);
-         
+
         try {
             acDataList = readFile(f);
             updateFile(fbu, acDataList);
@@ -74,13 +76,15 @@ public class MiniProject extends Application {
         VBox OTbox = new VBox(15);//User
         VBox RGbox = new VBox(15);//Register
         VBox TFbox = new VBox(15);//Tranfer
-        VBox FPbox = new VBox(15);//fix Password
+        VBox FPbox = new VBox(15);//fix Passwordas
+        VBox FGPbox = new VBox(15);//forgot password
 
         LIbox.setStyle(bgColor);
         OTbox.setStyle(bgColor);
         RGbox.setStyle(bgColor);
         TFbox.setStyle(bgColor);
         FPbox.setStyle(bgColor);
+        FGPbox.setStyle(bgColor);
 
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
@@ -140,7 +144,36 @@ public class MiniProject extends Application {
             stage.setScene(fixPassword);
             System.out.println("Fix Password Press.");
         });
+        
+        //Layout Scene forgot Password
+        TextField ansField = new TextField();
+        ansField.setMaxWidth(300);
+        PasswordField FGpassField = new PasswordField();
+        FGpassField.setMaxWidth(300);
+        PasswordField cfFGpassField = new PasswordField();
+        cfFGpassField.setMaxWidth(300);
 
+        Button summitPassBtn = new Button("Submit");
+        summitPassBtn.setOnAction((t) -> {
+            try {
+                acDataList.get(AccId).setForgotPassword(ansField.getText()
+                        , FGpassField.getText(), cfFGpassField.getText());
+                acDataList = updateFile(f, acDataList);
+                
+                stage.setScene(login);
+                AccId = -1;
+            } catch (Exception ex) {
+                System.out.println(ex);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+            }
+            System.out.println("Summit please.");
+        });
+        Button cancelPassBtn = new Button("Cancel");
+        cancelPassBtn.setOnAction((t) -> {
+            stage.setScene(login);
+            System.out.println("Cancel please.");
+        });
+        
         //Layout Scene Tranfer  
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
@@ -150,8 +183,12 @@ public class MiniProject extends Application {
         confirmBtn.setOnAction((t) -> {
             try {
                 if (acDataList.get(AccId).getBalance() >= Integer.parseInt(amountField.getText())) {
+                    tfToAcc = -1;
                     for (Account account : acDataList) {
                         if (account.getName().equals(accountField.getText())) {
+                            tfToAcc = account.getId()-1;
+                            if(AccId == tfToAcc) 
+                                throw new Exception("You tranfer to your account.");
                             acDataList.get(AccId).withdraw(Integer.parseInt(amountField.getText()));
                             account.deposit(Integer.parseInt(amountField.getText()));
                             acDataList = updateFile(f, acDataList);
@@ -163,8 +200,11 @@ public class MiniProject extends Application {
                             break;
                         }
                     }
+                    if(tfToAcc == -1){
+                        throw new Exception("Wrong account.");
+                    }
                 } else {
-                    throw new Exception("Not money enough or Wrong account.");
+                    throw new Exception("Not money enough.");
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
@@ -176,7 +216,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
                 informationBox.displayAlertBox("Error", ex.getMessage(), logo);
             }
-            
+
             System.out.println("Confirm press.");
         });
         Button cancelBtn = new Button("Cancel");
@@ -239,10 +279,26 @@ public class MiniProject extends Application {
             showList(acDataList);
             System.out.println("Size : " + acDataList.size());
         });
+        Button FGPBtn = new Button("Forgot Password.");
+        FGPBtn.setOnAction((t) -> {
+            AccId = findData(usernameField.getText(), acDataList);
+            if(AccId>=0){
+                FGPbox.getChildren().clear();
+                Text PassQThint = new Text("Question : " + acDataList.get(AccId).getQTPassHint());
+                stage.setScene(forgotPassword);
+                FGPbox.getChildren().addAll(PassQThint, 
+                    new Text("Answer :"),ansField,
+                    new Text("New-Password : "),FGpassField,
+                    new Text("Confirm New-Password : "),cfFGpassField,
+                    summitPassBtn, cancelPassBtn);
+            }else informationBox.displayAlertBox("Error", "Wrong username.", logo);
+            
+            
+        });
         LIbox.setAlignment(Pos.CENTER);
 
         LIbox.getChildren().addAll(getLogoImage(logo), labell3, idTopic, usernameField, passTopic,
-                passField, LIBtn, labell4, RGBtn);
+                passField, LIBtn, RGBtn,FGPBtn);
         //Layout Scene Login
 
         //Layout Scene Register 
@@ -258,7 +314,7 @@ public class MiniProject extends Application {
         qtPassHintField.setMaxWidth(300);
         TextField ansPassHintField = new TextField();
         ansPassHintField.setMaxWidth(300);
-        
+
         Button SMBtn = new Button("Submit");
         Button CancelBtn = new Button("Cancel");
         SMBtn.setOnAction((ActionEvent t) -> {
@@ -296,6 +352,7 @@ public class MiniProject extends Application {
                 SMBtn, CancelBtn);
         //Layout Scene Register 
 
+        
         /*LIbox.setMaxWidth(600);
         LIbox.setMaxHeight(400);
         BorderPane BdPane = new BorderPane();
@@ -306,6 +363,7 @@ public class MiniProject extends Application {
         option = new Scene(OTbox, 600, 400);
         tranfer = new Scene(TFbox, 600, 400);
         fixPassword = new Scene(FPbox, 600, 400);
+        forgotPassword = new Scene(FGPbox,600,400);
         stage.setScene(login);
         stage.show();
     }
@@ -331,11 +389,14 @@ public class MiniProject extends Application {
             out.writeObject(acNew);
         }
     }
-    
-    public static int findData(ArrayList<Account> ac){
+
+    public static int findData(String name, ArrayList<Account> ac) {
         int id = -1;
         for (Account account : ac) {
-            id = account.getId();
+            if (account.getName().equals(name)) {
+                id = account.getId() - 1;
+                break;
+            }
         }
         return id;
     }
@@ -360,13 +421,13 @@ public class MiniProject extends Application {
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
-        /*File f = new File("Accout.dat");
-        ArrayList<Account> ac = new ArrayList<>();
-        Account a1 = new Account("Jame","Jame.011",1,"Surawit","Yosaeng","My Name","Jame");
-        ac.add(a1);
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
-        out.writeObject(ac);
-        System.out.println("Finish");*/
+//        File f = new File("Accout.dat");
+//        ArrayList<Account> ac = new ArrayList<>();
+//        Account a1 = new Account("Jame","Jame.011",1,"Surawit","Yosaeng","My Name","Jame");
+//        ac.add(a1);
+//        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
+//        out.writeObject(ac);
+//        System.out.println("Finish");
 
         launch(args);
     }
