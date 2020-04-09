@@ -48,7 +48,7 @@ public class MiniProject extends Application {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
         stage.getIcons().add(logo);
-        /*
+        
         //File menu
         Menu fileMenu = new Menu("Tools");
         //Menu items
@@ -60,7 +60,7 @@ public class MiniProject extends Application {
         //Main menu bar
         MenuBar menubar = new MenuBar();
         menubar.getMenus().addAll(fileMenu);
-         */
+         
         try {
             acDataList = readFile(f);
             updateFile(fbu, acDataList);
@@ -151,12 +151,12 @@ public class MiniProject extends Application {
             try {
                 if (acDataList.get(AccId).getBalance() >= Integer.parseInt(amountField.getText())) {
                     for (Account account : acDataList) {
-                        if (account.getName().equals(accountField.getText())) {
+                        if (account.getUsername().equals(accountField.getText())) {
                             acDataList.get(AccId).withdraw(Integer.parseInt(amountField.getText()));
                             account.deposit(Integer.parseInt(amountField.getText()));
                             acDataList = updateFile(f, acDataList);
                             OTbox.getChildren().clear();
-                            Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                            Text userText = new Text("Username : " + acDataList.get(AccId).getUsername());
                             Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                             OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
                             stage.setScene(option);
@@ -210,12 +210,12 @@ public class MiniProject extends Application {
         LIBtn.setOnAction((var t) -> {
             for (Account account1 : acDataList) {
                 String thisUser = usernameField.getText(), thisPass = passField.getText();
-                String chkUser = account1.getName(), chkPass = account1.getPassword();
+                String chkUser = account1.getUsername(), chkPass = account1.getPassword();
                 if (thisUser.equals(chkUser) && thisPass.equals(chkPass)) {
                     AccId = account1.getId() - 1;
                     System.out.println("Math! : " + account1.getId());
                     stage.setScene(option);
-                    Text userText = new Text("Username : " + account1.getName());
+                    Text userText = new Text("Username : " + account1.getUsername());
                     Text balanceText = new Text("Balance : " + account1.getBalance());
 
                     OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
@@ -328,7 +328,7 @@ public class MiniProject extends Application {
     public static void showList(ArrayList<Account> ac) {
         for (Account acc : ac) {
             System.out.println("Id <" + acc.getId() + ">");
-            System.out.println("Username : " + acc.getName());
+            System.out.println("Username : " + acc.getUsername());
             System.out.println("Password : " + acc.getPassword());
             System.out.println("Balance : " + acc.getBalance());
             System.out.println("Date created : " + acc.getDateCreated());
