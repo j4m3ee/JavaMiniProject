@@ -39,6 +39,10 @@ public class Account implements Encryption,Serializable{
         }
     }
     
+    Account(String name,String password,int id,String QTPassHint,String ASWPasshint) throws Exception{
+        this(name,password,id);
+    }
+    
     
     
     public void addTransaction(Transaction tr){
@@ -119,7 +123,9 @@ public class Account implements Encryption,Serializable{
         if(this.password.equals(oldPassword)){
             if(npassword.length()>=4 && npassword.length() <=16){
                 if(npassword.equals(cfPassword)){
-                    this.password = npassword;
+                    if(oldPassword.equals(npassword) == false){
+                        this.password = npassword;
+                    }else throw new Exception("Your old and new password are same.");
                 }else throw new Exception("Wrong confirm password.");
             }else throw new Exception("Please input between 4-16 character.");
         }else throw new Exception("Wrong old password.");
