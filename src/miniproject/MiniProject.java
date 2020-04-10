@@ -218,8 +218,17 @@ public class MiniProject extends Application {
         Button TSconfirmBtn = new Button("Confirm");
         TSconfirmBtn.setOnAction((t) -> {
             try {
-                if (acDataList.get(AccId).getBalance() >= Integer.parseInt(TSamountField.getText())) {
-                    acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
+                if (acDataList.get(AccId).getBalance() < Integer.parseInt(TSamountField.getText())
+                        && Type == 'w') {
+                    throw new Exception("Not money enough.");
+                }
+                
+                if (Integer.parseInt(TSamountField.getText()) > acDataList.get(AccId).getMaxTransaction()
+                        && Type == 'd') {
+                    throw new Exception("You can't deposit more than " + acDataList.get(AccId).getMaxTransaction() + ".");
+                }
+                
+                acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
                     Type = 'n';
                     acDataList = updateFile(f, acDataList);
                     INFO.getChildren().clear();
@@ -227,7 +236,8 @@ public class MiniProject extends Application {
                     userText.setStyle("-fx-font-size:15px;");
                     Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                     balanceText.setStyle("-fx-font-size:15px;");
-                    Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
+                    Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() 
+                            + "  " + acDataList.get(AccId).getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
@@ -264,9 +274,6 @@ public class MiniProject extends Application {
 //                    INFO.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
                     stage.setScene(option);
                     System.out.println("Confirm press.");
-                } else {
-                    throw new Exception("Not money enough.");
-                }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
@@ -576,6 +583,7 @@ public class MiniProject extends Application {
         forgotPassword = new Scene(FGPbox, 600, 400);
         makeTransaction = new Scene(TSbox, 600, 400);
         stage.setScene(login);
+        stage.setResizable(false);
         stage.show();
     }
 

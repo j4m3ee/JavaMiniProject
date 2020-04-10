@@ -13,7 +13,7 @@ public class Account implements Encryption, Serializable {
     private String Username, password = "0000";
     private String QTPassHint, ASWPasshint, Surname, realName;
     private int id;
-    private double balance;
+    private double balance,maxTransaction = 20000.0;
     private double annualInterestRate;
     private Date dateCreated;
     private ArrayList<Transaction> tr;
@@ -191,6 +191,16 @@ public class Account implements Encryption, Serializable {
         }
     }
 
+    public double getMaxTransaction() {
+        return maxTransaction;
+    }
+
+    public void setMaxTransaction(double maxTransaction) {
+        this.maxTransaction = maxTransaction;
+    }
+
+    
+    
     public String SMS(String sms) {
         return new String(encrypt(sms.getBytes()));
     }

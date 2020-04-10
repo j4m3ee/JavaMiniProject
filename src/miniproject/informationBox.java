@@ -46,6 +46,7 @@ public class informationBox {
         Scene scene = new Scene(layout);
         window.getIcons().add(logo);
         window.setScene(scene);
+        window.setResizable(false);
         window.showAndWait();
     }
 
@@ -84,44 +85,8 @@ public class informationBox {
         Scene scene = new Scene(layout, 300, 300);
         window.getIcons().add(logo);
         window.setScene(scene);
+        window.setResizable(false);
         window.showAndWait();
     }
-
-//    public static int getIdOfList(String title, ArrayList<Account> account, Image logo) {
-//        id = -1;
-//        
-//        Stage window = new Stage();
-//        window.initModality(Modality.APPLICATION_MODAL);
-//        window.setTitle(title);
-//        window.setMinWidth(300);
-//        window.setMinHeight(150);
-//
-//        Label label = new Label("Enter username");
-//        VBox layout = new VBox(10);
-//        TextField usernameField = new TextField();
-//        Button submitBtn = new Button("OK");
-//        submitBtn.setOnAction((t) -> {
-//            for (Account ac : account) {
-//                if (ac.getName().equals(usernameField.getText())) {
-//                    id = ac.getId();
-//                    break;
-//                } 
-//            }
-//        });
-//
-//        Button closeBT = new Button("OK");
-//        closeBT.setOnAction(e -> window.close());
-//        
-//        layout.getChildren().addAll(label, usernameField, closeBT);
-//        layout.setStyle("-fx-background-color: rgb(255,154,162);");
-//        layout.setAlignment(Pos.CENTER);
-//        
-//        Scene scene = new Scene(layout);
-//        window.getIcons().add(logo);
-//        window.setScene(scene);
-//        window.showAndWait();
-//
-//        return id;   
-//    }
 
 }
