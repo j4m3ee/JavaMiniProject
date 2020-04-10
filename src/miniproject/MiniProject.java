@@ -37,9 +37,10 @@ public class MiniProject extends Application {
 
     static File f = new File("Accout.dat"); //Data
     static File fbu = new File("backup.dat"); //Backup file
-    int AccId = -1,tfToAcc = -1;
-    Scene login, option, tranfer, register, fixPassword, forgotPassword;
+    int AccId = -1, tfToAcc = -1;
+    Scene login, option, tranfer, register, fixPassword, forgotPassword, makeTransaction;
     ArrayList<Account> acDataList = new ArrayList<>();
+    char Type = 'n';
 
     String bgColor = "-fx-background-color: rgb(181,234,215);";
     //139,255,37 green
@@ -48,11 +49,13 @@ public class MiniProject extends Application {
     //(#FF9AA2) 255,154,162 pastel red
 
     @Override
-    public void start(Stage stage) throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
+    public void start(Stage stage)
+            throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
         Image userimage = new Image(new FileInputStream("User1.jpg"));
         stage.getIcons().add(logo);
+        Label tsLabel = new Label();
 
         //File menu
         Menu fileMenu = new Menu("Tools");
@@ -81,6 +84,7 @@ public class MiniProject extends Application {
         VBox TFbox = new VBox(15);//Tranfer
         VBox FPbox = new VBox(15);//fix Passwordas
         VBox FGPbox = new VBox(15);//forgot password
+        VBox TSbox = new VBox(15);//Make transaction (deposit/withdraw) 
 
         LIbox.setStyle(bgColor);
 //        OTbox.setStyle(bgColor);
@@ -88,7 +92,8 @@ public class MiniProject extends Application {
         TFbox.setStyle(bgColor);
         FPbox.setStyle(bgColor);
         FGPbox.setStyle(bgColor);
-        
+        TSbox.setStyle(bgColor);
+
         BorderPane INFO = new BorderPane();
         INFO.setStyle(bgColor);
 
@@ -117,9 +122,10 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel Press.");
         });
-        FPbox.getChildren().addAll(getLogoImage(logo), oldPassText, oldPassTextField, newPassText,
+        FPbox.getChildren().addAll(getImageView(logo), oldPassText, oldPassTextField, newPassText,
                 newPassTextField, CFnewPassText, CFnewPassTextField, SMFixPassBtn,
                 CancelFixPassBtn);
+        //Layout Scene fixPassword
 
         //Layout Scene Option
         Button TranferBtn = new Button("Transfer");
@@ -160,7 +166,20 @@ public class MiniProject extends Application {
             stage.setScene(fixPassword);
             System.out.println("Fix Password Press.");
         });
-        
+        DepositBtn.setOnAction((t) -> {
+            Type = 'd';
+            tsLabel.setText("Deposit");
+            stage.setScene(makeTransaction);
+            System.out.println("Deposit Press.");
+        });
+        WidthdrawBtn.setOnAction((t) -> {
+            Type = 'w';
+            tsLabel.setText("Withdraw");
+            stage.setScene(makeTransaction);
+            System.out.println("Widthdraw Press.");
+        });
+        //Layout Scene Option
+
         //Layout Scene forgot Password
         TextField ansField = new TextField();
         ansField.setMaxWidth(300);
@@ -172,10 +191,10 @@ public class MiniProject extends Application {
         Button summitPassBtn = new Button("Submit");
         summitPassBtn.setOnAction((t) -> {
             try {
-                acDataList.get(AccId).setForgotPassword(ansField.getText()
-                        , FGpassField.getText(), cfFGpassField.getText());
+                acDataList.get(AccId).setPassword(ansField.getText(),
+                        FGpassField.getText(), cfFGpassField.getText(), 0);
                 acDataList = updateFile(f, acDataList);
-                
+
                 stage.setScene(login);
                 AccId = -1;
             } catch (Exception ex) {
@@ -189,7 +208,49 @@ public class MiniProject extends Application {
             stage.setScene(login);
             System.out.println("Cancel please.");
         });
-        
+        //Layout Scene forgot Password
+
+        //Layout Scene Deposit/Withdraw
+        Text TSamountText = new Text("Amount : ");
+        TextField TSamountField = new TextField();
+//        Text TSaccountText = new Text("Tranfer to (name) : ");
+//        TextField TSaccountField = new TextField();
+        Button TSconfirmBtn = new Button("Confirm");
+        TSconfirmBtn.setOnAction((t) -> {
+            try {
+                if (acDataList.get(AccId).getBalance() >= Integer.parseInt(TSamountField.getText())) {
+                    acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
+                    Type = 'n';
+//                    acDataList = updateFile(f, acDataList);
+//                    OTbox.getChildren().clear();
+//                    Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+//                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
+//                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
+//                    stage.setScene(option);
+                    System.out.println("Confirm press.");
+                } else {
+                    throw new Exception("Not money enough.");
+                }
+            } catch (NumberFormatException numberFormatException) {
+                System.out.println("Plese input amount be number.");
+                System.out.println(numberFormatException);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo);
+            } catch (Exception e) {
+                System.out.println(e);
+                informationBox.displayAlertBox("Error", e.getMessage(), logo);
+            }
+
+        });
+        Button TScancelBtn = new Button("Cancel");
+        TScancelBtn.setOnAction((t) -> {
+            Type = 'n';
+            stage.setScene(option);
+            System.out.println("Cancel press.");
+        });
+        TSbox.getChildren().addAll(tsLabel, TSamountText, TSamountField,
+                 TSconfirmBtn, TScancelBtn);
+        //Layout Scene Deposit/Withdraw
+
         //Layout Scene Tranfer  
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
@@ -202,9 +263,10 @@ public class MiniProject extends Application {
                     tfToAcc = -1;
                     for (Account account : acDataList) {
                         if (account.getName().equals(accountField.getText())) {
-                            tfToAcc = account.getId()-1;
-                            if(AccId == tfToAcc) 
+                            tfToAcc = account.getId() - 1;
+                            if (AccId == tfToAcc) {
                                 throw new Exception("You tranfer to your account.");
+                            }
                             acDataList.get(AccId).withdraw(Integer.parseInt(amountField.getText()));
                             account.deposit(Integer.parseInt(amountField.getText()));
                             acDataList = updateFile(f, acDataList);
@@ -216,7 +278,7 @@ public class MiniProject extends Application {
                             break;
                         }
                     }
-                    if(tfToAcc == -1){
+                    if (tfToAcc == -1) {
                         throw new Exception("Wrong account.");
                     }
                 } else {
@@ -240,7 +302,8 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel press.");
         });
-        TFbox.getChildren().addAll(getLogoImage(logo), accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
+        TFbox.getChildren().addAll(getImageView(logo), accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
+        //Layout Scene Tranfer  
 
         //Layout Scene Login
         Label labell3 = new Label("WELCOME TO O PLUS SERVICE\n             Please sign in.");
@@ -279,16 +342,18 @@ public class MiniProject extends Application {
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
                     
+                    
+
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
                     HBox infoLogo = new HBox(115);
-                    infoLogo.getChildren().addAll(getLogoImage(logo), userInfo);
+                    infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                     HBox TOP = new HBox(80);
-                    TOP.getChildren().addAll(infoLogo, getUserImage(userimage));
-                    
+                    TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+
                     //FINANCE-CENTER
                     HBox DeWi = new HBox(15);
                     DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
@@ -301,13 +366,13 @@ public class MiniProject extends Application {
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
-                    
+
                     //DECISSION-BOTTOM
                     HBox decission = new HBox(25);
                     decission.getChildren().addAll(ExitBtn, fixPassBtn);
                     decission.setTranslateX(218);
                     decission.setTranslateY(-10);
-                    
+
                     INFO.setTop(TOP);
                     INFO.setCenter(CENTER);
                     INFO.setBottom(decission);
@@ -335,26 +400,27 @@ public class MiniProject extends Application {
         Button FGPBtn = new Button("Forgot Password.");
         FGPBtn.setOnAction((t) -> {
             AccId = findData(usernameField.getText(), acDataList);
-            if(AccId>=0){
+            if (AccId >= 0) {
                 FGPbox.getChildren().clear();
                 Text PassQThint = new Text("Question : " + acDataList.get(AccId).getQTPassHint());
                 stage.setScene(forgotPassword);
-                FGPbox.getChildren().addAll(PassQThint, 
-                    new Text("Answer :"),ansField,
-                    new Text("New-Password : "),FGpassField,
-                    new Text("Confirm New-Password : "),cfFGpassField,
-                    summitPassBtn, cancelPassBtn);
-            }else informationBox.displayAlertBox("Error", "Wrong username.", logo);
-            
-            
+                FGPbox.getChildren().addAll(PassQThint,
+                        new Text("Answer :"), ansField,
+                        new Text("New-Password : "), FGpassField,
+                        new Text("Confirm New-Password : "), cfFGpassField,
+                        summitPassBtn, cancelPassBtn);
+            } else {
+                informationBox.displayAlertBox("Error", "Wrong username.", logo);
+            }
+
         });
         LIbox.setAlignment(Pos.CENTER);
         HBox LIFGBtn = new HBox(15);
-        LIFGBtn.getChildren().addAll(LIBtn,FGPBtn);
+        LIFGBtn.getChildren().addAll(LIBtn, FGPBtn);
         LIFGBtn.setAlignment(Pos.CENTER);
-        
-        LIbox.getChildren().addAll(getLogoImage(logo), labell3, idTopic, usernameField, passTopic,
-                passField, LIFGBtn,labell4, RGBtn);
+
+        LIbox.getChildren().addAll(getImageView(logo), labell3, idTopic, usernameField, passTopic,
+                passField, LIFGBtn, labell4, RGBtn);
         //Layout Scene Login
 
         //Layout Scene Register 
@@ -362,7 +428,7 @@ public class MiniProject extends Application {
         Text userDeal = new Text("(user must not be the same)");
         userDeal.setFill(Color.RED);
         HBox userR = new HBox(3);
-        userR.getChildren().addAll(usernameR,userDeal);
+        userR.getChildren().addAll(usernameR, userDeal);
         userR.setAlignment(Pos.CENTER);
         Text passwordR = new Text("Password : ");
         Text passDeal = new Text("(must be between 4-16 digits)");
@@ -370,8 +436,7 @@ public class MiniProject extends Application {
         HBox passR = new HBox(3);
         passR.getChildren().addAll(passwordR, passDeal);
         passR.setAlignment(Pos.CENTER);
-        
-        
+
         TextField usernameField2 = new TextField();
         usernameField2.setMaxWidth(300);
         PasswordField passField2 = new PasswordField();
@@ -414,7 +479,7 @@ public class MiniProject extends Application {
         });
         RGbox.setAlignment(Pos.CENTER);
         HBox RegisChoice = new HBox(15);
-        RegisChoice.getChildren().addAll(SMBtn,CancelBtn);
+        RegisChoice.getChildren().addAll(SMBtn, CancelBtn);
         RegisChoice.setAlignment(Pos.CENTER);
         RGbox.getChildren().addAll(userR, usernameField2,
                 passR, passField2,
@@ -425,7 +490,6 @@ public class MiniProject extends Application {
                 RegisChoice);
         //Layout Scene Register 
 
-        
         /*LIbox.setMaxWidth(600);
         LIbox.setMaxHeight(400);
         BorderPane BdPane = new BorderPane();
@@ -436,28 +500,33 @@ public class MiniProject extends Application {
         option = new Scene(INFO, 600, 400);
         tranfer = new Scene(TFbox, 600, 400);
         fixPassword = new Scene(FPbox, 600, 400);
-        forgotPassword = new Scene(FGPbox,600,400);
+        forgotPassword = new Scene(FGPbox, 600, 400);
+        makeTransaction = new Scene(TSbox, 600, 400);
         stage.setScene(login);
         stage.show();
     }
 
-    public static ArrayList<Account> readFile(File f) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static ArrayList<Account> readFile(File f)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
         return (ArrayList<Account>) in.readObject();
     }
 
-    public static void writeFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException {
+    public static void writeFile(File f, ArrayList<Account> acNew)
+            throws FileNotFoundException, IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
             out.writeObject(acNew);
         }
     }
 
-    public static ArrayList<Account> updateFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static ArrayList<Account> updateFile(File f, ArrayList<Account> acNew)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
         writeFile(f, acNew);
         return readFile(f);
     }
 
-    public static void backupFile(File f, ArrayList<Account> acNew) throws FileNotFoundException, IOException {
+    public static void backupFile(File f, ArrayList<Account> acNew)
+            throws FileNotFoundException, IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
             out.writeObject(acNew);
         }
@@ -485,23 +554,16 @@ public class MiniProject extends Application {
         }
     }
 
-    public static ImageView getLogoImage(Image logo) {
+    public static ImageView getImageView(Image logo) {
         ImageView LOGO = new ImageView(logo);
         LOGO.setFitHeight(60);
         LOGO.setFitWidth(60);
         LOGO.setPreserveRatio(true);
         return LOGO;
     }
-    
-    public static ImageView getUserImage(Image userimage) {
-        ImageView USERIMAGE = new ImageView(userimage);
-        USERIMAGE.setFitHeight(60);
-        USERIMAGE.setFitWidth(60);
-        USERIMAGE.setPreserveRatio(true);
-        return USERIMAGE;
-    }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
+    public static void main(String[] args)
+            throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
 //        File f = new File("Accout.dat");
 //        ArrayList<Account> ac = new ArrayList<>();
 //        Account a1 = new Account("Jame","Jame.011",1,"Surawit","Yosaeng","My Name","Jame");
