@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -49,6 +51,7 @@ public class MiniProject extends Application {
     public void start(Stage stage) throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
+        Image userimage = new Image(new FileInputStream("User1.jpg"));
         stage.getIcons().add(logo);
 
         //File menu
@@ -80,11 +83,14 @@ public class MiniProject extends Application {
         VBox FGPbox = new VBox(15);//forgot password
 
         LIbox.setStyle(bgColor);
-        OTbox.setStyle(bgColor);
+//        OTbox.setStyle(bgColor);
         RGbox.setStyle(bgColor);
         TFbox.setStyle(bgColor);
         FPbox.setStyle(bgColor);
         FGPbox.setStyle(bgColor);
+        
+        BorderPane INFO = new BorderPane();
+        INFO.setStyle(bgColor);
 
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
@@ -116,10 +122,20 @@ public class MiniProject extends Application {
                 CancelFixPassBtn);
 
         //Layout Scene Option
-        Button ExitBtn = new Button("Logout");
         Button TranferBtn = new Button("Transfer");
+        TranferBtn.setPrefWidth(200);
+        TranferBtn.setPrefHeight(100);
+        Button DepositBtn = new Button("Deposit");
+        DepositBtn.setPrefWidth(200);
+        DepositBtn.setPrefHeight(100);
+        Button WidthdrawBtn = new Button("Widthdraw");
+        WidthdrawBtn.setPrefWidth(200);
+        WidthdrawBtn.setPrefHeight(100);
         Button TransactionBtn = new Button("Show Transaction");
+        TransactionBtn.setPrefWidth(200);
+        TransactionBtn.setPrefHeight(100);
         Button fixPassBtn = new Button("Change Password");
+        Button ExitBtn = new Button("Logout");
         TranferBtn.setOnAction((t) -> {
             stage.setScene(tranfer);
         });
@@ -234,11 +250,12 @@ public class MiniProject extends Application {
         labell3.setStyle("-fx-font-size:16px;");
         labell3.setAlignment(Pos.TOP_CENTER);
 
-        Label labell4 = new Label("Please logout after make transaction!");
+        Label labell4 = new Label("Don't have and account. Try now?");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
+        labell4.setStyle("-fx-font-size:15px;");
         labell4.setTextFill(Color.RED);
-        labell4.setAlignment(Pos.TOP_CENTER);
+        labell4.setAlignment(Pos.CENTER);
 
         Text idTopic = new Text("Username : ");
         TextField usernameField = new TextField();
@@ -256,10 +273,46 @@ public class MiniProject extends Application {
                     System.out.println("Math! : " + account1.getId());
                     stage.setScene(option);
                     Text userText = new Text("Username : " + account1.getName());
+                    userText.setStyle("-fx-font-size:15px;");
                     Text balanceText = new Text("Balance : " + account1.getBalance());
-
-                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
-                            TransactionBtn, fixPassBtn, ExitBtn);
+                    balanceText.setStyle("-fx-font-size:15px;");
+                    Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname());
+                    Fullname.setStyle("-fx-font-size:15px;");
+                    
+                    //INFO-TOP
+                    HBox nameBalance = new HBox(20);
+                    nameBalance.getChildren().addAll(userText, balanceText);
+                    VBox userInfo = new VBox(12);
+                    userInfo.getChildren().addAll(nameBalance, Fullname);
+                    HBox infoLogo = new HBox(115);
+                    infoLogo.getChildren().addAll(getLogoImage(logo), userInfo);
+                    HBox TOP = new HBox(80);
+                    TOP.getChildren().addAll(infoLogo, getUserImage(userimage));
+                    
+                    //FINANCE-CENTER
+                    HBox DeWi = new HBox(15);
+                    DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
+                    DeWi.setAlignment(Pos.CENTER);
+                    HBox Trans = new HBox(15);
+                    Trans.getChildren().addAll(TranferBtn, TransactionBtn);
+                    Trans.setAlignment(Pos.CENTER);
+                    Label Options = new Label("Please Choose your options.");
+                    Options.setStyle("-fx-font-size:18px;");
+                    VBox CENTER = new VBox(20);
+                    CENTER.getChildren().addAll(Options, DeWi, Trans);
+                    CENTER.setAlignment(Pos.CENTER);
+                    
+                    //DECISSION-BOTTOM
+                    HBox decission = new HBox(25);
+                    decission.getChildren().addAll(ExitBtn, fixPassBtn);
+                    decission.setTranslateX(218);
+                    decission.setTranslateY(-10);
+                    
+                    INFO.setTop(TOP);
+                    INFO.setCenter(CENTER);
+                    INFO.setBottom(decission);
+//                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
+//                            TransactionBtn, fixPassBtn, ExitBtn);
                     break;
                 }
             }
@@ -296,12 +349,29 @@ public class MiniProject extends Application {
             
         });
         LIbox.setAlignment(Pos.CENTER);
-
+        HBox LIFGBtn = new HBox(15);
+        LIFGBtn.getChildren().addAll(LIBtn,FGPBtn);
+        LIFGBtn.setAlignment(Pos.CENTER);
+        
         LIbox.getChildren().addAll(getLogoImage(logo), labell3, idTopic, usernameField, passTopic,
-                passField, LIBtn, RGBtn,FGPBtn);
+                passField, LIFGBtn,labell4, RGBtn);
         //Layout Scene Login
 
         //Layout Scene Register 
+        Text usernameR = new Text("Username : ");
+        Text userDeal = new Text("(user must not be the same)");
+        userDeal.setFill(Color.RED);
+        HBox userR = new HBox(3);
+        userR.getChildren().addAll(usernameR,userDeal);
+        userR.setAlignment(Pos.CENTER);
+        Text passwordR = new Text("Password : ");
+        Text passDeal = new Text("(must be between 4-16 digits)");
+        passDeal.setFill(Color.RED);
+        HBox passR = new HBox(3);
+        passR.getChildren().addAll(passwordR, passDeal);
+        passR.setAlignment(Pos.CENTER);
+        
+        
         TextField usernameField2 = new TextField();
         usernameField2.setMaxWidth(300);
         PasswordField passField2 = new PasswordField();
@@ -343,13 +413,16 @@ public class MiniProject extends Application {
             System.out.println("Cancel Press.");
         });
         RGbox.setAlignment(Pos.CENTER);
-        RGbox.getChildren().addAll(new Text("Username : "), usernameField2,
-                new Text("Password : "), passField2,
+        HBox RegisChoice = new HBox(15);
+        RegisChoice.getChildren().addAll(SMBtn,CancelBtn);
+        RegisChoice.setAlignment(Pos.CENTER);
+        RGbox.getChildren().addAll(userR, usernameField2,
+                passR, passField2,
                 new Text("Name : "), realnameTextField,
                 new Text("Surname : "), surnameField,
                 new Text("Question : "), qtPassHintField,
                 new Text("Answer :"), ansPassHintField,
-                SMBtn, CancelBtn);
+                RegisChoice);
         //Layout Scene Register 
 
         
@@ -358,9 +431,9 @@ public class MiniProject extends Application {
         BorderPane BdPane = new BorderPane();
         BdPane.setTop(menubar);
         BdPane.getChildren().add(LIbox);*/
-        login = new Scene(LIbox, 600, 400);
+        login = new Scene(LIbox, 650, 500);
         register = new Scene(RGbox, 600, 600);
-        option = new Scene(OTbox, 600, 400);
+        option = new Scene(INFO, 600, 400);
         tranfer = new Scene(TFbox, 600, 400);
         fixPassword = new Scene(FPbox, 600, 400);
         forgotPassword = new Scene(FGPbox,600,400);
@@ -412,12 +485,20 @@ public class MiniProject extends Application {
         }
     }
 
-    public static ImageView getLogoImage(Image logo) throws FileNotFoundException {
+    public static ImageView getLogoImage(Image logo) {
         ImageView LOGO = new ImageView(logo);
         LOGO.setFitHeight(60);
         LOGO.setFitWidth(60);
         LOGO.setPreserveRatio(true);
         return LOGO;
+    }
+    
+    public static ImageView getUserImage(Image userimage) {
+        ImageView USERIMAGE = new ImageView(userimage);
+        USERIMAGE.setFitHeight(60);
+        USERIMAGE.setFitWidth(60);
+        USERIMAGE.setPreserveRatio(true);
+        return USERIMAGE;
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
