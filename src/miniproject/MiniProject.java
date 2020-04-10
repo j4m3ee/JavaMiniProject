@@ -152,7 +152,7 @@ public class MiniProject extends Application {
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             }
-            OTbox.getChildren().clear();
+            INFO.getChildren().clear();
             AccId = -1;
             stage.setScene(login);
             System.out.println("Submit Press.");
@@ -221,12 +221,48 @@ public class MiniProject extends Application {
                 if (acDataList.get(AccId).getBalance() >= Integer.parseInt(TSamountField.getText())) {
                     acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
                     Type = 'n';
-//                    acDataList = updateFile(f, acDataList);
-//                    OTbox.getChildren().clear();
-//                    Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-//                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
-//                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
-//                    stage.setScene(option);
+                    acDataList = updateFile(f, acDataList);
+                    INFO.getChildren().clear();
+                    Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                    userText.setStyle("-fx-font-size:15px;");
+                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
+                    balanceText.setStyle("-fx-font-size:15px;");
+                    Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
+                    Fullname.setStyle("-fx-font-size:15px;");
+                    //INFO-TOP
+                    HBox nameBalance = new HBox(20);
+                    nameBalance.getChildren().addAll(userText, balanceText);
+                    VBox userInfo = new VBox(12);
+                    userInfo.getChildren().addAll(nameBalance, Fullname);
+                    HBox infoLogo = new HBox(115);
+                    infoLogo.getChildren().addAll(getImageView(logo), userInfo);
+                    HBox TOP = new HBox(80);
+                    TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+
+                    //FINANCE-CENTER
+                    HBox DeWi = new HBox(15);
+                    DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
+                    DeWi.setAlignment(Pos.CENTER);
+                    HBox Trans = new HBox(15);
+                    Trans.getChildren().addAll(TranferBtn, TransactionBtn);
+                    Trans.setAlignment(Pos.CENTER);
+                    Label Options = new Label("Please Choose your options.");
+                    Options.setStyle("-fx-font-size:18px;");
+                    VBox CENTER = new VBox(20);
+                    CENTER.getChildren().addAll(Options, DeWi, Trans);
+                    CENTER.setAlignment(Pos.CENTER);
+
+                    //DECISSION-BOTTOM
+                    HBox decission = new HBox(25);
+                    decission.getChildren().addAll(ExitBtn, fixPassBtn);
+                    decission.setTranslateX(218);
+                    decission.setTranslateY(-10);
+
+                    INFO.setTop(TOP);
+                    INFO.setCenter(CENTER);
+                    INFO.setBottom(decission);
+//                    INFO.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
+                    stage.setScene(option);
                     System.out.println("Confirm press.");
                 } else {
                     throw new Exception("Not money enough.");
@@ -270,10 +306,48 @@ public class MiniProject extends Application {
                             acDataList.get(AccId).withdraw(Integer.parseInt(amountField.getText()));
                             account.deposit(Integer.parseInt(amountField.getText()));
                             acDataList = updateFile(f, acDataList);
-                            OTbox.getChildren().clear();
+                            INFO.getChildren().clear();
                             Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                            userText.setStyle("-fx-font-size:15px;");
                             Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
-                            OTbox.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
+                            balanceText.setStyle("-fx-font-size:15px;");
+                            Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
+                            Fullname.setStyle("-fx-font-size:15px;");
+                            
+                            //INFO-TOP
+                            HBox nameBalance = new HBox(20);
+                            nameBalance.getChildren().addAll(userText, balanceText);
+                            VBox userInfo = new VBox(12);
+                            userInfo.getChildren().addAll(nameBalance, Fullname);
+                            
+                            HBox infoLogo = new HBox(115);
+                            infoLogo.getChildren().addAll(getImageView(logo), userInfo);
+                            HBox TOP = new HBox(80);
+                            TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+
+                            //FINANCE-CENTER
+                            HBox DeWi = new HBox(15);
+                            DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
+                            DeWi.setAlignment(Pos.CENTER);
+                            HBox Trans = new HBox(15);
+                            Trans.getChildren().addAll(TranferBtn, TransactionBtn);
+                            Trans.setAlignment(Pos.CENTER);
+                            Label Options = new Label("Please Choose your options.");
+                            Options.setStyle("-fx-font-size:18px;");
+                            VBox CENTER = new VBox(20);
+                            CENTER.getChildren().addAll(Options, DeWi, Trans);
+                            CENTER.setAlignment(Pos.CENTER);
+
+                            //DECISSION-BOTTOM
+                            HBox decission = new HBox(25);
+                            decission.getChildren().addAll(ExitBtn, fixPassBtn);
+                            decission.setTranslateX(218);
+                            decission.setTranslateY(-10);
+
+                            INFO.setTop(TOP);
+                            INFO.setCenter(CENTER);
+                            INFO.setBottom(decission);
+//                            INFO.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
                             stage.setScene(option);
                             break;
                         }
@@ -342,8 +416,7 @@ public class MiniProject extends Application {
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
                     
-                    
-
+                   
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
