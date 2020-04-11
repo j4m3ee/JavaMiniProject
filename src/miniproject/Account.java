@@ -199,7 +199,9 @@ public class Account implements Encryption, Serializable {
         this.maxTransaction = maxTransaction;
     }
 
-    
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
     
     public String SMS(String sms) {
         return new String(encrypt(sms.getBytes()));
@@ -218,6 +220,12 @@ public class Account implements Encryption, Serializable {
         System.out.println("4: transaction");
         System.out.println("5: exit");
     }
+
+//    public String getUsername() {
+//        return Username;
+//    }
+    
+    
 
     private static String Encrypt(String text) {
         String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -243,10 +251,17 @@ public class Account implements Encryption, Serializable {
         return rot13;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Account{" + "name=" + Username + "id=" + id + ", balance=" + balance + "$" + ", annualInterestRate=" + annualInterestRate + ", dateCreated=" + dateCreated + '}';
+//    }
+
     @Override
     public String toString() {
-        return "Account{" + "name=" + Username + "id=" + id + ", balance=" + balance + "$" + ", annualInterestRate=" + annualInterestRate + ", dateCreated=" + dateCreated + '}';
+        return "Account{" + "Username=" + Username + ", password=" + password + ", QTPassHint=" + QTPassHint + ", ASWPasshint=" + ASWPasshint + ", Surname=" + Surname + ", realName=" + realName + ", id=" + id + ", balance=" + balance + ", dateCreated=" + dateCreated + '}';
     }
+    
+    
 
     @Override
     public byte[] encrypt(byte[] data) {

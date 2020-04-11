@@ -1,0 +1,4 @@
+Jame:JameJame:1:Surawit:Yosaeng:My Name:Jame:500.0
+Yaimai:YaimaiYaimai:2:Yanapa:Singsit:My Name:Yaimai:500.0
+02:020202:3:02:02:02:02:300.0
+03:030303:4:03:03:03:03:500.0

@@ -1,14 +1,20 @@
 package miniproject;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -42,7 +48,6 @@ import javafx.stage.Stage;
 public class MiniProject extends Application {
 
     static File f = new File("Accout.dat"); //Data
-    static File fbu = new File("backup.dat"); //Backup file
     int AccId = -1, tfToAcc = -1;
     Scene login, option, tranfer, register, fixPassword, forgotPassword, makeTransaction;
     ArrayList<Account> acDataList = new ArrayList<>();
@@ -65,17 +70,17 @@ public class MiniProject extends Application {
         File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
-        
+
         //Background
         FileInputStream input = new FileInputStream("Background.jpg");
         Image bg = new Image(input);
-        BackgroundImage bgimage = new BackgroundImage(bg,  
-                                             BackgroundRepeat.NO_REPEAT,  
-                                             BackgroundRepeat.NO_REPEAT,  
-                                             BackgroundPosition.DEFAULT,  
-                                                BackgroundSize.DEFAULT);
-        Background background = new Background(bgimage); 
-        
+        BackgroundImage bgimage = new BackgroundImage(bg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(bgimage);
+
         //File menu
         Menu fileMenu = new Menu("Tools");
         //Menu items
@@ -90,10 +95,11 @@ public class MiniProject extends Application {
 
         try {
             acDataList = readFile(f);
-            updateFile(fbu, acDataList);
         } catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Use backup data.");
             System.out.println(ex);
-            acDataList = readFile(fbu);
+            acDataList = readBackupData();
+            acDataList = updateFile(f, acDataList);
         }
 
         //All Pane Layout
@@ -104,7 +110,7 @@ public class MiniProject extends Application {
         VBox FPbox = new VBox(15);//fix Passwordas
         VBox FGPbox = new VBox(15);//forgot password
         VBox TSbox = new VBox(15);//Make transaction (deposit/withdraw) 
-       
+
         LIbox.setBackground(background);
 //        OTbox.setStyle(bgColor);
         RGbox.setBackground(background);
@@ -147,16 +153,16 @@ public class MiniProject extends Application {
         //Layout Scene fixPassword
 
         //Layout Scene Option
-        Button TranferBtn = new Button("Transfer" , new ImageView(Buck));
+        Button TranferBtn = new Button("Transfer", new ImageView(Buck));
         TranferBtn.setPrefWidth(200);
         TranferBtn.setPrefHeight(80);
-        Button DepositBtn = new Button("Deposit" , new ImageView(Buck));
+        Button DepositBtn = new Button("Deposit", new ImageView(Buck));
         DepositBtn.setPrefWidth(200);
         DepositBtn.setPrefHeight(80);
-        Button WidthdrawBtn = new Button("Widthdraw" , new ImageView(Buck));
+        Button WidthdrawBtn = new Button("Widthdraw", new ImageView(Buck));
         WidthdrawBtn.setPrefWidth(200);
         WidthdrawBtn.setPrefHeight(80);
-        Button TransactionBtn = new Button("Show Transaction" , new ImageView(Buck));
+        Button TransactionBtn = new Button("Show Transaction", new ImageView(Buck));
         TransactionBtn.setPrefWidth(200);
         TransactionBtn.setPrefHeight(80);
         Button fixPassBtn = new Button("Change Password");
@@ -166,8 +172,9 @@ public class MiniProject extends Application {
         });
         ExitBtn.setOnAction((t) -> {
             try {
-                backupFile(fbu, acDataList);
+                System.out.println("Backup data.");
                 acDataList = updateFile(f, acDataList);
+                backupData(acDataList);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             }
@@ -241,62 +248,62 @@ public class MiniProject extends Application {
                         && Type == 'w') {
                     throw new Exception("Not money enough.");
                 }
-                
+
                 if (Integer.parseInt(TSamountField.getText()) > acDataList.get(AccId).getMaxTransaction()
                         && Type == 'd') {
                     throw new Exception("You can't deposit more than " + acDataList.get(AccId).getMaxTransaction() + ".");
                 }
-                
+
                 acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
-                    Type = 'n';
-                    acDataList = updateFile(f, acDataList);
-                    INFO.getChildren().clear();
-                    Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                    userText.setStyle("-fx-font-size:15px;");
-                    userText.setStyle("-fx-font-weight: bold");
-                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
-                    balanceText.setStyle("-fx-font-size:15px;");
-                    balanceText.setStyle("-fx-font-weight: bold");
-                    Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() 
-                            + "  " + acDataList.get(AccId).getSurname());
-                    Fullname.setStyle("-fx-font-size:15px;");
-                    Fullname.setStyle("-fx-font-weight: bold");
-                    //INFO-TOP
-                    HBox nameBalance = new HBox(20);
-                    nameBalance.getChildren().addAll(userText, balanceText);
-                    VBox userInfo = new VBox(12);
-                    userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox infoLogo = new HBox(95);
-                    infoLogo.getChildren().addAll(getImageView(logo), userInfo);
-                    HBox TOP = new HBox(80);
-                    TOP.getChildren().addAll(infoLogo, getImageView(userimage));
-                    TOP.setTranslateY(10);
+                Type = 'n';
+                acDataList = updateFile(f, acDataList);
+                INFO.getChildren().clear();
+                Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                userText.setStyle("-fx-font-size:15px;");
+                userText.setStyle("-fx-font-weight: bold");
+                Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
+                balanceText.setStyle("-fx-font-size:15px;");
+                balanceText.setStyle("-fx-font-weight: bold");
+                Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName()
+                        + "  " + acDataList.get(AccId).getSurname());
+                Fullname.setStyle("-fx-font-size:15px;");
+                Fullname.setStyle("-fx-font-weight: bold");
+                //INFO-TOP
+                HBox nameBalance = new HBox(20);
+                nameBalance.getChildren().addAll(userText, balanceText);
+                VBox userInfo = new VBox(12);
+                userInfo.getChildren().addAll(nameBalance, Fullname);
+                HBox infoLogo = new HBox(95);
+                infoLogo.getChildren().addAll(getImageView(logo), userInfo);
+                HBox TOP = new HBox(80);
+                TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                TOP.setTranslateY(10);
 
-                    //FINANCE-CENTER
-                    HBox DeWi = new HBox(15);
-                    DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
-                    DeWi.setAlignment(Pos.CENTER);
-                    HBox Trans = new HBox(15);
-                    Trans.getChildren().addAll(TranferBtn, TransactionBtn);
-                    Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle("-fx-font-size:18px;");
-                    VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(Options, DeWi, Trans);
-                    CENTER.setAlignment(Pos.CENTER);
+                //FINANCE-CENTER
+                HBox DeWi = new HBox(15);
+                DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
+                DeWi.setAlignment(Pos.CENTER);
+                HBox Trans = new HBox(15);
+                Trans.getChildren().addAll(TranferBtn, TransactionBtn);
+                Trans.setAlignment(Pos.CENTER);
+                Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                Options.setStyle("-fx-font-size:18px;");
+                VBox CENTER = new VBox(20);
+                CENTER.getChildren().addAll(Options, DeWi, Trans);
+                CENTER.setAlignment(Pos.CENTER);
 
-                    //DECISSION-BOTTOM
-                    HBox decission = new HBox(25);
-                    decission.getChildren().addAll(ExitBtn, fixPassBtn);
-                    decission.setTranslateX(218);
-                    decission.setTranslateY(-10);
+                //DECISSION-BOTTOM
+                HBox decission = new HBox(25);
+                decission.getChildren().addAll(ExitBtn, fixPassBtn);
+                decission.setTranslateX(218);
+                decission.setTranslateY(-10);
 
-                    INFO.setTop(TOP);
-                    INFO.setCenter(CENTER);
-                    INFO.setBottom(decission);
+                INFO.setTop(TOP);
+                INFO.setCenter(CENTER);
+                INFO.setBottom(decission);
 //                    INFO.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
-                    stage.setScene(option);
-                    System.out.println("Confirm press.");
+                stage.setScene(option);
+                System.out.println("Confirm press.");
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
@@ -314,7 +321,7 @@ public class MiniProject extends Application {
             System.out.println("Cancel press.");
         });
         TSbox.getChildren().addAll(tsLabel, TSamountText, TSamountField,
-                 TSconfirmBtn, TScancelBtn);
+                TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
 
         //Layout Scene Tranfer  
@@ -346,7 +353,7 @@ public class MiniProject extends Application {
                             Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
                             Fullname.setStyle("-fx-font-size:15px;");
                             Fullname.setStyle("-fx-font-weight: bold");
-                            
+
                             //INFO-TOP
                             HBox nameBalance = new HBox(20);
                             nameBalance.getChildren().addAll(userText, balanceText);
@@ -451,8 +458,7 @@ public class MiniProject extends Application {
                     Text Fullname = new Text("     Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
                     Fullname.setStyle("-fx-font-weight: bold");
-                    
-                   
+
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
@@ -472,7 +478,7 @@ public class MiniProject extends Application {
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
                     Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle("-fx-font-size:18px;");                 
+                    Options.setStyle("-fx-font-size:18px;");
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
@@ -574,6 +580,8 @@ public class MiniProject extends Application {
                         ansPassHintField.getText()));
                 writeFile(f, addDataList);
                 acDataList = readFile(f);
+                System.out.println("Backup data.");
+                backupData(acDataList);
                 stage.setScene(login);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
@@ -636,13 +644,6 @@ public class MiniProject extends Application {
         return readFile(f);
     }
 
-    public static void backupFile(File f, ArrayList<Account> acNew)
-            throws FileNotFoundException, IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
-            out.writeObject(acNew);
-        }
-    }
-
     public static int findData(String name, ArrayList<Account> ac) {
         int id = -1;
         for (Account account : ac) {
@@ -673,6 +674,64 @@ public class MiniProject extends Application {
         return LOGO;
     }
 
+    public static void backupData(ArrayList<Account> ac) {
+        String fpath = new String("backupData.txt");
+        StringBuilder sb = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        for (Account account : ac) {
+            sb.append(account.getName() + ":"
+                    + account.getPassword() + ":"
+                    + account.getId() + ":"
+                    + account.getRealName() + ":"
+                    + account.getSurname() + ":"
+                    + account.getQTPassHint() + ":"
+                    + account.getASWPasshint() + ":"
+                    + account.getBalance());
+            sb.append(ls);
+        }
+        //System.out.println(sb.toString());
+
+        File f = new File(System.getProperty("user.home"), fpath); //object home directory
+        String s = sb.toString();
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("backupData.txt"));
+            out.write(s);
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Error backup.");
+            System.out.println(ex);
+        }
+
+    }
+
+    public static ArrayList<Account> readBackupData() throws Exception {
+        String f = new String("backupData.txt");
+        ArrayList<Account> ac = new ArrayList<>();
+        try {
+            List<String> Lines = Files.readAllLines(Paths.get(f));
+            for (String Line : Lines) {
+                String s = Line;
+                String[] data = s.split(":");
+                Account account = new Account(data[0], data[1],
+                        Integer.parseInt(data[2]), data[3], data[4], data[5], data[6]);
+                account.setBalance(Double.parseDouble(data[7]));
+                
+                ac.add(account);
+                
+            }
+
+        } catch (IOException ex) {
+            System.out.println("Error read backup.");
+            System.out.println(ex);
+        } catch (NumberFormatException numberFormatException) {
+            System.out.println("Error read backup.");
+            System.out.println(numberFormatException);
+        }
+        System.out.println(ac);
+        return ac;
+    }
+
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
 //        File f = new File("Accout.dat");
@@ -682,6 +741,20 @@ public class MiniProject extends Application {
 //        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
 //        out.writeObject(ac);
 //        System.out.println("Finish");
+
+        /*File f = new File("backupData.txt");
+        ArrayList<Account> ac = new ArrayList<>();
+        Account a1 = new Account("Jame", "JameJame", 1, "Surawit", "Yosaeng", "My Name", "Jame");
+        Account a2 = new Account("Yaimai", "YaimaiYaimai", 2, "Yanapa", "Singsit", "My Name", "Yaimai");
+        ac.add(a1);
+        ac.add(a2);
+        backupData(ac);
+
+        System.out.println("");
+
+        ArrayList<Account> ac2 = new ArrayList<>();
+        ac2 = readBackupData();
+        System.out.println(ac2);*/
 
         launch(args);
     }
