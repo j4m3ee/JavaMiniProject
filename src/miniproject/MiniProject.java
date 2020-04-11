@@ -330,10 +330,10 @@ public class MiniProject extends Application {
         Topfinance.setAlignment(Pos.CENTER);
         TSbox.setAlignment(Pos.CENTER);
         Topfinance.setTranslateY(-15);
-        Text WarningTS = new Text("---The maximum amount you can put your money--- \n        ---into your bank account is 20,000 baht.---");
+        Text WarningTS = new Text("--- Maximum amount is 20,000 Baht. ---");
         WarningTS.setStyle("-fx-font-size:14px;");
         WarningTS.setFill(Color.WHITE);
-        WarningTS.setStroke(Color.RED);
+        WarningTS.setStroke(Color.DARKRED);
         WarningTS.setStrokeWidth(0.85);
         TSbox.getChildren().addAll(Topfinance, WarningTS, TSamountText, TSamountField,
                  TSconfirmBtn, TScancelBtn);
@@ -446,7 +446,7 @@ public class MiniProject extends Application {
         Text warn = new Text("Please make sure that you put a correct username.");
         warn.setStyle("-fx-font-size:14px;");
         warn.setFill(Color.WHITE);
-        warn.setStroke(Color.RED);
+        warn.setStroke(Color.DARKRED);
         warn.setStrokeWidth(0.85);
         TFbox.getChildren().addAll(transferTop, warn, accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
         TFbox.setAlignment(Pos.CENTER);
@@ -586,7 +586,7 @@ public class MiniProject extends Application {
         userR.setAlignment(Pos.CENTER);
         Text passwordR = new Text("Password : ");
         Text passDeal = new Text("(must be between 4-16 digits)");
-        passDeal.setFill(Color.RED);
+        passDeal.setFill(Color.DARKRED);
         HBox passR = new HBox(3);
         passR.getChildren().addAll(passwordR, passDeal);
         passR.setAlignment(Pos.CENTER);
