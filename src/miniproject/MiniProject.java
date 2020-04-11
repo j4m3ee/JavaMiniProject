@@ -16,6 +16,7 @@ import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,6 +38,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MiniProject extends Application {
@@ -65,6 +67,9 @@ public class MiniProject extends Application {
         File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
+        tsLabel.setTextFill(Color.WHITE);
+        tsLabel.setStyle("-fx-font-size:20px;");
+//        tsLabel.setTranslateY(5);
         
         //Background
         FileInputStream input = new FileInputStream("Background.jpg");
@@ -231,7 +236,9 @@ public class MiniProject extends Application {
 
         //Layout Scene Deposit/Withdraw
         Text TSamountText = new Text("Amount : ");
+        TSamountText.setStyle("-fx-font-size:15px;");
         TextField TSamountField = new TextField();
+        TSamountField.setMaxWidth(300);
 //        Text TSaccountText = new Text("Tranfer to (name) : ");
 //        TextField TSaccountField = new TextField();
         Button TSconfirmBtn = new Button("Confirm");
@@ -253,14 +260,18 @@ public class MiniProject extends Application {
                     INFO.getChildren().clear();
                     Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                     userText.setStyle("-fx-font-size:15px;");
-                    userText.setStyle("-fx-font-weight: bold");
+                    userText.setFill(Color.WHITE);
+                    userText.setStroke(Color.YELLOW);
                     Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                     balanceText.setStyle("-fx-font-size:15px;");
-                    balanceText.setStyle("-fx-font-weight: bold");
+                    balanceText.setFill(Color.WHITE);
+                    balanceText.setStroke(Color.YELLOW);
                     Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() 
                             + "  " + acDataList.get(AccId).getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
-                    Fullname.setStyle("-fx-font-weight: bold");
+                    Fullname.setFill(Color.WHITE);
+                    Fullname.setStroke(Color.YELLOW);
+                    
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
@@ -270,6 +281,7 @@ public class MiniProject extends Application {
                     infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                     HBox TOP = new HBox(80);
                     TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                    TOP.setTranslateX(2);
                     TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
@@ -313,15 +325,27 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel press.");
         });
-        TSbox.getChildren().addAll(tsLabel, TSamountText, TSamountField,
+        HBox Topfinance = new HBox(15);
+        Topfinance.getChildren().addAll(getImageView(logo), tsLabel);
+        Topfinance.setAlignment(Pos.CENTER);
+        TSbox.setAlignment(Pos.CENTER);
+        Topfinance.setTranslateY(-15);
+        Text WarningTS = new Text("---The maximum amount you can put your money--- \n        ---into your bank account is 20,000 baht.---");
+        WarningTS.setStyle("-fx-font-size:14px;");
+        WarningTS.setFill(Color.WHITE);
+        WarningTS.setStroke(Color.RED);
+        WarningTS.setStrokeWidth(0.85);
+        TSbox.getChildren().addAll(Topfinance, WarningTS, TSamountText, TSamountField,
                  TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
 
         //Layout Scene Tranfer  
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
+        amountField.setMaxWidth(300);
         Text accountText = new Text("Tranfer to (name) : ");
         TextField accountField = new TextField();
+        accountField.setMaxWidth(300);
         Button confirmBtn = new Button("Confirm");
         confirmBtn.setOnAction((t) -> {
             try {
@@ -339,13 +363,16 @@ public class MiniProject extends Application {
                             INFO.getChildren().clear();
                             Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                             userText.setStyle("-fx-font-size:15px;");
-                            userText.setStyle("-fx-font-weight: bold");
+                            userText.setFill(Color.WHITE);
+                            userText.setStroke(Color.YELLOW);
                             Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                             balanceText.setStyle("-fx-font-size:15px;");
-                            balanceText.setStyle("-fx-font-weight: bold");
+                            balanceText.setFill(Color.WHITE);
+                            balanceText.setStroke(Color.YELLOW);
                             Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
                             Fullname.setStyle("-fx-font-size:15px;");
-                            Fullname.setStyle("-fx-font-weight: bold");
+                            Fullname.setFill(Color.WHITE);
+                            Fullname.setStroke(Color.YELLOW);
                             
                             //INFO-TOP
                             HBox nameBalance = new HBox(20);
@@ -356,6 +383,7 @@ public class MiniProject extends Application {
                             infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                             HBox TOP = new HBox(80);
                             TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                            TOP.setTranslateX(2);
                             TOP.setTranslateY(10);
 
                             //FINANCE-CENTER
@@ -409,7 +437,19 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel press.");
         });
-        TFbox.getChildren().addAll(getImageView(logo), accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
+        Label tran = new Label("Transfer / Loan");
+        tran.setStyle("-fx-font-size:20px;");
+        tran.setTextFill(Color.WHITE);
+        HBox transferTop = new HBox(15);
+        transferTop.getChildren().addAll(getImageView(logo), tran);
+        transferTop.setAlignment(Pos.CENTER);
+        Text warn = new Text("Please make sure that you put a correct username.");
+        warn.setStyle("-fx-font-size:14px;");
+        warn.setFill(Color.WHITE);
+        warn.setStroke(Color.RED);
+        warn.setStrokeWidth(0.85);
+        TFbox.getChildren().addAll(transferTop, warn, accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
+        TFbox.setAlignment(Pos.CENTER);
         //Layout Scene Tranfer  
 
         //Layout Scene Login
@@ -444,13 +484,16 @@ public class MiniProject extends Application {
                     stage.setScene(option);
                     Text userText = new Text("Username : " + account1.getName());
                     userText.setStyle("-fx-font-size:15px;");
-                    userText.setStyle("-fx-font-weight: bold");
+                    userText.setFill(Color.WHITE);
+                    userText.setStroke(Color.YELLOW);
                     Text balanceText = new Text("Balance : " + account1.getBalance());
                     balanceText.setStyle("-fx-font-size:15px;");
-                    balanceText.setStyle("-fx-font-weight: bold");
+                    balanceText.setFill(Color.WHITE);
+                    balanceText.setStroke(Color.YELLOW);
                     Text Fullname = new Text("     Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
-                    Fullname.setStyle("-fx-font-weight: bold");
+                    Fullname.setFill(Color.WHITE);
+                    Fullname.setStroke(Color.YELLOW);
                     
                    
                     //INFO-TOP
@@ -462,6 +505,7 @@ public class MiniProject extends Application {
                     infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                     HBox TOP = new HBox(80);
                     TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                    TOP.setTranslateX(2);
                     TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
