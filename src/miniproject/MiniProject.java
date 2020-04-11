@@ -61,7 +61,7 @@ public class MiniProject extends Application {
             throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
-        Image userimage = new Image(new FileInputStream("User1.jpg"));
+        Image userimage = new Image(new FileInputStream("User1.png"));
         File imageFile1 = new File("Bucks.png");
         Image Buck = new Image(imageFile1.toURI().toString());
         File bgFile = new File("Background.jpg");
