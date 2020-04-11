@@ -26,6 +26,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -54,9 +60,22 @@ public class MiniProject extends Application {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
         Image userimage = new Image(new FileInputStream("User1.jpg"));
+        File imageFile1 = new File("Bucks.png");
+        Image Buck = new Image(imageFile1.toURI().toString());
+        File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
-
+        
+        //Background
+        FileInputStream input = new FileInputStream("Background.jpg");
+        Image bg = new Image(input);
+        BackgroundImage bgimage = new BackgroundImage(bg,  
+                                             BackgroundRepeat.NO_REPEAT,  
+                                             BackgroundRepeat.NO_REPEAT,  
+                                             BackgroundPosition.DEFAULT,  
+                                                BackgroundSize.DEFAULT);
+        Background background = new Background(bgimage); 
+        
         //File menu
         Menu fileMenu = new Menu("Tools");
         //Menu items
@@ -85,17 +104,17 @@ public class MiniProject extends Application {
         VBox FPbox = new VBox(15);//fix Passwordas
         VBox FGPbox = new VBox(15);//forgot password
         VBox TSbox = new VBox(15);//Make transaction (deposit/withdraw) 
-
-        LIbox.setStyle(bgColor);
+       
+        LIbox.setBackground(background);
 //        OTbox.setStyle(bgColor);
-        RGbox.setStyle(bgColor);
-        TFbox.setStyle(bgColor);
-        FPbox.setStyle(bgColor);
-        FGPbox.setStyle(bgColor);
-        TSbox.setStyle(bgColor);
+        RGbox.setBackground(background);
+        TFbox.setBackground(background);
+        FPbox.setBackground(background);
+        FGPbox.setBackground(background);
+        TSbox.setBackground(background);
 
         BorderPane INFO = new BorderPane();
-        INFO.setStyle(bgColor);
+        INFO.setBackground(background);
 
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
@@ -128,18 +147,18 @@ public class MiniProject extends Application {
         //Layout Scene fixPassword
 
         //Layout Scene Option
-        Button TranferBtn = new Button("Transfer");
+        Button TranferBtn = new Button("Transfer" , new ImageView(Buck));
         TranferBtn.setPrefWidth(200);
-        TranferBtn.setPrefHeight(100);
-        Button DepositBtn = new Button("Deposit");
+        TranferBtn.setPrefHeight(80);
+        Button DepositBtn = new Button("Deposit" , new ImageView(Buck));
         DepositBtn.setPrefWidth(200);
-        DepositBtn.setPrefHeight(100);
-        Button WidthdrawBtn = new Button("Widthdraw");
+        DepositBtn.setPrefHeight(80);
+        Button WidthdrawBtn = new Button("Widthdraw" , new ImageView(Buck));
         WidthdrawBtn.setPrefWidth(200);
-        WidthdrawBtn.setPrefHeight(100);
-        Button TransactionBtn = new Button("Show Transaction");
+        WidthdrawBtn.setPrefHeight(80);
+        Button TransactionBtn = new Button("Show Transaction" , new ImageView(Buck));
         TransactionBtn.setPrefWidth(200);
-        TransactionBtn.setPrefHeight(100);
+        TransactionBtn.setPrefHeight(80);
         Button fixPassBtn = new Button("Change Password");
         Button ExitBtn = new Button("Logout");
         TranferBtn.setOnAction((t) -> {
@@ -234,20 +253,24 @@ public class MiniProject extends Application {
                     INFO.getChildren().clear();
                     Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                     userText.setStyle("-fx-font-size:15px;");
+                    userText.setStyle("-fx-font-weight: bold");
                     Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                     balanceText.setStyle("-fx-font-size:15px;");
-                    Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() 
+                    balanceText.setStyle("-fx-font-weight: bold");
+                    Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() 
                             + "  " + acDataList.get(AccId).getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
+                    Fullname.setStyle("-fx-font-weight: bold");
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox infoLogo = new HBox(115);
+                    HBox infoLogo = new HBox(95);
                     infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                     HBox TOP = new HBox(80);
                     TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                    TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
                     HBox DeWi = new HBox(15);
@@ -256,7 +279,7 @@ public class MiniProject extends Application {
                     HBox Trans = new HBox(15);
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("Please Choose your options.");
+                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
                     Options.setStyle("-fx-font-size:18px;");
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(Options, DeWi, Trans);
@@ -316,21 +339,24 @@ public class MiniProject extends Application {
                             INFO.getChildren().clear();
                             Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                             userText.setStyle("-fx-font-size:15px;");
+                            userText.setStyle("-fx-font-weight: bold");
                             Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
                             balanceText.setStyle("-fx-font-size:15px;");
-                            Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
+                            balanceText.setStyle("-fx-font-weight: bold");
+                            Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
                             Fullname.setStyle("-fx-font-size:15px;");
+                            Fullname.setStyle("-fx-font-weight: bold");
                             
                             //INFO-TOP
                             HBox nameBalance = new HBox(20);
                             nameBalance.getChildren().addAll(userText, balanceText);
                             VBox userInfo = new VBox(12);
                             userInfo.getChildren().addAll(nameBalance, Fullname);
-                            
-                            HBox infoLogo = new HBox(115);
+                            HBox infoLogo = new HBox(95);
                             infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                             HBox TOP = new HBox(80);
                             TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                            TOP.setTranslateY(10);
 
                             //FINANCE-CENTER
                             HBox DeWi = new HBox(15);
@@ -339,7 +365,7 @@ public class MiniProject extends Application {
                             HBox Trans = new HBox(15);
                             Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                             Trans.setAlignment(Pos.CENTER);
-                            Label Options = new Label("Please Choose your options.");
+                            Label Options = new Label("       Welcome to system.\n Please choose your options.");
                             Options.setStyle("-fx-font-size:18px;");
                             VBox CENTER = new VBox(20);
                             CENTER.getChildren().addAll(Options, DeWi, Trans);
@@ -394,7 +420,7 @@ public class MiniProject extends Application {
         labell3.setStyle("-fx-font-size:16px;");
         labell3.setAlignment(Pos.TOP_CENTER);
 
-        Label labell4 = new Label("Don't have and account. Try now?");
+        Label labell4 = new Label("Don't have an account. Try now?");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
         labell4.setStyle("-fx-font-size:15px;");
@@ -418,10 +444,13 @@ public class MiniProject extends Application {
                     stage.setScene(option);
                     Text userText = new Text("Username : " + account1.getName());
                     userText.setStyle("-fx-font-size:15px;");
+                    userText.setStyle("-fx-font-weight: bold");
                     Text balanceText = new Text("Balance : " + account1.getBalance());
                     balanceText.setStyle("-fx-font-size:15px;");
-                    Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname());
+                    balanceText.setStyle("-fx-font-weight: bold");
+                    Text Fullname = new Text("     Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
+                    Fullname.setStyle("-fx-font-weight: bold");
                     
                    
                     //INFO-TOP
@@ -429,10 +458,11 @@ public class MiniProject extends Application {
                     nameBalance.getChildren().addAll(userText, balanceText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox infoLogo = new HBox(115);
+                    HBox infoLogo = new HBox(95);
                     infoLogo.getChildren().addAll(getImageView(logo), userInfo);
                     HBox TOP = new HBox(80);
                     TOP.getChildren().addAll(infoLogo, getImageView(userimage));
+                    TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
                     HBox DeWi = new HBox(15);
@@ -441,8 +471,8 @@ public class MiniProject extends Application {
                     HBox Trans = new HBox(15);
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("Please Choose your options.");
-                    Options.setStyle("-fx-font-size:18px;");
+                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                    Options.setStyle("-fx-font-size:18px;");                 
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
