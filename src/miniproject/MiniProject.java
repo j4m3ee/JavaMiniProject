@@ -56,6 +56,25 @@ public class MiniProject extends Application {
     char Type = 'n';
 
     String bgColor = "-fx-background-color: rgb(181,234,215);";
+    String redBgColor ="-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
+    String grnBgColor ="-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
+    String yelBgColor ="-fx-background-color: linear-gradient(#fff700, #ffdd00);\n";
+    String bgRad ="    -fx-background-radius: 30;\n";
+    String bgIns ="    -fx-background-radius: 30;\n";
+    String whtTextFill ="    -fx-text-fill: white;";
+    String yelBigBtn = "-fx-background-color: \n"
+                + "        linear-gradient(#ffd65b, #e68400),\n"
+                + "        linear-gradient(#ffef84, #f2ba44),\n"
+                + "        linear-gradient(#ffea6a, #efaa22),\n"
+                + "        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),\n"
+                + "        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));\n"
+                + "    -fx-background-radius: 30;\n"
+                + "    -fx-background-insets: 0,1,2,3,0;\n"
+                + "    -fx-text-fill: #654b00;\n"
+                + "    -fx-font-weight: bold;\n"
+                + "    -fx-font-size: 14px;\n"
+                + "    -fx-padding: 10 20 10 20;";
+    
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
     //(#B5EAD7) 181,234,215 pastel green
@@ -83,17 +102,17 @@ public class MiniProject extends Application {
         tsLabel.setTextFill(Color.WHITE);
         tsLabel.setStyle("-fx-font-size:20px;");
 //        tsLabel.setTranslateY(5);
-        
+
         //Background
         FileInputStream input = new FileInputStream("Background.jpg");
         Image bg = new Image(input);
-        BackgroundImage bgimage = new BackgroundImage(bg,  
-                                             BackgroundRepeat.NO_REPEAT,  
-                                             BackgroundRepeat.NO_REPEAT,  
-                                             BackgroundPosition.DEFAULT,  
-                                                BackgroundSize.DEFAULT);
-        Background background = new Background(bgimage); 
-        
+        BackgroundImage bgimage = new BackgroundImage(bg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(bgimage);
+
         //File menu
         Menu fileMenu = new Menu("Tools");
         //Menu items
@@ -122,7 +141,7 @@ public class MiniProject extends Application {
         VBox FPbox = new VBox(15);//fix Passwordas
         VBox FGPbox = new VBox(15);//forgot password
         VBox TSbox = new VBox(15);//Make transaction (deposit/withdraw) 
-       
+
         LIbox.setBackground(background);
 //        OTbox.setStyle(bgColor);
         RGbox.setBackground(background);
@@ -137,11 +156,15 @@ public class MiniProject extends Application {
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
         TextField oldPassTextField = new PasswordField();
+        oldPassTextField.setMaxWidth(300);
         Text newPassText = new Text("Enter new password.");
         TextField newPassTextField = new PasswordField();
+        newPassTextField.setMaxWidth(300);
         Text CFnewPassText = new Text("Re-new password.");
         TextField CFnewPassTextField = new PasswordField();
+        CFnewPassTextField.setMaxWidth(300);
         Button SMFixPassBtn = new Button("Submit");
+        SMFixPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         SMFixPassBtn.setOnAction((var t) -> {
             try {
                 acDataList.get(AccId).setPassword(oldPassTextField.getText(),
@@ -155,6 +178,7 @@ public class MiniProject extends Application {
             }
         });
         Button CancelFixPassBtn = new Button("Cancel");
+        CancelFixPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         CancelFixPassBtn.setOnAction((t) -> {
             stage.setScene(option);
             System.out.println("Cancel Press.");
@@ -162,23 +186,30 @@ public class MiniProject extends Application {
         FPbox.getChildren().addAll(getImageView(logo), oldPassText, oldPassTextField, newPassText,
                 newPassTextField, CFnewPassText, CFnewPassTextField, SMFixPassBtn,
                 CancelFixPassBtn);
+        FPbox.setAlignment(Pos.CENTER);
         //Layout Scene fixPassword
 
         //Layout Scene Option
-        Button TranferBtn = new Button("Transfer" , new ImageView(Tran));
+        Button TranferBtn = new Button("Transfer", new ImageView(Tran));
         TranferBtn.setPrefWidth(200);
         TranferBtn.setPrefHeight(80);
-        Button DepositBtn = new Button("Deposit" , new ImageView(Depo));
+        TranferBtn.setStyle(yelBigBtn);
+        Button DepositBtn = new Button("Deposit", new ImageView(Depo));
         DepositBtn.setPrefWidth(200);
         DepositBtn.setPrefHeight(80);
-        Button WidthdrawBtn = new Button("Widthdraw" , new ImageView(With));
+        DepositBtn.setStyle(yelBigBtn);
+        Button WidthdrawBtn = new Button("Widthdraw", new ImageView(With));
         WidthdrawBtn.setPrefWidth(200);
         WidthdrawBtn.setPrefHeight(80);
-        Button TransactionBtn = new Button("Show Transaction" , new ImageView(Hist));
+        WidthdrawBtn.setStyle(yelBigBtn);
+        Button TransactionBtn = new Button("Show Transaction", new ImageView(Hist));
         TransactionBtn.setPrefWidth(200);
         TransactionBtn.setPrefHeight(80);
+        TransactionBtn.setStyle(yelBigBtn);
         Button fixPassBtn = new Button("Change Password");
+        fixPassBtn.setStyle(yelBgColor + bgRad + bgIns + whtTextFill);
         Button ExitBtn = new Button("Logout");
+        ExitBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         TranferBtn.setOnAction((t) -> {
             stage.setScene(tranfer);
         });
@@ -225,6 +256,7 @@ public class MiniProject extends Application {
         cfFGpassField.setMaxWidth(300);
 
         Button summitPassBtn = new Button("Submit");
+        summitPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         summitPassBtn.setOnAction((t) -> {
             try {
                 acDataList.get(AccId).setPassword(ansField.getText(),
@@ -240,6 +272,7 @@ public class MiniProject extends Application {
             System.out.println("Summit please.");
         });
         Button cancelPassBtn = new Button("Cancel");
+        cancelPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         cancelPassBtn.setOnAction((t) -> {
             stage.setScene(login);
             System.out.println("Cancel please.");
@@ -254,73 +287,75 @@ public class MiniProject extends Application {
 //        Text TSaccountText = new Text("Tranfer to (name) : ");
 //        TextField TSaccountField = new TextField();
         Button TSconfirmBtn = new Button("Confirm");
+        TSconfirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         TSconfirmBtn.setOnAction((t) -> {
             try {
                 if (acDataList.get(AccId).getBalance() < Integer.parseInt(TSamountField.getText())
                         && Type == 'w') {
                     throw new Exception("Not money enough.");
                 }
-                
+
                 if (Integer.parseInt(TSamountField.getText()) > acDataList.get(AccId).getMaxTransaction()
                         && Type == 'd') {
                     throw new Exception("You can't deposit more than " + acDataList.get(AccId).getMaxTransaction() + ".");
                 }
-                
+
                 acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
-                    Type = 'n';
-                    acDataList = updateFile(f, acDataList);
-                    INFO.getChildren().clear();
-                    Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                    userText.setStyle("-fx-font-size:15px;");
-                    userText.setFill(Color.WHITE);
-                    userText.setStroke(Color.YELLOW);
-                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
-                    balanceText.setStyle("-fx-font-size:15px;");
-                    balanceText.setFill(Color.WHITE);
-                    balanceText.setStroke(Color.YELLOW);
-                    Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() 
-                            + "  " + acDataList.get(AccId).getSurname());
-                    Fullname.setStyle("-fx-font-size:15px;");
-                    Fullname.setFill(Color.WHITE);
-                    Fullname.setStroke(Color.YELLOW);
-                    
-                    //INFO-TOP
-                    HBox nameBalance = new HBox(20);
-                    nameBalance.getChildren().addAll(userText, balanceText);
-                    VBox userInfo = new VBox(12);
-                    userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox infoLogo = new HBox(95);
-                    infoLogo.getChildren().addAll(getImageView(logo), userInfo);
-                    HBox TOP = new HBox(80);
-                    TOP.getChildren().addAll(infoLogo, getImageView(userimage));
-                    TOP.setTranslateX(2);
-                    TOP.setTranslateY(10);
+                Type = 'n';
+                acDataList = updateFile(f, acDataList);
+                INFO.getChildren().clear();
+                Text userText = new Text("Username : " + acDataList.get(AccId).getName());
+                userText.setStyle("-fx-font-size:15px;");
+                userText.setFill(Color.WHITE);
+                userText.setStroke(Color.YELLOW);
+                Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance());
+                balanceText.setStyle("-fx-font-size:15px;");
+                balanceText.setFill(Color.WHITE);
+                balanceText.setStroke(Color.YELLOW);
+                Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName()
+                        + "  " + acDataList.get(AccId).getSurname());
+                Fullname.setStyle("-fx-font-size:15px;");
+                Fullname.setFill(Color.WHITE);
+                Fullname.setStroke(Color.YELLOW);
 
-                    //FINANCE-CENTER
-                    HBox DeWi = new HBox(15);
-                    DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
-                    DeWi.setAlignment(Pos.CENTER);
-                    HBox Trans = new HBox(15);
-                    Trans.getChildren().addAll(TranferBtn, TransactionBtn);
-                    Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle("-fx-font-size:18px;");
-                    VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(Options, DeWi, Trans);
-                    CENTER.setAlignment(Pos.CENTER);
+                //INFO-TOP
+                HBox nameBalance = new HBox(20);
+                nameBalance.getChildren().addAll(userText, balanceText);
+                VBox userInfo = new VBox(12);
+                userInfo.getChildren().addAll(nameBalance, Fullname);
+                HBox doubleLogo = new HBox(15);
+                doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                HBox TOP = new HBox(40);
+                TOP.getChildren().addAll(doubleLogo, userInfo);
+                TOP.setTranslateX(45);
+                TOP.setTranslateY(10);
 
-                    //DECISSION-BOTTOM
-                    HBox decission = new HBox(25);
-                    decission.getChildren().addAll(ExitBtn, fixPassBtn);
-                    decission.setTranslateX(218);
-                    decission.setTranslateY(-10);
+                //FINANCE-CENTER
+                HBox DeWi = new HBox(15);
+                DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
+                DeWi.setAlignment(Pos.CENTER);
+                HBox Trans = new HBox(15);
+                Trans.getChildren().addAll(TranferBtn, TransactionBtn);
+                Trans.setAlignment(Pos.CENTER);
+                Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                Options.setStyle("-fx-font-size:18px;");
+                Options.setTextFill(Color.BLACK);
+                VBox CENTER = new VBox(20);
+                CENTER.getChildren().addAll(Options, DeWi, Trans);
+                CENTER.setAlignment(Pos.CENTER);
 
-                    INFO.setTop(TOP);
-                    INFO.setCenter(CENTER);
-                    INFO.setBottom(decission);
+                //DECISSION-BOTTOM
+                HBox decission = new HBox(25);
+                decission.getChildren().addAll(ExitBtn, fixPassBtn);
+                decission.setTranslateX(218);
+                decission.setTranslateY(-10);
+
+                INFO.setTop(TOP);
+                INFO.setCenter(CENTER);
+                INFO.setBottom(decission);
 //                    INFO.getChildren().addAll(userText, balanceText, TranferBtn, TransactionBtn, fixPassBtn, ExitBtn);
-                    stage.setScene(option);
-                    System.out.println("Confirm press.");
+                stage.setScene(option);
+                System.out.println("Confirm press.");
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
@@ -332,6 +367,7 @@ public class MiniProject extends Application {
 
         });
         Button TScancelBtn = new Button("Cancel");
+        TScancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         TScancelBtn.setOnAction((t) -> {
             Type = 'n';
             stage.setScene(option);
@@ -348,7 +384,7 @@ public class MiniProject extends Application {
         WarningTS.setStroke(Color.DARKRED);
         WarningTS.setStrokeWidth(0.85);
         TSbox.getChildren().addAll(Topfinance, WarningTS, TSamountText, TSamountField,
-                 TSconfirmBtn, TScancelBtn);
+                TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
 
         //Layout Scene Tranfer  
@@ -359,6 +395,7 @@ public class MiniProject extends Application {
         TextField accountField = new TextField();
         accountField.setMaxWidth(300);
         Button confirmBtn = new Button("Confirm");
+        confirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         confirmBtn.setOnAction((t) -> {
             try {
                 if (acDataList.get(AccId).getBalance() >= Integer.parseInt(amountField.getText())) {
@@ -381,21 +418,21 @@ public class MiniProject extends Application {
                             balanceText.setStyle("-fx-font-size:15px;");
                             balanceText.setFill(Color.WHITE);
                             balanceText.setStroke(Color.YELLOW);
-                            Text Fullname = new Text("     Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
+                            Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname());
                             Fullname.setStyle("-fx-font-size:15px;");
                             Fullname.setFill(Color.WHITE);
                             Fullname.setStroke(Color.YELLOW);
-                            
+
                             //INFO-TOP
                             HBox nameBalance = new HBox(20);
                             nameBalance.getChildren().addAll(userText, balanceText);
                             VBox userInfo = new VBox(12);
                             userInfo.getChildren().addAll(nameBalance, Fullname);
-                            HBox infoLogo = new HBox(95);
-                            infoLogo.getChildren().addAll(getImageView(logo), userInfo);
-                            HBox TOP = new HBox(80);
-                            TOP.getChildren().addAll(infoLogo, getImageView(userimage));
-                            TOP.setTranslateX(2);
+                            HBox doubleLogo = new HBox(15);
+                            doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                            HBox TOP = new HBox(40);
+                            TOP.getChildren().addAll(doubleLogo, userInfo);
+                            TOP.setTranslateX(45);
                             TOP.setTranslateY(10);
 
                             //FINANCE-CENTER
@@ -407,6 +444,7 @@ public class MiniProject extends Application {
                             Trans.setAlignment(Pos.CENTER);
                             Label Options = new Label("       Welcome to system.\n Please choose your options.");
                             Options.setStyle("-fx-font-size:18px;");
+                            Options.setTextFill(Color.BLACK);
                             VBox CENTER = new VBox(20);
                             CENTER.getChildren().addAll(Options, DeWi, Trans);
                             CENTER.setAlignment(Pos.CENTER);
@@ -445,6 +483,7 @@ public class MiniProject extends Application {
             System.out.println("Confirm press.");
         });
         Button cancelBtn = new Button("Cancel");
+        cancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         cancelBtn.setOnAction((t) -> {
             stage.setScene(option);
             System.out.println("Cancel press.");
@@ -486,6 +525,7 @@ public class MiniProject extends Application {
         TextField passField = new PasswordField();
         passField.setMaxWidth(300);
         Button LIBtn = new Button("Login");
+        LIBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         LIBtn.setOnAction((var t) -> {
             for (Account account1 : acDataList) {
                 String thisUser = usernameField.getText(), thisPass = passField.getText();
@@ -502,22 +542,21 @@ public class MiniProject extends Application {
                     balanceText.setStyle("-fx-font-size:15px;");
                     balanceText.setFill(Color.WHITE);
                     balanceText.setStroke(Color.YELLOW);
-                    Text Fullname = new Text("     Name : " + account1.getRealName() + "  " + account1.getSurname());
+                    Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname());
                     Fullname.setStyle("-fx-font-size:15px;");
                     Fullname.setFill(Color.WHITE);
                     Fullname.setStroke(Color.YELLOW);
-                    
-                   
+
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
                     nameBalance.getChildren().addAll(userText, balanceText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox infoLogo = new HBox(95);
-                    infoLogo.getChildren().addAll(getImageView(logo), userInfo);
-                    HBox TOP = new HBox(80);
-                    TOP.getChildren().addAll(infoLogo, getImageView(userimage));
-                    TOP.setTranslateX(2);
+                    HBox doubleLogo = new HBox(15);
+                    doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                    HBox TOP = new HBox(40);
+                    TOP.getChildren().addAll(doubleLogo, userInfo);
+                    TOP.setTranslateX(45);
                     TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
@@ -528,7 +567,8 @@ public class MiniProject extends Application {
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
                     Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle("-fx-font-size:18px;");                 
+                    Options.setStyle("-fx-font-size:18px;");
+                    Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
@@ -554,6 +594,7 @@ public class MiniProject extends Application {
             System.out.println("Login Press.\n");
         });
         Button RGBtn = new Button("Register");
+        RGBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         RGBtn.setOnAction((ActionEvent t) -> {
             stage.setScene(register);
             System.out.println("Register Press.");
@@ -564,6 +605,7 @@ public class MiniProject extends Application {
             System.out.println("Size : " + acDataList.size());
         });
         Button FGPBtn = new Button("Forgot Password.");
+        FGPBtn.setStyle(yelBgColor + bgRad + bgIns + whtTextFill);
         FGPBtn.setOnAction((t) -> {
             AccId = findData(usernameField.getText(), acDataList);
             if (AccId >= 0) {
@@ -575,6 +617,7 @@ public class MiniProject extends Application {
                         new Text("New-Password : "), FGpassField,
                         new Text("Confirm New-Password : "), cfFGpassField,
                         summitPassBtn, cancelPassBtn);
+                FGPbox.setAlignment(Pos.CENTER);
             } else {
                 informationBox.displayAlertBox("Error", "Wrong username.", logo);
             }
@@ -584,7 +627,6 @@ public class MiniProject extends Application {
         HBox LIFGBtn = new HBox(15);
         LIFGBtn.getChildren().addAll(LIBtn, FGPBtn);
         LIFGBtn.setAlignment(Pos.CENTER);
-
         LIbox.getChildren().addAll(getImageView(logo), labell3, idTopic, usernameField, passTopic,
                 passField, LIFGBtn, labell4, RGBtn);
         //Layout Scene Login
@@ -617,7 +659,9 @@ public class MiniProject extends Application {
         ansPassHintField.setMaxWidth(300);
 
         Button SMBtn = new Button("Submit");
+        SMBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         Button CancelBtn = new Button("Cancel");
+        CancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         SMBtn.setOnAction((ActionEvent t) -> {
             ArrayList<Account> addDataList = new ArrayList<>();
             try {
@@ -656,11 +700,6 @@ public class MiniProject extends Application {
                 RegisChoice);
         //Layout Scene Register 
 
-        /*LIbox.setMaxWidth(600);
-        LIbox.setMaxHeight(400);
-        BorderPane BdPane = new BorderPane();
-        BdPane.setTop(menubar);
-        BdPane.getChildren().add(LIbox);*/
         login = new Scene(LIbox, 650, 500);
         register = new Scene(RGbox, 600, 600);
         option = new Scene(INFO, 600, 400);
@@ -693,7 +732,7 @@ public class MiniProject extends Application {
         backupData(acNew);
         return readFile(f);
     }
-    
+
     public static void backupData(ArrayList<Account> ac) {
         String fpath = new String("backupData.txt");
         StringBuilder sb = new StringBuilder();
@@ -791,7 +830,6 @@ public class MiniProject extends Application {
 //        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f));
 //        out.writeObject(ac);
 //        System.out.println("Finish");
-
         launch(args);
     }
 }
