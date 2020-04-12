@@ -199,7 +199,9 @@ public class Account implements Encryption, Serializable {
         this.maxTransaction = maxTransaction;
     }
 
-    
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
     
     public String SMS(String sms) {
         return new String(encrypt(sms.getBytes()));
@@ -245,7 +247,7 @@ public class Account implements Encryption, Serializable {
 
     @Override
     public String toString() {
-        return "Account{" + "name=" + Username + "id=" + id + ", balance=" + balance + "$" + ", annualInterestRate=" + annualInterestRate + ", dateCreated=" + dateCreated + '}';
+        return "Account{" + "Username=" + Username + ", password=" + password + ", QTPassHint=" + QTPassHint + ", ASWPasshint=" + ASWPasshint + ", Surname=" + Surname + ", realName=" + realName + ", id=" + id + ", balance=" + balance + ", dateCreated=" + dateCreated + '}';
     }
 
     @Override
