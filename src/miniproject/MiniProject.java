@@ -61,9 +61,17 @@ public class MiniProject extends Application {
             throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream("Logo.png"));
-        Image userimage = new Image(new FileInputStream("User1.png"));
+        Image userimage = new Image(new FileInputStream("resource/User1.png"));
         File imageFile1 = new File("Bucks.png");
         Image Buck = new Image(imageFile1.toURI().toString());
+        File depositFile = new File("resource/depo.png");
+        Image Depo = new Image(depositFile.toURI().toString());
+        File withdrawFile = new File("resource/with.png");
+        Image With = new Image(withdrawFile.toURI().toString());
+        File transactionFile = new File("resource/tran.png");
+        Image Tran = new Image(transactionFile.toURI().toString());
+        File historyFile = new File("resource/hist.png");
+        Image Hist = new Image(depositFile.toURI().toString());
         File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
@@ -152,16 +160,16 @@ public class MiniProject extends Application {
         //Layout Scene fixPassword
 
         //Layout Scene Option
-        Button TranferBtn = new Button("Transfer" , new ImageView(Buck));
+        Button TranferBtn = new Button("Transfer" , new ImageView(Tran));
         TranferBtn.setPrefWidth(200);
         TranferBtn.setPrefHeight(80);
-        Button DepositBtn = new Button("Deposit" , new ImageView(Buck));
+        Button DepositBtn = new Button("Deposit" , new ImageView(Depo));
         DepositBtn.setPrefWidth(200);
         DepositBtn.setPrefHeight(80);
-        Button WidthdrawBtn = new Button("Widthdraw" , new ImageView(Buck));
+        Button WidthdrawBtn = new Button("Widthdraw" , new ImageView(With));
         WidthdrawBtn.setPrefWidth(200);
         WidthdrawBtn.setPrefHeight(80);
-        Button TransactionBtn = new Button("Show Transaction" , new ImageView(Buck));
+        Button TransactionBtn = new Button("Show Transaction" , new ImageView(Hist));
         TransactionBtn.setPrefWidth(200);
         TransactionBtn.setPrefHeight(80);
         Button fixPassBtn = new Button("Change Password");
