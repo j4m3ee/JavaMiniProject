@@ -17,6 +17,7 @@ public class Account implements Encryption, Serializable {
     private double annualInterestRate;
     private Date dateCreated;
     private ArrayList<Transaction> tr;
+    private char gender;
 
     Account() {
         dateCreated = new Date();
@@ -48,12 +49,13 @@ public class Account implements Encryption, Serializable {
      * @throws Exception
      */
     Account(String name, String password, int id, String realName, String Surname,
-            String QTPassHint, String ASWPasshint) throws Exception {
+            char gender,String QTPassHint, String ASWPasshint) throws Exception {
         this(name, password, id);
         this.QTPassHint = QTPassHint;
         this.ASWPasshint = ASWPasshint;
-        this.Surname = Surname;
-        this.realName = realName;
+        setSurname(Surname);
+        setRealName(realName);
+        this.gender = gender;
     }
 
     public void addTransaction(Transaction tr) {
@@ -75,6 +77,12 @@ public class Account implements Encryption, Serializable {
         id = newId;
     }
 
+    public char getGender() {
+        return gender;
+    }
+
+    
+    
     public int getId() {
         return id;
     }
@@ -210,6 +218,20 @@ public class Account implements Encryption, Serializable {
     public ArrayList<Transaction> getTr() {
         return tr;
     }
+
+    public void setSurname(String Surname) {
+        Surname = Surname.toLowerCase();
+        Surname = Surname.substring(0,1).toUpperCase()+Surname.substring(1);
+        this.Surname = Surname;
+    }
+
+    public void setRealName(String realName) {
+        realName = realName.toLowerCase();
+        realName = realName.substring(0,1).toUpperCase()+realName.substring(1);
+        this.realName = realName;
+    }
+    
+    
 
     public static void menu() {
         System.out.println("");

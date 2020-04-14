@@ -25,6 +25,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -43,6 +44,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -55,7 +58,7 @@ public class MiniProject extends Application {
     double amount = 0.0;
     Scene login, option, tranfer, register, fixPassword, forgotPassword, makeTransaction, CFTransactionScene;
     ArrayList<Account> acDataList = new ArrayList<>();
-    char Type = 'n';
+    char Type = 'n', Gender = 'n';
 
     String bgColor = "-fx-background-color: rgb(181,234,215);";
     String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
@@ -145,7 +148,7 @@ public class MiniProject extends Application {
         VBox CFTransactionbox = new VBox(15);//Before tranfer confirm transection
 
         LIbox.setBackground(background);
-//        OTbox.setStyle(bgColor);
+//        LIbox.setStyle(bgColor);
         RGbox.setBackground(background);
         TFbox.setBackground(background);
         FPbox.setBackground(background);
@@ -390,7 +393,7 @@ public class MiniProject extends Application {
                 TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
         int r1, r2;
-        
+
         Random random = new Random();
         r1 = random.nextInt(10);
         r2 = random.nextInt(10);
@@ -474,7 +477,6 @@ public class MiniProject extends Application {
         });
 
         //LayOut Scene CFTransation
-        
         //Layout Scene Tranfer  
         Text amountText = new Text("Amount : ");
         TextField amountField = new TextField();
@@ -558,8 +560,8 @@ public class MiniProject extends Application {
                             System.out.println("tf : " + tfToAcc);
                             Text TransactionText2 = new Text("Amount : ");
 
-                            CFTransactionbox.getChildren().setAll(TransactionText,TransactionText2, RandomText,
-                                    CFTextField, CFTranferBtn,CancelTranferBtn);
+                            CFTransactionbox.getChildren().setAll(TransactionText, TransactionText2, RandomText,
+                                    CFTextField, CFTranferBtn, CancelTranferBtn);
 
                             stage.setScene(CFTransactionScene);
                             break;
@@ -621,9 +623,11 @@ public class MiniProject extends Application {
         labell4.setAlignment(Pos.CENTER);
 
         Text idTopic = new Text("Username : ");
+        idTopic = setStyleElement.setStyleText(idTopic, 20, Color.BLACK, Color.WHITE);
         TextField usernameField = new TextField();
         usernameField.setMaxWidth(300);
         Text passTopic = new Text("Password : ");
+        passTopic = setStyleElement.setStyleText(passTopic, 20, Color.BLACK, Color.WHITE);
         TextField passField = new PasswordField();
         passField.setMaxWidth(300);
         Button LIBtn = new Button("Login");
@@ -686,6 +690,7 @@ public class MiniProject extends Application {
                     INFO.setBottom(decission);
 //                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
 //                            TransactionBtn, fixPassBtn, ExitBtn);
+                    System.out.println(account1.getGender());
                     break;
                 }
             }
@@ -760,18 +765,46 @@ public class MiniProject extends Application {
         TextField ansPassHintField = new TextField();
         ansPassHintField.setMaxWidth(300);
 
+        CheckBox mGender = new CheckBox("Male");
+        CheckBox fmGender = new CheckBox("Female");
+        HBox gender = new HBox(20);
+        gender.getChildren().addAll(mGender, fmGender);
+        gender.setAlignment(Pos.CENTER);
+
+        mGender.setOnAction((t) -> {
+            if (mGender.isSelected()) {
+                fmGender.setSelected(false);
+            }
+        });
+
+        fmGender.setOnAction((t) -> {
+            if (fmGender.isSelected()) {
+                mGender.setSelected(false);
+            }
+        });
+
         Button SMBtn = new Button("Submit");
         SMBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         Button CancelBtn = new Button("Cancel");
         CancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         SMBtn.setOnAction((ActionEvent t) -> {
+
             ArrayList<Account> addDataList = new ArrayList<>();
             try {
+                if (mGender.isSelected() == false && fmGender.isSelected() == false) {
+                    throw new Exception("Please select gender.");
+                }
+                if (mGender.isSelected() == true) {
+                    Gender = 'm';
+                } else {
+                    Gender = 'f';
+                }
                 addDataList = readFile(f);
                 addDataList.add(new Account(usernameField2.getText(), passField2.getText(),
                         addDataList.size() + 1,
                         realnameTextField.getText(),
                         surnameField.getText(),
+                        Gender,
                         qtPassHintField.getText(),
                         ansPassHintField.getText()));
                 writeFile(f, addDataList);
@@ -797,6 +830,7 @@ public class MiniProject extends Application {
                 passR, passField2,
                 new Text("Name : "), realnameTextField,
                 new Text("Surname : "), surnameField,
+                gender,
                 new Text("Question : "), qtPassHintField,
                 new Text("Answer :"), ansPassHintField,
                 RegisChoice);
@@ -823,7 +857,7 @@ public class MiniProject extends Application {
 
     public static void writeFile(File f, ArrayList<Account> acNew)
             throws FileNotFoundException, IOException {
-        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
             out.writeObject(acNew);
         }
     }
@@ -849,7 +883,8 @@ public class MiniProject extends Application {
                     + account.getSurname() + ":"
                     + account.getQTPassHint() + ":"
                     + account.getASWPasshint() + ":"
-                    + account.getBalance());
+                    + account.getBalance() + ":"
+                    + account.getGender());
             sb.append(ls);
         }
         //System.out.println(sb.toString());
@@ -876,7 +911,7 @@ public class MiniProject extends Application {
                 String s = Line;
                 String[] data = s.split(":");
                 Account account = new Account(data[0], data[1],
-                        Integer.parseInt(data[2]), data[3], data[4], data[5], data[6]);
+                        Integer.parseInt(data[2]), data[3], data[4], data[8].charAt(0), data[5], data[6]);
                 account.setBalance(Double.parseDouble(data[7]));
 
                 ac.add(account);
