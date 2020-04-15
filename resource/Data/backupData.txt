@@ -1,8 +1,8 @@
-Jame:Jame.011:1:Surawiturawit:Yosaengosaeng:Your Name:Jame:1523.0:n
+Jame:Jame.011:1:Surawiturawit:Yosaengosaeng:Your Name:Jame:1519.0:n
 Yaimai:Yaimai:2:Yanapaanapa:Singsitingsit:Your Name:Yaimai:400.0:n
 1234:1234:3:1234234:1234234:1234:1234:594.0:n
 1235:1235:4:1235235:1235235:1235:1235:405.0:n
-02:020202:5:022:022:02:02:495.0:n
+02:020202:5:022:022:02:02:540.0:n
 Test01:010101:6:Yuiui:Asdasd:01:01:500.0:n
 Test02:020202:7:Tstdsf:Sdsdf:02:02:502.0:m
 Test03:030303:8:H:H:sdf:sdf:500.0:m
