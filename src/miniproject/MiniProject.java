@@ -957,6 +957,8 @@ public class MiniProject extends Application {
         LOGO.setFitWidth(60);
         LOGO.setPreserveRatio(true);
         return LOGO;
+        
+        //Develop
     }
 
     public static void main(String[] args)
@@ -970,6 +972,6 @@ public class MiniProject extends Application {
 //        System.out.println("Finish");
         launch(args);
         
-        //Master
+        
     }
 }
