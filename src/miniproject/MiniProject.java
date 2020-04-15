@@ -1,5 +1,7 @@
 package miniproject;
 
+import GUI.informationBox;
+import GUI.setStyleElement;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,9 +53,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MiniProject extends Application {
-
-    static File f = new File("Accout.dat"); //Data
-    static File fbu = new File("backup.dat"); //Backup file
+    String pathPic = "resource\\Pictures\\";
+    static File f = new File("resource\\Data\\Accout.dat"); //Data
     int AccId = -1, tfToAcc = -1;
     double amount = 0.0;
     Scene login, option, tranfer, register, fixPassword, forgotPassword, makeTransaction, CFTransactionScene;
@@ -88,19 +89,18 @@ public class MiniProject extends Application {
     public void start(Stage stage)
             throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
-        Image logo = new Image(new FileInputStream("Logo.png"));
-        Image userimage = new Image(new FileInputStream("User1.png"));
-        File imageFile1 = new File("Bucks.png");
+        Image logo = new Image(new FileInputStream(pathPic + "Logo.png"));
+        Image userimage = new Image(new FileInputStream(pathPic + "User1.png"));
+        File imageFile1 = new File(pathPic + "Bucks.png");
         Image Buck = new Image(imageFile1.toURI().toString());
-        File depositFile = new File("depo.png");
+        File depositFile = new File(pathPic + "depo.png");
         Image Depo = new Image(depositFile.toURI().toString());
-        File withdrawFile = new File("with.png");
+        File withdrawFile = new File(pathPic + "with.png");
         Image With = new Image(withdrawFile.toURI().toString());
-        File transactionFile = new File("tran.png");
+        File transactionFile = new File(pathPic + "tran.png");
         Image Tran = new Image(transactionFile.toURI().toString());
-        File historyFile = new File("hist.png");
+        File historyFile = new File(pathPic + "hist.png");
         Image Hist = new Image(depositFile.toURI().toString());
-        File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
         tsLabel.setTextFill(Color.WHITE);
@@ -108,7 +108,7 @@ public class MiniProject extends Application {
 //        tsLabel.setTranslateY(5);
 
         //Background
-        FileInputStream input = new FileInputStream("Background.jpg");
+        FileInputStream input = new FileInputStream(pathPic + "Background.jpg");
         Image bg = new Image(input);
         BackgroundImage bgimage = new BackgroundImage(bg,
                 BackgroundRepeat.NO_REPEAT,
@@ -871,7 +871,7 @@ public class MiniProject extends Application {
     }
 
     public static void backupData(ArrayList<Account> ac) {
-        String fpath = new String("backupData.txt");
+        String fpath = new String("resource\\Data\\backupData.txt");
         StringBuilder sb = new StringBuilder();
         String ls = System.getProperty("line.separator");
 
@@ -892,7 +892,7 @@ public class MiniProject extends Application {
         File f = new File(System.getProperty("user.home"), fpath); //object home directory
         String s = sb.toString();
         try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("backupData.txt"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("resource\\Data\\backupData.txt"));
             out.write(s);
             out.close();
         } catch (IOException ex) {
@@ -903,7 +903,7 @@ public class MiniProject extends Application {
     }
 
     public static ArrayList<Account> readBackupData() throws Exception {
-        String f = new String("backupData.txt");
+        String f = new String("resource\\Data\\backupData.txt");
         ArrayList<Account> ac = new ArrayList<>();
         try {
             List<String> Lines = Files.readAllLines(Paths.get(f));
@@ -957,6 +957,8 @@ public class MiniProject extends Application {
         LOGO.setFitWidth(60);
         LOGO.setPreserveRatio(true);
         return LOGO;
+        
+        //Develop
     }
 
     public static void main(String[] args)
@@ -969,5 +971,7 @@ public class MiniProject extends Application {
 //        out.writeObject(ac);
 //        System.out.println("Finish");
         launch(args);
+        
+        
     }
 }

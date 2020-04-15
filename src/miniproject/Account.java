@@ -81,8 +81,6 @@ public class Account implements Encryption, Serializable {
         return gender;
     }
 
-    
-    
     public int getId() {
         return id;
     }
