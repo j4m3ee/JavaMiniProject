@@ -1,28 +1,19 @@
 package miniproject;
 
-import java.io.BufferedWriter;
+import GUI.informationBox;
+import GUI.setStyleElement;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -34,7 +25,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -44,16 +34,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class MiniProject extends Application {
-
-    static File f = new File("Accout.dat"); //Data
-    static File fbu = new File("backup.dat"); //Backup file
+    String pathPic = "resource\\Pictures\\";
+    static File f = new File("resource\\Data\\Accout.dat"); //Data
     int AccId = -1, tfToAcc = -1;
     double amount = 0.0;
     Scene login, option, tranfer, register, fixPassword, forgotPassword, makeTransaction, CFTransactionScene;
@@ -88,19 +74,18 @@ public class MiniProject extends Application {
     public void start(Stage stage)
             throws Exception, FileNotFoundException, IOException, ClassNotFoundException {
         stage.setTitle("O+ O PLUS");
-        Image logo = new Image(new FileInputStream("Logo.png"));
-        Image userimage = new Image(new FileInputStream("User1.png"));
-        File imageFile1 = new File("Bucks.png");
+        Image logo = new Image(new FileInputStream(pathPic + "Logo.png"));
+        Image userimage = new Image(new FileInputStream(pathPic + "User1.png"));
+        File imageFile1 = new File(pathPic + "Bucks.png");
         Image Buck = new Image(imageFile1.toURI().toString());
-        File depositFile = new File("depo.png");
+        File depositFile = new File(pathPic + "depo.png");
         Image Depo = new Image(depositFile.toURI().toString());
-        File withdrawFile = new File("with.png");
+        File withdrawFile = new File(pathPic + "with.png");
         Image With = new Image(withdrawFile.toURI().toString());
-        File transactionFile = new File("tran.png");
+        File transactionFile = new File(pathPic + "tran.png");
         Image Tran = new Image(transactionFile.toURI().toString());
-        File historyFile = new File("hist.png");
+        File historyFile = new File(pathPic + "hist.png");
         Image Hist = new Image(depositFile.toURI().toString());
-        File bgFile = new File("Background.jpg");
         stage.getIcons().add(logo);
         Label tsLabel = new Label();
         tsLabel.setTextFill(Color.WHITE);
@@ -108,7 +93,7 @@ public class MiniProject extends Application {
 //        tsLabel.setTranslateY(5);
 
         //Background
-        FileInputStream input = new FileInputStream("Background.jpg");
+        FileInputStream input = new FileInputStream(pathPic + "Background.jpg");
         Image bg = new Image(input);
         BackgroundImage bgimage = new BackgroundImage(bg,
                 BackgroundRepeat.NO_REPEAT,
@@ -130,11 +115,11 @@ public class MiniProject extends Application {
         menubar.getMenus().addAll(fileMenu);
 
         try {
-            acDataList = readFile(f);
+            acDataList = Data.readFile(f);
         } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex);
-            acDataList = readBackupData();
-            acDataList = updateFile(f, acDataList);
+            acDataList = Data.readBackupData();
+            acDataList = Data.updateFile(f, acDataList);
         }
 
         //All Pane Layout
@@ -175,7 +160,7 @@ public class MiniProject extends Application {
             try {
                 acDataList.get(AccId).setPassword(oldPassTextField.getText(),
                         newPassTextField.getText(), CFnewPassTextField.getText());
-                acDataList = updateFile(f, acDataList);
+                acDataList = Data.updateFile(f, acDataList);
                 stage.setScene(option);
                 System.out.println("Submit Press.");
             } catch (Exception ex) {
@@ -221,7 +206,7 @@ public class MiniProject extends Application {
         });
         ExitBtn.setOnAction((t) -> {
             try {
-                acDataList = updateFile(f, acDataList);
+                acDataList = Data.updateFile(f, acDataList);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             }
@@ -267,7 +252,7 @@ public class MiniProject extends Application {
             try {
                 acDataList.get(AccId).setPassword(ansField.getText(),
                         FGpassField.getText(), cfFGpassField.getText(), 0);
-                acDataList = updateFile(f, acDataList);
+                acDataList = Data.updateFile(f, acDataList);
 
                 stage.setScene(login);
                 AccId = -1;
@@ -308,7 +293,7 @@ public class MiniProject extends Application {
 
                 acDataList.get(AccId).makeTransaction(Type, Integer.parseInt(TSamountField.getText()));
                 Type = 'n';
-                acDataList = updateFile(f, acDataList);
+                acDataList = Data.updateFile(f, acDataList);
                 INFO.getChildren().clear();
                 Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                 userText.setStyle("-fx-font-size:15px;");
@@ -408,7 +393,7 @@ public class MiniProject extends Application {
                 acDataList.get(tfToAcc).deposit(amount);
                 System.out.println("Amount : " + amount);
                 try {
-                    acDataList = updateFile(f, acDataList);
+                    acDataList = Data.updateFile(f, acDataList);
                 } catch (IOException ex) {
                     Logger.getLogger(MiniProject.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
@@ -714,7 +699,7 @@ public class MiniProject extends Application {
         Button FGPBtn = new Button("Forgot Password.");
         FGPBtn.setStyle(yelBgColor + bgRad + bgIns + whtTextFill);
         FGPBtn.setOnAction((t) -> {
-            AccId = findData(usernameField.getText(), acDataList);
+            AccId = Data.findData(usernameField.getText(), acDataList);
             if (AccId >= 0) {
                 FGPbox.getChildren().clear();
                 Text PassQThint = new Text("Question : " + acDataList.get(AccId).getQTPassHint());
@@ -799,7 +784,7 @@ public class MiniProject extends Application {
                 } else {
                     Gender = 'f';
                 }
-                addDataList = readFile(f);
+                addDataList = Data.readFile(f);
                 addDataList.add(new Account(usernameField2.getText(), passField2.getText(),
                         addDataList.size() + 1,
                         realnameTextField.getText(),
@@ -807,8 +792,8 @@ public class MiniProject extends Application {
                         Gender,
                         qtPassHintField.getText(),
                         ansPassHintField.getText()));
-                writeFile(f, addDataList);
-                acDataList = readFile(f);
+                Data.writeFile(f, addDataList);
+                acDataList = Data.readFile(f);
                 stage.setScene(login);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
@@ -849,96 +834,7 @@ public class MiniProject extends Application {
         stage.show();
     }
 
-    public static ArrayList<Account> readFile(File f)
-            throws FileNotFoundException, IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
-        return (ArrayList<Account>) in.readObject();
-    }
 
-    public static void writeFile(File f, ArrayList<Account> acNew)
-            throws FileNotFoundException, IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
-            out.writeObject(acNew);
-        }
-    }
-
-    public static ArrayList<Account> updateFile(File f, ArrayList<Account> acNew)
-            throws FileNotFoundException, IOException, ClassNotFoundException {
-        writeFile(f, acNew);
-        System.out.println("Backup data.");
-        backupData(acNew);
-        return readFile(f);
-    }
-
-    public static void backupData(ArrayList<Account> ac) {
-        String fpath = new String("backupData.txt");
-        StringBuilder sb = new StringBuilder();
-        String ls = System.getProperty("line.separator");
-
-        for (Account account : ac) {
-            sb.append(account.getName() + ":"
-                    + account.getPassword() + ":"
-                    + account.getId() + ":"
-                    + account.getRealName() + ":"
-                    + account.getSurname() + ":"
-                    + account.getQTPassHint() + ":"
-                    + account.getASWPasshint() + ":"
-                    + account.getBalance() + ":"
-                    + account.getGender());
-            sb.append(ls);
-        }
-        //System.out.println(sb.toString());
-
-        File f = new File(System.getProperty("user.home"), fpath); //object home directory
-        String s = sb.toString();
-        try {
-            BufferedWriter out = new BufferedWriter(new FileWriter("backupData.txt"));
-            out.write(s);
-            out.close();
-        } catch (IOException ex) {
-            System.out.println("Error backup.");
-            System.out.println(ex);
-        }
-
-    }
-
-    public static ArrayList<Account> readBackupData() throws Exception {
-        String f = new String("backupData.txt");
-        ArrayList<Account> ac = new ArrayList<>();
-        try {
-            List<String> Lines = Files.readAllLines(Paths.get(f));
-            for (String Line : Lines) {
-                String s = Line;
-                String[] data = s.split(":");
-                Account account = new Account(data[0], data[1],
-                        Integer.parseInt(data[2]), data[3], data[4], data[8].charAt(0), data[5], data[6]);
-                account.setBalance(Double.parseDouble(data[7]));
-
-                ac.add(account);
-
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Error read backup.");
-            System.out.println(ex);
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("Error read backup.");
-            System.out.println(numberFormatException);
-        }
-        System.out.println(ac);
-        return ac;
-    }
-
-    public static int findData(String name, ArrayList<Account> ac) {
-        int id = -1;
-        for (Account account : ac) {
-            if (account.getName().equals(name)) {
-                id = account.getId() - 1;
-                break;
-            }
-        }
-        return id;
-    }
 
     public static void showList(ArrayList<Account> ac) {
         for (Account acc : ac) {

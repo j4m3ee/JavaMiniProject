@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package miniproject;
+package GUI;
 
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -11,10 +6,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-/**
- *
- * @author ASUS
- */
 public class setStyleElement {
     
     public static Text setStyleText(Text tx,int size,Color color,Color color2){
