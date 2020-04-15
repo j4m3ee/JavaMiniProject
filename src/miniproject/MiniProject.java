@@ -969,5 +969,7 @@ public class MiniProject extends Application {
 //        out.writeObject(ac);
 //        System.out.println("Finish");
         launch(args);
+        
+        //Master
     }
 }
