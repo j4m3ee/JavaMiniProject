@@ -91,5 +91,43 @@ public class informationBox {
         window.setResizable(false);
         window.showAndWait();
     }
+    
+    public static void displayConditions( Image logo) {
+        Stage window = new Stage();
 
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Account conditions");
+
+        Label label = new Label();
+        VBox layout = new VBox(10);
+
+        label.setText("Account conditions (must read!!)");
+
+        Button closeBT = new Button("Accept");
+        closeBT.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        closeBT.setOnAction(e -> window.close());
+
+        ScrollPane cdPane = new ScrollPane();
+        Label labelContent = new Label(""
+                + "                                     WELCOME TO O-PLUS SERVICE. PLEASE READ.\n"
+                + "1.When user starts O-PlUS sevice.User will achieve 500 baht.\n"
+                + "2.In this platform.User can extremly deposit 20000 baht.\n"
+                + "3.In this platform.User can extremly widthdraw 20000 baht.\n"
+                + "4.If user want to delete and account.User should replace money to another account.\n"
+                + "5.User should follow the rules strictly.\n"
+                + "                                                     --THANK YOU--" );
+        labelContent.setAlignment(Pos.CENTER);
+        cdPane.setContent(labelContent);
+        cdPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        cdPane.setPannable(true);
+        layout.getChildren().addAll(label, cdPane, closeBT);
+        layout.setStyle("-fx-background-color: rgb(226,240,203);");
+        layout.setAlignment(Pos.CENTER);
+
+        Scene scene = new Scene(layout, 450, 350);
+        window.getIcons().add(logo);
+        window.setScene(scene);
+        window.setResizable(false);
+        window.showAndWait();
+    }
 }
