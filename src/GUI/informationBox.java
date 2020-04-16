@@ -1,15 +1,25 @@
 package GUI;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import miniproject.Account;
+import miniproject.Data;
 import miniproject.Transaction;
 
 /**
@@ -19,12 +29,14 @@ import miniproject.Transaction;
 public class informationBox {
 
     static int id = -1;
-    
-    static String redBgColor ="-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
-    static String grnBgColor ="-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
-    static String bgRad ="    -fx-background-radius: 30;\n";
-    static String bgIns ="    -fx-background-radius: 30;\n";
-    static String whtTextFill ="    -fx-text-fill: white;";
+
+    static String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
+    static String grnBgColor = "-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
+    static String bgRad = "    -fx-background-radius: 30;\n";
+    static String bgIns = "    -fx-background-radius: 30;\n";
+    static String whtTextFill = "    -fx-text-fill: white;";
+    static String HoverY = "-fx-background-color: linear-gradient(#ffdd00, #ffdd00);\n";
+    static String blueBgColor = "-fx-background-color: linear-gradient(#00ffff, #ffdd00);\n";
 
     public static void displayAlertBox(String title, String message, Image logo) {
         Stage window = new Stage();
@@ -91,8 +103,8 @@ public class informationBox {
         window.setResizable(false);
         window.showAndWait();
     }
-    
-    public static void displayConditions( Image logo) {
+
+    public static void displayConditions(Image logo) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -115,7 +127,7 @@ public class informationBox {
                 + "3.In this platform.User can extremly widthdraw 20000 baht.\n"
                 + "4.If user want to delete and account.User should replace money to another account.\n"
                 + "5.User should follow the rules strictly.\n"
-                + "                                                     --THANK YOU--" );
+                + "                                                     --THANK YOU--");
         labelContent.setAlignment(Pos.CENTER);
         cdPane.setContent(labelContent);
         cdPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
