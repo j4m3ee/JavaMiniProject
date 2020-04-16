@@ -229,6 +229,18 @@ public class Account implements Encryption, Serializable {
         this.realName = realName;
     }
     
+    public void setProfile(String username,String name,String surname,char gender){
+        setName(username);
+        setRealName(name);
+        setSurname(surname);
+        setGender(gender);
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+    
+    
     
 
     public static void menu() {
