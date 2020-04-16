@@ -1,295 +1,117 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package miniproject;
 
-import java.io.Serializable;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author ASUS
  */
-public class Account implements Encryption, Serializable {
+public class Data {
+    public static File f = new File("resource\\Data\\Accout.dat");
 
-    private String Username, password = "0000";
-    private String QTPassHint, ASWPasshint, Surname, realName;
-    private int id;
-    private double balance,maxTransaction = 20000.0;
-    private double annualInterestRate;
-    private Date dateCreated;
-    private ArrayList<Transaction> tr;
-    private char gender;
-
-    Account() {
-        dateCreated = new Date();
-        tr = new ArrayList<>();
-        balance = 500;
+    public static ArrayList<Account> readFile(File f)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(f));
+        return (ArrayList<Account>) in.readObject();
     }
 
-    Account(String name, String password, int id) throws Exception {
-        this();
-        this.Username = name;
-        this.id = id;
+    public static void writeFile(File f, ArrayList<Account> acNew)
+            throws FileNotFoundException, IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
+            out.writeObject(acNew);
+        }
+    }
+
+    public static ArrayList<Account> updateFile(File f, ArrayList<Account> acNew)
+            throws FileNotFoundException, IOException, ClassNotFoundException {
+        writeFile(f, acNew);
+        System.out.println("Backup data.");
+        backupData(acNew);
+        return readFile(f);
+    }
+
+    public static void backupData(ArrayList<Account> ac) {
+        String fpath = new String("resource\\Data\\backupData.txt");
+        StringBuilder sb = new StringBuilder();
+        String ls = System.getProperty("line.separator");
+
+        for (Account account : ac) {
+            sb.append(account.getName() + ":"
+                    + account.getPassword() + ":"
+                    + account.getId() + ":"
+                    + account.getRealName() + ":"
+                    + account.getSurname() + ":"
+                    + account.getQTPassHint() + ":"
+                    + account.getASWPasshint() + ":"
+                    + account.getBalance() + ":"
+                    + account.getGender());
+            sb.append(ls);
+        }
+        //System.out.println(sb.toString());
+
+        File f = new File(System.getProperty("user.home"), fpath); //object home directory
+        String s = sb.toString();
         try {
-            setPassword("0000", password, password);
-        } catch (Exception ex) {
+            BufferedWriter out = new BufferedWriter(new FileWriter("resource\\Data\\backupData.txt"));
+            out.write(s);
+            out.close();
+        } catch (IOException ex) {
+            System.out.println("Error backup.");
             System.out.println(ex);
-            throw ex;
         }
+
     }
 
-    /**
-     *
-     * @param name
-     * @param password
-     * @param id
-     * @param QTPassHint
-     * @param ASWPasshint
-     * @param Surname
-     * @param realName
-     * @throws Exception
-     */
-    Account(String name, String password, int id, String realName, String Surname,
-            char gender,String QTPassHint, String ASWPasshint) throws Exception {
-        this(name, password, id);
-        this.QTPassHint = QTPassHint;
-        this.ASWPasshint = ASWPasshint;
-        setSurname(Surname);
-        setRealName(realName);
-        this.gender = gender;
-    }
+    public static ArrayList<Account> readBackupData() throws Exception {
+        String f = new String("resource\\Data\\backupData.txt");
+        ArrayList<Account> ac = new ArrayList<>();
+        try {
+            List<String> Lines = Files.readAllLines(Paths.get(f));
+            for (String Line : Lines) {
+                String s = Line;
+                String[] data = s.split(":");
+                Account account = new Account(data[0], data[1],
+                        Integer.parseInt(data[2]), data[3], data[4], data[8].charAt(0), data[5], data[6]);
+                account.setBalance(Double.parseDouble(data[7]));
+                ac.add(account);
+            }
 
-    public void addTransaction(Transaction tr) {
-        this.tr.add(tr);
-    }
-
-    public void showTransaction() {
-        System.out.println("\nTransaction ID <" + id + "> Name : " + Username);
-        for (Transaction transaction : tr) {
-            System.out.println("Date : " + transaction.getDate());
-            System.out.println("Type : " + transaction.getType());
-            System.out.println("Amount : " + transaction.getAmount());
-            System.out.println("Balance : " + transaction.getBalance());
-            System.out.println("Description : " + transaction.getDescription() + "\n");
+        } catch (IOException ex) {
+            System.out.println("Error read backup.");
+            System.out.println(ex);
+        } catch (NumberFormatException numberFormatException) {
+            System.out.println("Error read backup.");
+            System.out.println(numberFormatException);
         }
+        System.out.println(ac);
+        return ac;
     }
 
-    public void setId(int newId) {
-        id = newId;
-    }
-
-    public char getGender() {
-        return gender;
-    }
-
-    public int getId() {
+    public static int findData(String name, ArrayList<Account> ac) {
+        int id = -1;
+        for (Account account : ac) {
+            if (account.getName().equals(name)) {
+                id = account.getId() - 1;
+                break;
+            }
+        }
         return id;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setBalance(double newBalance) {
-        balance = newBalance;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setAnnualInterestRate(double newAIR) {
-        if (newAIR >= 0 || newAIR <= 100) {
-            annualInterestRate = newAIR / 100;
-        }
-    }
-
-    public double getAnnualInterestRate() {
-        return annualInterestRate;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public double getMonthlyInterestRate() {
-        return annualInterestRate / 12;
-    }
-
-    public double getMonthlyInterest() {
-        return balance * getMonthlyInterestRate();
-    }
-
-    public void withdraw(double value) {
-        balance -= value;
-        this.tr.add(new Transaction('W', value, balance));
-    }
-
-    public void deposit(double value) {
-        balance += value;
-        this.tr.add(new Transaction('D', value, balance));
-    }
-
-    public void makeTransaction(char type, double value) throws Exception {
-        type = Character.toLowerCase(type);
-        switch (type) {
-            case 'd':
-                deposit(value);
-                break;
-            case 'w':
-                withdraw(value);
-                break;
-            default:
-                throw new Exception("input d : deposit\ninput w : withdraw");
-        }
-    }
-
-    public String getName() {
-        return Username;
-    }
-
-    public void setName(String name) {
-        this.Username = name;
-    }
-
-    public String getSurname() {
-        return Surname;
-    }
-
-    public String getRealName() {
-        return realName;
-    }
-
-    public String getQTPassHint() {
-        return QTPassHint;
-    }
-
-    public String getASWPasshint() {
-        return ASWPasshint;
-    }
-
-    public void setPassword(String oldPassword, String npassword, String cfPassword)
-            throws Exception {
-        if (this.password.equals(oldPassword)) {
-            if (npassword.length() >= 4 && npassword.length() <= 16) {
-                if (npassword.equals(cfPassword)) {
-                    if (oldPassword.equals(npassword) == false) {
-                        this.password = npassword;
-                    } else {
-                        throw new Exception("Your old and new password are same.");
-                    }
-                } else {
-                    throw new Exception("Wrong confirm password.");
-                }
-            } else {
-                throw new Exception("Please input between 4-16 character.");
-            }
-        } else {
-            throw new Exception("Wrong old password.");
-        }
-    }
-
-    public void setPassword(String ans, String npassword, String cfPassword, int i)
-            throws Exception {
-        if (ans.equals(ASWPasshint)) {
-            setPassword(password, npassword, cfPassword);
-        } else {
-            throw new Exception("Wrong Answer.");
-        }
-    }
-
-    public double getMaxTransaction() {
-        return maxTransaction;
-    }
-
-    public void setMaxTransaction(double maxTransaction) {
-        this.maxTransaction = maxTransaction;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-    
-    public String SMS(String sms) {
-        return new String(encrypt(sms.getBytes()));
-    }
-
-    public ArrayList<Transaction> getTr() {
-        return tr;
-    }
-
-    public void setSurname(String Surname) {
-        Surname = Surname.toLowerCase();
-        Surname = Surname.substring(0,1).toUpperCase()+Surname.substring(1);
-        this.Surname = Surname;
-    }
-
-    public void setRealName(String realName) {
-        realName = realName.toLowerCase();
-        realName = realName.substring(0,1).toUpperCase()+realName.substring(1);
-        this.realName = realName;
-    }
-    
-    
-
-    public static void menu() {
-        System.out.println("");
-        System.out.println("Main menu");
-        System.out.println("1: check balance");
-        System.out.println("2: withdraw");
-        System.out.println("3: deposit");
-        System.out.println("4: transaction");
-        System.out.println("5: exit");
-    }
-
-    private static String Encrypt(String text) {
-        String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lowerCase = upperCase.toLowerCase();
-        String numCase = "0123456789";
-        String rot13 = "";
-        int k, p;
-        for (int i = 0; i < text.length(); i++) {
-            String c = text.substring(i, i + 1);
-            if ((k = upperCase.indexOf(c)) >= 0) {
-                p = (k + 13) % upperCase.length();
-                rot13 = rot13 + upperCase.substring(p, p + 1);
-            } else if ((k = lowerCase.indexOf(c)) >= 0) {
-                p = (k + 13) % upperCase.length();
-                rot13 = rot13 + lowerCase.substring(p, p + 1);
-            } else if ((k = numCase.indexOf(c)) >= 0) {
-                p = (k + 5) % numCase.length();
-                rot13 = rot13 + numCase.substring(p, p + 1);
-            } else {
-                rot13 = rot13 + c;
-            }
-        }
-        return rot13;
-    }
-
-    @Override
-    public String toString() {
-        return "Account{" + "Username=" + Username + ", password=" + password + ", QTPassHint=" + QTPassHint + ", ASWPasshint=" + ASWPasshint + ", Surname=" + Surname + ", realName=" + realName + ", id=" + id + ", balance=" + balance + ", dateCreated=" + dateCreated + '}';
-    }
-
-    @Override
-    public byte[] encrypt(byte[] data) {
-        byte[] enc = new byte[data.length];
-
-        for (int i = 0; i < data.length; i++) {
-            enc[i] = (byte) ((i % 2 == 0) ? data[i] + 1 : data[i] - 1);
-        }
-
-        return enc;
-    }
-
-    @Override
-    public byte[] decrypt(byte[] data) {
-        byte[] dec = new byte[data.length];
-
-        for (int i = 0; i < data.length; i++) {
-            dec[i] = (byte) ((i % 2 == 0) ? data[i] - 1 : data[i] + 1);
-        }
-
-        return dec;
-    }
-
 }
