@@ -24,6 +24,8 @@ import java.util.List;
  * @author ASUS
  */
 public class Data {
+    
+    public static File f = new File("resource\\Data\\Accout.dat");
 
     public static ArrayList<Account> readFile(File f)
             throws FileNotFoundException, IOException, ClassNotFoundException {
