@@ -39,10 +39,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MiniProject extends Application {
-
-    String pathPic = "resource\\Pictures\\";
+    
+    public String pathPic = "resource\\Pictures\\";
     int AccId = -1, tfToAcc = -1;
-    double amount = 0.0;
+    double amount = 0.0,stageWidth = 600,stageHeight = 650;
     Scene login, option, tranfer, register, fixPassword, forgotPassword, 
             editProfile,makeTransaction, CFTransactionScene;
     ArrayList<Account> acDataList = new ArrayList<>();
@@ -295,7 +295,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
             System.out.println("Submit Press.");
         });
@@ -351,7 +351,7 @@ public class MiniProject extends Application {
                 System.out.println("Submit Press.");
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
         });
         Button CancelFixPassBtn = new Button("Cancel");
@@ -453,12 +453,12 @@ public class MiniProject extends Application {
             System.out.println("Submit Press.");
         });
         ConditionsBtn.setOnAction((t) -> {
-            informationBox.displayConditions(logo);
+            informationBox.displayConditions(logo,background);
             System.out.println("Conditions Press.");
         });
         TransactionBtn.setOnAction((t) -> {
             acDataList.get(AccId).showTransaction();
-            informationBox.displayTransactionBox(acDataList.get(AccId), logo);
+            informationBox.displayTransactionBox(acDataList.get(AccId), logo,background);
             System.out.println("TraTransaction Press.");
         });
         DepositBtn.setOnAction((t) -> {
@@ -529,7 +529,7 @@ public class MiniProject extends Application {
                 AccId = -1;
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
             System.out.println("Summit please.");
         });
@@ -602,13 +602,13 @@ public class MiniProject extends Application {
                     Text userText = new Text("Username : " + acDataList.get(AccId).getName());
                     userText.setStyle(nameTxColor1);
                     Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance() + "  " + "Baht");
-                    balanceText.setStyle(nameTxColor1);
+                    balanceText.setStyle(nameTxColor2);
                     Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  " + acDataList.get(AccId).getGender());
                     Fullname.setStyle(nameTxColor1);
 
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
-                    nameBalance.getChildren().addAll(userText, balanceText);
+                    nameBalance.getChildren().addAll(userText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
                     HBox doubleLogo = new HBox(15);
@@ -629,7 +629,7 @@ public class MiniProject extends Application {
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(balanceText,Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
                     //DECISSION-BOTTOM
@@ -649,10 +649,10 @@ public class MiniProject extends Application {
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input number.", logo);
+                informationBox.displayAlertBox("Error", "Plese input number.", logo,background);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
 
         });
@@ -724,10 +724,10 @@ public class MiniProject extends Application {
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo,background);
             } catch (Exception e) {
                 System.out.println(e);
-                informationBox.displayAlertBox("Error", e.getMessage(), logo);
+                informationBox.displayAlertBox("Error", e.getMessage(), logo,background);
             }
 
         });
@@ -817,12 +817,12 @@ public class MiniProject extends Application {
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo,background);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
 
             System.out.println("Confirm press.");
@@ -899,13 +899,14 @@ public class MiniProject extends Application {
                     Text userText = new Text("Username : " + account1.getName());
                     userText.setStyle(nameTxColor1);
                     Text balanceText = new Text("Balance : " + account1.getBalance() + "  " + "Baht");
-                    balanceText.setStyle(nameTxColor1);
+                    balanceText.setStyle(nameTxColor2);
+                    
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname() + "  " + "Gender : " + " " + account1.getGender());
                     Fullname.setStyle(nameTxColor1);
 
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
-                    nameBalance.getChildren().addAll(userText, balanceText);
+                    nameBalance.getChildren().addAll(userText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
                     HBox doubleLogo = new HBox(15);
@@ -926,7 +927,7 @@ public class MiniProject extends Application {
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(balanceText,Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
                     //DECISSION-BOTTOM
@@ -946,7 +947,7 @@ public class MiniProject extends Application {
             }
             if (AccId == -1) //If didn't have id in account list.
             {
-                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo);
+                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo,background);
             }
             System.out.println("Login Press.\n");
         });
@@ -995,7 +996,7 @@ public class MiniProject extends Application {
                         summitPassBtn, cancelPassBtn);
                 FGPbox.setAlignment(Pos.CENTER);
             } else {
-                informationBox.displayAlertBox("Error", "Wrong username.", logo);
+                informationBox.displayAlertBox("Error", "Wrong username.", logo,background);
             }
 
         });
@@ -1121,7 +1122,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
             }
             System.out.println("Submit Press.");
         });
@@ -1143,15 +1144,15 @@ public class MiniProject extends Application {
                 RegisChoice);
         //Layout Scene Register 
 
-        login = new Scene(LIbox, 650, 500);
-        register = new Scene(RGbox, 600, 600);
-        option = new Scene(INFO, 600, 450);
-        tranfer = new Scene(TFbox, 600, 400);
-        fixPassword = new Scene(FPbox, 600, 400);
-        forgotPassword = new Scene(FGPbox, 600, 400);
-        makeTransaction = new Scene(TSbox, 600, 400);
-        CFTransactionScene = new Scene(CFTransactionbox, 600, 400);
-        editProfile = new Scene(editProfilebox, 600, 400);
+        login = new Scene(LIbox, stageWidth, stageHeight);
+        register = new Scene(RGbox, stageWidth, stageHeight);
+        option = new Scene(INFO, stageWidth, stageHeight);
+        tranfer = new Scene(TFbox, stageWidth, stageHeight);
+        fixPassword = new Scene(FPbox, stageWidth, stageHeight);
+        forgotPassword = new Scene(FGPbox, stageWidth, stageHeight);
+        makeTransaction = new Scene(TSbox, stageWidth, stageHeight);
+        CFTransactionScene = new Scene(CFTransactionbox, stageWidth, stageHeight);
+        editProfile = new Scene(editProfilebox, stageWidth, stageHeight);
         stage.setScene(login);
         stage.setResizable(false);
         stage.show();

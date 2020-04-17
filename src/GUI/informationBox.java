@@ -1,11 +1,18 @@
 package GUI;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,16 +24,18 @@ import miniproject.Transaction;
  * @author User
  */
 public class informationBox {
-
-    static int id = -1;
     
+    static public String pathPic = "resource\\Pictures\\";
+    static int id = -1;
     static String redBgColor ="-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
     static String grnBgColor ="-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
     static String bgRad ="    -fx-background-radius: 30;\n";
     static String bgIns ="    -fx-background-radius: 30;\n";
     static String whtTextFill ="    -fx-text-fill: white;";
+    static String redTexColor = "-fx-text-fill: linear-gradient(#f12711, #f5af19);\n";
+    static String blueTxColor = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n";
 
-    public static void displayAlertBox(String title, String message, Image logo) {
+    public static void displayAlertBox(String title, String message, Image logo,Background background) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -34,15 +43,17 @@ public class informationBox {
         window.setMinHeight(150);
 
         Label label = new Label(message);
-        Label lebel2 = new Label("Please try again.");
+        Label label2 = new Label("Please try again.");
         VBox layout = new VBox(10);
+        label = setStyleElement.setStyleLabel(label, redTexColor);
+        label2 = setStyleElement.setStyleLabel(label2, redTexColor);
 
         Button closeBT = new Button("OK");
         closeBT.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         closeBT.setOnAction(e -> window.close());
 
-        layout.getChildren().addAll(label, lebel2, closeBT);
-        layout.setStyle("-fx-background-color: rgb(255,154,162);");
+        layout.getChildren().addAll(label, label2, closeBT);
+        layout.setBackground(background);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
@@ -52,7 +63,7 @@ public class informationBox {
         window.showAndWait();
     }
 
-    public static void displayTransactionBox(Account tr, Image logo) {
+    public static void displayTransactionBox(Account tr, Image logo,Background background) {
         Stage window = new Stage();
         String s = "";
 
@@ -61,8 +72,14 @@ public class informationBox {
 
         Label label = new Label();
         VBox layout = new VBox(10);
+        
 
         label.setText("Name : " + tr.getName() + " Id<" + tr.getId() + ">");
+        label.setMinSize(50, 0);
+        label.setScaleX(1.5);
+        label.setScaleY(1.5);
+        label.setStyle("-fx-font-size:16px;");
+        label.setStyle(blueTxColor);
 
         Button closeBT = new Button("OK");
         closeBT.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
@@ -82,8 +99,8 @@ public class informationBox {
         trPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         trPane.setPannable(true);
         layout.getChildren().addAll(label, trPane, closeBT);
-        layout.setStyle("-fx-background-color: rgb(226,240,203);");
         layout.setAlignment(Pos.CENTER);
+        layout.setBackground(background);
 
         Scene scene = new Scene(layout, 300, 300);
         window.getIcons().add(logo);
@@ -92,7 +109,7 @@ public class informationBox {
         window.showAndWait();
     }
     
-    public static void displayConditions( Image logo) {
+    public static void displayConditions( Image logo,Background background) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -100,9 +117,13 @@ public class informationBox {
 
         Label label = new Label();
         VBox layout = new VBox(10);
-
         label.setText("Account conditions (must read!!)");
-
+        label.setMinSize(50, 0);
+        label.setScaleX(1.5);
+        label.setScaleY(1.5);
+        label.setStyle("-fx-font-size:16px;");
+        label.setStyle(blueTxColor);
+        
         Button closeBT = new Button("Accept");
         closeBT.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         closeBT.setOnAction(e -> window.close());
@@ -121,8 +142,8 @@ public class informationBox {
         cdPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         cdPane.setPannable(true);
         layout.getChildren().addAll(label, cdPane, closeBT);
-        layout.setStyle("-fx-background-color: rgb(226,240,203);");
         layout.setAlignment(Pos.CENTER);
+        layout.setBackground(background);
 
         Scene scene = new Scene(layout, 450, 350);
         window.getIcons().add(logo);
@@ -130,4 +151,5 @@ public class informationBox {
         window.setResizable(false);
         window.showAndWait();
     }
+   
 }

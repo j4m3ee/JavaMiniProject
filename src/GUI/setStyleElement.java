@@ -1,5 +1,6 @@
 package GUI;
 
+import static GUI.informationBox.blueTxColor;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -16,5 +17,16 @@ public class setStyleElement {
         tx.setFont(Font.font("Cascadia",FontWeight.BOLD,10));
         return tx;
     }
+    
+    public static Label setStyleLabel(Label label,String style){
+        label.setMinSize(50, 0);
+        label.setScaleX(1.5);
+        label.setScaleY(1.5);
+        label.setStyle("-fx-font-size:16px;");
+        label.setStyle(style);
+        return label;
+    }
+    
+    
     
 }
