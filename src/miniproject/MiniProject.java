@@ -92,8 +92,11 @@ public class MiniProject extends Application {
             + "    -fx-padding: 10 20 10 20;";
 
     final String BorderText = "-fx-border-color: linear-gradient(#00ffff, #ffdd00); \n"
-            + "-fx-border-width:5;";
-
+            + "-fx-background-radius: 15;\n"
+            + "-fx-border-radius: 15;\n"
+            + "-fx-border-width:5; \n"
+            + "-fx-background-color: rgba(255,255,255,0.5); \n";
+            
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
     //(#B5EAD7) 181,234,215 pastel green
@@ -175,6 +178,7 @@ public class MiniProject extends Application {
 
         //Layout Scene edit profile
         Text editUsernameR = new Text("Username : ");
+        editUsernameR.setStyle(blueTxColor2);
         Text editUserDeal = new Text("(user must not be the same)");
         editUserDeal.setFill(Color.RED);
         HBox userR2 = new HBox(3);
@@ -183,15 +187,21 @@ public class MiniProject extends Application {
 
         TextField usernameField3 = new TextField();
         usernameField3.setMaxWidth(300);
+        usernameField3.setStyle(BorderText);
         PasswordField passField3 = new PasswordField();
         passField3.setMaxWidth(300);
+        passField3.setStyle(BorderText);
         TextField realnameTextField2 = new TextField();
         realnameTextField2.setMaxWidth(300);
+        realnameTextField2.setStyle(BorderText);
         TextField surnameField2 = new TextField();
         surnameField2.setMaxWidth(300);
+        surnameField2.setStyle(BorderText);
 
         CheckBox mGender2 = new CheckBox("Male");
+        mGender2.setStyle(blueTxColor);
         CheckBox fmGender2 = new CheckBox("Female");
+        fmGender2.setStyle(blueTxColor);
         HBox gender2 = new HBox(20);
         gender2.getChildren().addAll(mGender2, fmGender2);
         gender2.setAlignment(Pos.CENTER);
@@ -258,19 +268,13 @@ public class MiniProject extends Application {
                 acDataList = Data.updateFile(Data.f, acDataList);
 
                 Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                userText.setStyle("-fx-font-size:15px;");
-                userText.setFill(Color.WHITE);
-                userText.setStroke(Color.YELLOW);
+                userText.setStyle(nameTxColor1);
                 Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance() + "  " + "Baht");
-                balanceText.setStyle("-fx-font-size:15px;");
-                balanceText.setFill(Color.WHITE);
-                balanceText.setStroke(Color.YELLOW);
+                balanceText.setStyle(nameTxColor1);
                 Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  "
                         + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  "
                         + acDataList.get(AccId).getGender());
-                Fullname.setStyle("-fx-font-size:15px;");
-                Fullname.setFill(Color.WHITE);
-                Fullname.setStroke(Color.YELLOW);
+                Fullname.setStyle(nameTxColor1);
 
                 //INFO-TOP
                 HBox nameBalance = new HBox(20);
@@ -304,7 +308,9 @@ public class MiniProject extends Application {
             System.out.println("Cancel Press.");
         });
         Text nameTag = new Text("Name : ");
+        nameTag.setStyle(blueTxColor2);
         Text surnameTag = new Text("Surname : ");
+        surnameTag.setStyle(blueTxColor2);
         editProfilebox.setAlignment(Pos.CENTER);
         HBox RegisChoice2 = new HBox(15);
         RegisChoice2.getChildren().addAll(SMBtn2, fixPassBtn, CancelBtn2);
@@ -314,14 +320,20 @@ public class MiniProject extends Application {
 
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
+        oldPassText.setStyle(blueTxColor2);
         TextField oldPassTextField = new PasswordField();
         oldPassTextField.setMaxWidth(300);
+        oldPassTextField.setStyle(BorderText);
         Text newPassText = new Text("Enter new password.");
+        newPassText.setStyle(blueTxColor2);
         TextField newPassTextField = new PasswordField();
         newPassTextField.setMaxWidth(300);
+        newPassTextField.setStyle(BorderText);
         Text CFnewPassText = new Text("Re-new password.");
+        CFnewPassText.setStyle(blueTxColor2);
         TextField CFnewPassTextField = new PasswordField();
         CFnewPassTextField.setMaxWidth(300);
+        CFnewPassTextField.setStyle(BorderText);
         Button SMFixPassBtn = new Button("Submit");
         SMFixPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
         SMFixPassBtn.setOnMouseEntered((t) -> {
@@ -623,7 +635,7 @@ public class MiniProject extends Application {
                     //DECISSION-BOTTOM
                     HBox decission = new HBox(25);
                     decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
-                    decission.setTranslateX(135);
+                    decission.setTranslateX(165);
                     decission.setTranslateY(-10);
 
                     INFO.setTop(TOP);
@@ -920,7 +932,7 @@ public class MiniProject extends Application {
                     //DECISSION-BOTTOM
                     HBox decission = new HBox(25);
                     decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
-                    decission.setTranslateX(135);
+                    decission.setTranslateX(165);
                     decission.setTranslateY(-10);
 
                     INFO.setTop(TOP);

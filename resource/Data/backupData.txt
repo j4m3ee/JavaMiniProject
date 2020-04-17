@@ -8,4 +8,4 @@ Test02:020202:7:Tstdsf:Sdsdf:02:02:502.0:m
 Test03:030303:8:H:H:sdf:sdf:500.0:m
 Test03:030303:9:Kk:Kk:kk:kk:500.0:f
 Test04:040404:10:Jhk:Hjhk:hj:hj:500.0:n
-Phattaraphat:0851515137:11:Phattaraphat:Chaiamornvate:eiei:eiei:20660.0:m
+Phattaraphat:0851515137:11:Phattaraphat:Chaiamornvate:eiei:eiei:22660.0:m
