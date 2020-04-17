@@ -39,12 +39,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MiniProject extends Application {
-    
+
     public String pathPic = "resource\\Pictures\\";
     int AccId = -1, tfToAcc = -1;
-    double amount = 0.0,stageWidth = 600,stageHeight = 650;
-    Scene login, option, tranfer, register, fixPassword, forgotPassword, 
-            editProfile,makeTransaction, CFTransactionScene;
+    double amount = 0.0, stageWidth = 600, stageHeight = 650;
+    Scene login, option, tranfer, register, fixPassword, forgotPassword,
+            editProfile, makeTransaction, CFTransactionScene;
     ArrayList<Account> acDataList = new ArrayList<>();
     char Type = 'n';
 
@@ -96,7 +96,7 @@ public class MiniProject extends Application {
             + "-fx-border-radius: 15;\n"
             + "-fx-border-width:5; \n"
             + "-fx-background-color: rgba(255,255,255,0.5); \n";
-            
+
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
     //(#B5EAD7) 181,234,215 pastel green
@@ -164,7 +164,6 @@ public class MiniProject extends Application {
         VBox editProfilebox = new VBox(15);//Edit profile
 
         LIbox.setBackground(background);
-//        LIbox.setStyle(bgColor);
         RGbox.setBackground(background);
         TFbox.setBackground(background);
         FPbox.setBackground(background);
@@ -242,6 +241,14 @@ public class MiniProject extends Application {
         CancelBtn2.setOnMouseExited((t) -> {
             CancelBtn2.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
         });
+        Button deleteAcBtn = new Button("Delete");
+        deleteAcBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        deleteAcBtn.setOnMouseEntered((t) -> {
+            deleteAcBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+        });
+        deleteAcBtn.setOnMouseExited((t) -> {
+            deleteAcBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        });
         SMBtn2.setOnAction((ActionEvent t) -> {
             char Gender = 'n';
             try {
@@ -295,7 +302,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
             System.out.println("Submit Press.");
         });
@@ -307,13 +314,35 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel Press.");
         });
+        
+        deleteAcBtn.setOnAction((t) -> {
+            try {
+                if (acDataList.get(AccId).getBalance() > 0.0) {
+                    throw new Exception("Please clear your balance");
+                }
+                if (informationBox.confirmAlert("Confirm", "Are you sure?",logo,background)) {
+                    acDataList.remove(AccId);
+                    for (int i = 0; i < acDataList.size(); i++) {
+                        acDataList.get(i).setId(i + 1);
+                    }
+                    acDataList = Data.updateFile(Data.f, acDataList);
+                    AccId = -1;
+                    stage.setScene(login);
+                }
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
+            }
+            System.out.println("Del Prease.");
+        });
         Text nameTag = new Text("Name : ");
         nameTag.setStyle(blueTxColor2);
         Text surnameTag = new Text("Surname : ");
         surnameTag.setStyle(blueTxColor2);
         editProfilebox.setAlignment(Pos.CENTER);
         HBox RegisChoice2 = new HBox(15);
-        RegisChoice2.getChildren().addAll(SMBtn2, fixPassBtn, CancelBtn2);
+        RegisChoice2.getChildren().addAll(SMBtn2, fixPassBtn, deleteAcBtn, CancelBtn2);
         RegisChoice2.setAlignment(Pos.CENTER);
         editProfilebox.getChildren().addAll(RegisChoice2);
         //Layout Scene edit profile
@@ -351,7 +380,7 @@ public class MiniProject extends Application {
                 System.out.println("Submit Press.");
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
         });
         Button CancelFixPassBtn = new Button("Cancel");
@@ -453,12 +482,12 @@ public class MiniProject extends Application {
             System.out.println("Submit Press.");
         });
         ConditionsBtn.setOnAction((t) -> {
-            informationBox.displayConditions(logo,background);
+            informationBox.displayConditions(logo, background);
             System.out.println("Conditions Press.");
         });
         TransactionBtn.setOnAction((t) -> {
             acDataList.get(AccId).showTransaction();
-            informationBox.displayTransactionBox(acDataList.get(AccId), logo,background);
+            informationBox.displayTransactionBox(acDataList.get(AccId), logo, background);
             System.out.println("TraTransaction Press.");
         });
         DepositBtn.setOnAction((t) -> {
@@ -529,7 +558,7 @@ public class MiniProject extends Application {
                 AccId = -1;
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
             System.out.println("Summit please.");
         });
@@ -545,6 +574,9 @@ public class MiniProject extends Application {
             stage.setScene(login);
             System.out.println("Cancel please.");
         });
+        HBox disistionFGPassBtn = new HBox(15);
+        disistionFGPassBtn.getChildren().addAll(summitPassBtn,CancelFixPassBtn);
+        disistionFGPassBtn.setAlignment(Pos.CENTER);
         //Layout Scene forgot Password
 
         //Layout Scene CFTransation
@@ -629,7 +661,7 @@ public class MiniProject extends Application {
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(balanceText,Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(balanceText, Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
                     //DECISSION-BOTTOM
@@ -649,10 +681,10 @@ public class MiniProject extends Application {
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input number.", logo,background);
+                informationBox.displayAlertBox("Error", "Plese input number.", logo, background);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
 
         });
@@ -724,10 +756,10 @@ public class MiniProject extends Application {
             } catch (NumberFormatException numberFormatException) {
                 System.out.println("Plese input amount be number.");
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo,background);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo, background);
             } catch (Exception e) {
                 System.out.println(e);
-                informationBox.displayAlertBox("Error", e.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", e.getMessage(), logo, background);
             }
 
         });
@@ -817,12 +849,12 @@ public class MiniProject extends Application {
                 }
             } catch (NumberFormatException numberFormatException) {
                 System.out.println(numberFormatException);
-                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo,background);
+                informationBox.displayAlertBox("Error", "Plese input amount be number.", logo, background);
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
 
             System.out.println("Confirm press.");
@@ -873,12 +905,14 @@ public class MiniProject extends Application {
         idTopic.setStyle("-fx-font-size:15px;");
         TextField usernameField = new TextField();
         usernameField.setMaxWidth(300);
+        usernameField.setAlignment(Pos.CENTER);
         usernameField.setStyle(BorderText);
         Text passTopic = new Text("Password : ");
         passTopic.setFill(Color.WHITE);
         passTopic.setStyle("-fx-font-size:15px;");
         TextField passField = new PasswordField();
         passField.setMaxWidth(300);
+        passField.setAlignment(Pos.CENTER);
         passField.setStyle(BorderText);
         Button LIBtn = new Button("Login");
         LIBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
@@ -900,7 +934,7 @@ public class MiniProject extends Application {
                     userText.setStyle(nameTxColor1);
                     Text balanceText = new Text("Balance : " + account1.getBalance() + "  " + "Baht");
                     balanceText.setStyle(nameTxColor2);
-                    
+
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname() + "  " + "Gender : " + " " + account1.getGender());
                     Fullname.setStyle(nameTxColor1);
 
@@ -927,7 +961,7 @@ public class MiniProject extends Application {
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
-                    CENTER.getChildren().addAll(balanceText,Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(balanceText, Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
                     //DECISSION-BOTTOM
@@ -941,14 +975,15 @@ public class MiniProject extends Application {
                     INFO.setBottom(decission);
 //                    OTbox.getChildren().addAll(userText, balanceText, TranferBtn,
 //                            TransactionBtn, fixPassBtn, ExitBtn);
-                    System.out.println(account1.getGender());
                     break;
                 }
             }
             if (AccId == -1) //If didn't have id in account list.
             {
-                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo,background);
+                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo, background);
             }
+            usernameField.clear();
+            passField.clear();
             System.out.println("Login Press.\n");
         });
         Button RGBtn = new Button("Register");
@@ -961,6 +996,8 @@ public class MiniProject extends Application {
         });
         RGBtn.setOnAction((ActionEvent t) -> {
             stage.setScene(register);
+            usernameField.clear();
+            passField.clear();
             System.out.println("Register Press.");
         });
         Button ChkListBtn = new Button("Check list");
@@ -993,12 +1030,13 @@ public class MiniProject extends Application {
                         answer2, ansField,
                         pass1, FGpassField,
                         cfpass1, cfFGpassField,
-                        summitPassBtn, cancelPassBtn);
+                        disistionFGPassBtn);
                 FGPbox.setAlignment(Pos.CENTER);
             } else {
-                informationBox.displayAlertBox("Error", "Wrong username.", logo,background);
+                informationBox.displayAlertBox("Error", "Wrong username.", logo, background);
             }
-
+            usernameField.clear();
+            passField.clear();
         });
         LIbox.setAlignment(Pos.CENTER);
         HBox LIFGBtn = new HBox(15);
@@ -1093,11 +1131,11 @@ public class MiniProject extends Application {
             try {
                 acDataList = Data.readFile(Data.f);
                 for (Account account : acDataList) {
-                    if(usernameField2.getText().equals(account.getName()))
+                    if (usernameField2.getText().equals(account.getName())) {
                         throw new Exception("This username is already.");
+                    }
                 }
 
-                
                 if (mGender.isSelected() == false && fmGender.isSelected() == false) {
                     throw new Exception("Please select gender.");
                 }
@@ -1122,7 +1160,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
             } catch (Exception ex) {
                 System.out.println(ex);
-                informationBox.displayAlertBox("Error", ex.getMessage(), logo,background);
+                informationBox.displayAlertBox("Error", ex.getMessage(), logo, background);
             }
             System.out.println("Submit Press.");
         });
