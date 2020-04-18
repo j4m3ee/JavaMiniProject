@@ -1100,7 +1100,6 @@ public class MiniProject extends Application {
                 } else {
                     Gender = 'F';
                 }
-                acDataList = Data.readFile(Data.f);
                 acDataList.add(new Account(usernameField2.getText(), passField2.getText(),
                         acDataList.size() + 1,
                         realnameTextField.getText(),
@@ -1108,10 +1107,17 @@ public class MiniProject extends Application {
                         Gender,
                         qtPassHintField.getText(),
                         ansPassHintField.getText()));
-                Data.writeFile(Data.f, acDataList);
-                acDataList = Data.readFile(Data.f);
+                acDataList = Data.updateFile(Data.f, acDataList);
                 Gender = 'n';
                 stage.setScene(login);
+                usernameField2.clear();
+                passField2.clear();
+                realnameTextField.clear();
+                surnameField.clear();
+                mGender.setSelected(false);
+                fmGender.setSelected(false);
+                qtPassHintField.clear();
+                ansPassHintField.clear();
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println(ex);
             } catch (Exception ex) {

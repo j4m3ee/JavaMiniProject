@@ -3,7 +3,6 @@ Yaimai:Yaimai:2:Yanapaanapa:Singsitingsit:Your Name:Yaimai:400.0:n
 1235:1235:3:1235235:1235235:1235:1235:405.0:n
 Test01:010101:4:Yuiui:Asdasd:01:01:0.0:n
 Test02:020202:5:Tstdsf:Sdsdf:02:02:502.0:m
-Test03:030303:6:H:H:sdf:sdf:0.0:m
-Test03:030303:7:Kk:Kk:kk:kk:500.0:f
-Test04:040404:8:Jhk:Hjhk:hj:hj:0.0:n
-Phattaraphat:0851515137:9:Phattaraphat:Chaiamornvate:eiei:eiei:22660.0:m
+Test03:030303:6:Kk:Kk:kk:kk:500.0:f
+Phattaraphat:0851515137:7:Phattaraphat:Chaiamornvate:eiei:eiei:22660.0:m
+02:020202:8:02:02:02:02:500.0:M
