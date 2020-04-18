@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-/**
- *
- * @author ASUS
- */
 public class getElement {
 
     final static public String nameTxColor2 = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 14px;\n";
@@ -95,9 +88,20 @@ public class getElement {
     public static String getYelStyleBtn() {
         return yelBgColor + bgRad + bgIns + whtTextFill;
     }
+    
+    public static String getPurpleStyleBtn() {
+        return purpBgColor + bgRad + bgIns + whtTextFill;
+    }
 
     public static String getStyleBtnHover() {
         return HoverY + bgRad + bgIns + whtTextFill;
     }
-
+    
+    public static ImageView getImageView(Image logo) {
+        ImageView LOGO = new ImageView(logo);
+        LOGO.setFitHeight(60);
+        LOGO.setFitWidth(60);
+        LOGO.setPreserveRatio(true);
+        return LOGO;
+    }
 }
