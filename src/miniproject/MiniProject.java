@@ -395,9 +395,11 @@ public class MiniProject extends Application {
             stage.setScene(option);
             System.out.println("Cancel Press.");
         });
+        HBox disiFixPassBtn = new HBox(15);
+        disiFixPassBtn.getChildren().addAll(SMFixPassBtn,CancelFixPassBtn);
+        disiFixPassBtn.setAlignment(Pos.CENTER);
         FPbox.getChildren().addAll(getImageView(logo), oldPassText, oldPassTextField, newPassText,
-                newPassTextField, CFnewPassText, CFnewPassTextField, SMFixPassBtn,
-                CancelFixPassBtn);
+                newPassTextField, CFnewPassText, CFnewPassTextField, disiFixPassBtn);
         FPbox.setAlignment(Pos.CENTER);
         //Layout Scene fixPassword
 
@@ -575,7 +577,7 @@ public class MiniProject extends Application {
             System.out.println("Cancel please.");
         });
         HBox disistionFGPassBtn = new HBox(15);
-        disistionFGPassBtn.getChildren().addAll(summitPassBtn,CancelFixPassBtn);
+        disistionFGPassBtn.getChildren().addAll(summitPassBtn,cancelPassBtn);
         disistionFGPassBtn.setAlignment(Pos.CENTER);
         //Layout Scene forgot Password
 

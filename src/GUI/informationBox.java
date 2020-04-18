@@ -21,16 +21,16 @@ import miniproject.Transaction;
 public class informationBox {
 
     static boolean ans;
-    static public String pathPic = "resource\\Pictures\\";
+    final static public String pathPic = "resource\\Pictures\\";
     static int id = -1;
-    static String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
-    static String grnBgColor = "-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
-    static String bgRad = "    -fx-background-radius: 30;\n";
-    static String bgIns = "    -fx-background-radius: 30;\n";
-    static String whtTextFill = "    -fx-text-fill: white;";
-    static String redTexColor = "-fx-text-fill: linear-gradient(#f12711, #f5af19);\n";
-    static String blueTxColor = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n";
-    static String HoverY = "-fx-background-color: linear-gradient(#ffdd00, #ffdd00);\n";
+    final static String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
+    final static String grnBgColor = "-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
+    final static String bgRad = "    -fx-background-radius: 30;\n";
+    final static String bgIns = "    -fx-background-radius: 30;\n";
+    final static String whtTextFill = "    -fx-text-fill: white;";
+    final static String redTexColor = "-fx-text-fill: linear-gradient(#f12711, #f5af19);\n";
+    final static String blueTxColor = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n";
+    final static String HoverY = "-fx-background-color: linear-gradient(#ffdd00, #ffdd00);\n";
 
     public static void displayAlertBox(String title, String message, Image logo, Background background) {
         Stage window = new Stage();
