@@ -1,5 +1,6 @@
 package miniproject;
 
+import GUI.getElement;
 import GUI.informationBox;
 import GUI.setStyleElement;
 import java.io.File;
@@ -49,53 +50,7 @@ public class MiniProject extends Application {
     char Type = 'n';
 
     int r1 = 0, r2 = 0;
-    final String nameTxColor2 = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 14px;\n";
-    final String nameTxColor1 = "-fx-fill: linear-gradient(#40e0d0, #ff8c00, #ff0080);\n" + "    -fx-font-size: 15px;\n";
-    final String blueTxColor3 = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 19px;\n";
-    final String blueTxColor2 = "-fx-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 14px;\n";
-    final String redTexColor = "-fx-text-fill: linear-gradient(#f12711, #f5af19);\n";
-    final String blueTxColor = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n";
-    final String bgColor = "-fx-background-color: rgb(181,234,215);";
-    final String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #ffdd00);\n";
-    final String grnBgColor = "-fx-background-color: linear-gradient(#59ff00, #ffdd00);\n";
-    final String yelBgColor = "-fx-background-color: linear-gradient(#00e699, #ffdd00);\n";
-    final String purpBgColor = "-fx-background-color: linear-gradient(#00ff80, #ffdd00);\n";
-    final String blueBgColor = "-fx-background-color: linear-gradient(#00ffff, #ffdd00);\n";
-    final String HoverY = "-fx-background-color: linear-gradient(#ffdd00, #ffdd00);\n";
-    final String bgRad = "    -fx-background-radius: 30;\n";
-    final String bgIns = "    -fx-background-radius: 30;\n";
-    final String whtTextFill = "    -fx-text-fill: black;";
-    final String yelBigBtn = "-fx-background-color: \n"
-            + "        linear-gradient(#ffd65b, #e68400),\n"
-            + "        linear-gradient(#ffef84, #f2ba44),\n"
-            + "        linear-gradient(#ffea6a, #efaa22),\n"
-            + "        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),\n"
-            + "        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));\n"
-            + "    -fx-background-radius: 30;\n"
-            + "    -fx-background-insets: 0,1,2,3,0;\n"
-            + "    -fx-text-fill: #654b00;\n"
-            + "    -fx-font-weight: bold;\n"
-            + "    -fx-font-size: 14px;\n"
-            + "    -fx-padding: 10 20 10 20;";
-
-    final String yelBigBtnHover = "-fx-background-color: \n"
-            + "        linear-gradient(#ffd65b, #e68400),\n"
-            + "        linear-gradient(#ffef84, #f2ba44),\n"
-            + "        linear-gradient(#ffea6a, #efaa22),\n"
-            + "        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),\n"
-            + "        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));\n"
-            + "    -fx-background-radius: 40;\n"
-            + "    -fx-background-insets: 0,1,2,3,0;\n"
-            + "    -fx-text-fill: #654b00;\n"
-            + "    -fx-font-weight: bold;\n"
-            + "    -fx-font-size: 16px;\n"
-            + "    -fx-padding: 10 20 10 20;";
-
-    final String BorderText = "-fx-border-color: linear-gradient(#00ffff, #ffdd00); \n"
-            + "-fx-background-radius: 15;\n"
-            + "-fx-border-radius: 15;\n"
-            + "-fx-border-width:5; \n"
-            + "-fx-background-color: rgba(255,255,255,0.5); \n";
+    
 
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
@@ -177,7 +132,7 @@ public class MiniProject extends Application {
 
         //Layout Scene edit profile
         Text editUsernameR = new Text("Username : ");
-        editUsernameR.setStyle(blueTxColor2);
+        editUsernameR.setStyle(getElement.blueTxColor2);
         Text editUserDeal = new Text("(user must not be the same)");
         editUserDeal.setFill(Color.RED);
         HBox userR2 = new HBox(3);
@@ -186,21 +141,21 @@ public class MiniProject extends Application {
 
         TextField usernameField3 = new TextField();
         usernameField3.setMaxWidth(300);
-        usernameField3.setStyle(BorderText);
+        usernameField3.setStyle(getElement.BorderText);
         PasswordField passField3 = new PasswordField();
         passField3.setMaxWidth(300);
-        passField3.setStyle(BorderText);
+        passField3.setStyle(getElement.BorderText);
         TextField realnameTextField2 = new TextField();
         realnameTextField2.setMaxWidth(300);
-        realnameTextField2.setStyle(BorderText);
+        realnameTextField2.setStyle(getElement.BorderText);
         TextField surnameField2 = new TextField();
         surnameField2.setMaxWidth(300);
-        surnameField2.setStyle(BorderText);
+        surnameField2.setStyle(getElement.BorderText);
 
         CheckBox mGender2 = new CheckBox("Male");
-        mGender2.setStyle(blueTxColor);
+        mGender2.setStyle(getElement.blueTxColor);
         CheckBox fmGender2 = new CheckBox("Female");
-        fmGender2.setStyle(blueTxColor);
+        fmGender2.setStyle(getElement.blueTxColor);
         HBox gender2 = new HBox(20);
         gender2.getChildren().addAll(mGender2, fmGender2);
         gender2.setAlignment(Pos.CENTER);
@@ -217,37 +172,37 @@ public class MiniProject extends Application {
             }
         });
         Button fixPassBtn = new Button("Change Password");
-        fixPassBtn.setStyle(blueBgColor + bgRad + bgIns + whtTextFill);
+        fixPassBtn.setStyle(getElement.getBlueStyleBtn());
         fixPassBtn.setOnMouseEntered((t) -> {
-            fixPassBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            fixPassBtn.setStyle(getElement.getStyleBtnHover());
         });
         fixPassBtn.setOnMouseExited((t) -> {
-            fixPassBtn.setStyle(blueBgColor + bgRad + bgIns + whtTextFill);
+            fixPassBtn.setStyle(getElement.getBlueStyleBtn());
         });
 
         Button SMBtn2 = new Button("Submit");
-        SMBtn2.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        SMBtn2.setStyle(getElement.getGrnStyleBtn());
         SMBtn2.setOnMouseEntered((t) -> {
-            SMBtn2.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            SMBtn2.setStyle(getElement.getStyleBtnHover());
         });
         SMBtn2.setOnMouseExited((t) -> {
-            SMBtn2.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            SMBtn2.setStyle(getElement.getGrnStyleBtn());
         });
         Button CancelBtn2 = new Button("Cancel");
-        CancelBtn2.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        CancelBtn2.setStyle(getElement.getRedStyleBtn());
         CancelBtn2.setOnMouseEntered((t) -> {
-            CancelBtn2.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            CancelBtn2.setStyle(getElement.getStyleBtnHover());
         });
         CancelBtn2.setOnMouseExited((t) -> {
-            CancelBtn2.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            CancelBtn2.setStyle(getElement.getRedStyleBtn());
         });
         Button deleteAcBtn = new Button("Delete");
-        deleteAcBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        deleteAcBtn.setStyle(getElement.getRedStyleBtn());
         deleteAcBtn.setOnMouseEntered((t) -> {
-            deleteAcBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            deleteAcBtn.setStyle(getElement.getStyleBtnHover());
         });
         deleteAcBtn.setOnMouseExited((t) -> {
-            deleteAcBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            deleteAcBtn.setStyle(getElement.getRedStyleBtn());
         });
         SMBtn2.setOnAction((ActionEvent t) -> {
             char Gender = 'n';
@@ -275,13 +230,13 @@ public class MiniProject extends Application {
                 acDataList = Data.updateFile(Data.f, acDataList);
 
                 Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                userText.setStyle(nameTxColor1);
+                userText.setStyle(getElement.nameTxColor1);
                 Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance() + "  " + "Baht");
-                balanceText.setStyle(nameTxColor1);
+                balanceText.setStyle(getElement.nameTxColor1);
                 Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  "
                         + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  "
                         + acDataList.get(AccId).getGender());
-                Fullname.setStyle(nameTxColor1);
+                Fullname.setStyle(getElement.nameTxColor1);
 
                 //INFO-TOP
                 HBox nameBalance = new HBox(20);
@@ -337,9 +292,9 @@ public class MiniProject extends Application {
             System.out.println("Del Prease.");
         });
         Text nameTag = new Text("Name : ");
-        nameTag.setStyle(blueTxColor2);
+        nameTag.setStyle(getElement.blueTxColor2);
         Text surnameTag = new Text("Surname : ");
-        surnameTag.setStyle(blueTxColor2);
+        surnameTag.setStyle(getElement.blueTxColor2);
         editProfilebox.setAlignment(Pos.CENTER);
         HBox RegisChoice2 = new HBox(15);
         RegisChoice2.getChildren().addAll(SMBtn2, fixPassBtn, deleteAcBtn, CancelBtn2);
@@ -349,27 +304,30 @@ public class MiniProject extends Application {
 
         //Layout Scene fixPassword
         Text oldPassText = new Text("Enter old password.");
-        oldPassText.setStyle(blueTxColor2);
+        oldPassText.setStyle(getElement.blueTxColor2);
         TextField oldPassTextField = new PasswordField();
         oldPassTextField.setMaxWidth(300);
-        oldPassTextField.setStyle(BorderText);
+        oldPassTextField.setStyle(getElement.BorderText);
         Text newPassText = new Text("Enter new password.");
-        newPassText.setStyle(blueTxColor2);
+        newPassText.setStyle(getElement.blueTxColor2);
         TextField newPassTextField = new PasswordField();
         newPassTextField.setMaxWidth(300);
-        newPassTextField.setStyle(BorderText);
+        newPassTextField.setStyle(getElement.BorderText);
         Text CFnewPassText = new Text("Re-new password.");
-        CFnewPassText.setStyle(blueTxColor2);
+        CFnewPassText.setStyle(getElement.blueTxColor2);
         TextField CFnewPassTextField = new PasswordField();
         CFnewPassTextField.setMaxWidth(300);
-        CFnewPassTextField.setStyle(BorderText);
+        CFnewPassTextField.setStyle(getElement.BorderText);
         Button SMFixPassBtn = new Button("Submit");
-        SMFixPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        SMFixPassBtn.setStyle(getElement.grnBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         SMFixPassBtn.setOnMouseEntered((t) -> {
-            SMFixPassBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            SMFixPassBtn.setStyle(getElement.HoverY + getElement.bgRad + 
+                    getElement.bgIns + getElement.whtTextFill);
         });
         SMFixPassBtn.setOnMouseExited((t) -> {
-            SMFixPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            SMFixPassBtn.setStyle(getElement.grnBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         });
         SMFixPassBtn.setOnAction((var t) -> {
             try {
@@ -384,12 +342,15 @@ public class MiniProject extends Application {
             }
         });
         Button CancelFixPassBtn = new Button("Cancel");
-        CancelFixPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        CancelFixPassBtn.setStyle(getElement.redBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         CancelFixPassBtn.setOnMouseEntered((t) -> {
-            CancelFixPassBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            CancelFixPassBtn.setStyle(getElement.HoverY + getElement.bgRad + 
+                    getElement.bgIns + getElement.whtTextFill);
         });
         CancelFixPassBtn.setOnMouseExited((t) -> {
-            CancelFixPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            CancelFixPassBtn.setStyle(getElement.redBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         });
         CancelFixPassBtn.setOnAction((t) -> {
             stage.setScene(option);
@@ -405,68 +366,71 @@ public class MiniProject extends Application {
 
         //Layout Scene Option
         Button ConditionsBtn = new Button("Account Conditions");
-        ConditionsBtn.setStyle(purpBgColor + bgRad + bgIns + whtTextFill);
+        ConditionsBtn.setStyle(getElement.purpBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         ConditionsBtn.setOnMouseEntered((t) -> {
-            ConditionsBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            ConditionsBtn.setStyle(getElement.HoverY + getElement.bgRad + 
+                    getElement.bgIns + getElement.whtTextFill);
         });
         ConditionsBtn.setOnMouseExited((t) -> {
-            ConditionsBtn.setStyle(purpBgColor + bgRad + bgIns + whtTextFill);
+            ConditionsBtn.setStyle(getElement.purpBgColor + getElement.bgRad + 
+                getElement.bgIns + getElement.whtTextFill);
         });
         Button TranferBtn = new Button("Transfer", new ImageView(Tran));
         TranferBtn.setPrefWidth(200);
         TranferBtn.setPrefHeight(80);
-        TranferBtn.setStyle(yelBigBtn);
+        TranferBtn.setStyle(getElement.yelBigBtn);
         TranferBtn.setOnMouseEntered((t) -> {
-            TranferBtn.setStyle(yelBigBtnHover);
+            TranferBtn.setStyle(getElement.yelBigBtnHover);
         });
         TranferBtn.setOnMouseExited((t) -> {
-            TranferBtn.setStyle(yelBigBtn);
+            TranferBtn.setStyle(getElement.yelBigBtn);
         });
         Button DepositBtn = new Button("Deposit", new ImageView(Depo));
         DepositBtn.setPrefWidth(200);
         DepositBtn.setPrefHeight(80);
-        DepositBtn.setStyle(yelBigBtn);
+        DepositBtn.setStyle(getElement.yelBigBtn);
         DepositBtn.setOnMouseEntered((t) -> {
-            DepositBtn.setStyle(yelBigBtnHover);
+            DepositBtn.setStyle(getElement.yelBigBtnHover);
         });
         DepositBtn.setOnMouseExited((t) -> {
-            DepositBtn.setStyle(yelBigBtn);
+            DepositBtn.setStyle(getElement.yelBigBtn);
         });
         Button WidthdrawBtn = new Button("Widthdraw", new ImageView(With));
         WidthdrawBtn.setPrefWidth(200);
         WidthdrawBtn.setPrefHeight(80);
-        WidthdrawBtn.setStyle(yelBigBtn);
+        WidthdrawBtn.setStyle(getElement.yelBigBtn);
         WidthdrawBtn.setOnMouseEntered((t) -> {
-            WidthdrawBtn.setStyle(yelBigBtnHover);
+            WidthdrawBtn.setStyle(getElement.yelBigBtnHover);
         });
         WidthdrawBtn.setOnMouseExited((t) -> {
-            WidthdrawBtn.setStyle(yelBigBtn);
+            WidthdrawBtn.setStyle(getElement.yelBigBtn);
         });
         Button TransactionBtn = new Button("Show Transaction", new ImageView(Hist));
         TransactionBtn.setPrefWidth(200);
         TransactionBtn.setPrefHeight(80);
-        TransactionBtn.setStyle(yelBigBtn);
+        TransactionBtn.setStyle(getElement.yelBigBtn);
         TransactionBtn.setOnMouseEntered((t) -> {
-            TransactionBtn.setStyle(yelBigBtnHover);
+            TransactionBtn.setStyle(getElement.yelBigBtnHover);
         });
         TransactionBtn.setOnMouseExited((t) -> {
-            TransactionBtn.setStyle(yelBigBtn);
+            TransactionBtn.setStyle(getElement.yelBigBtn);
         });
         Button editProfileBtn = new Button("Edit Profile");
-        editProfileBtn.setStyle(blueBgColor + bgRad + bgIns + whtTextFill);
+        editProfileBtn.setStyle(getElement.getBlueStyleBtn());
         editProfileBtn.setOnMouseEntered((t) -> {
-            editProfileBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            editProfileBtn.setStyle(getElement.getStyleBtnHover());
         });
         editProfileBtn.setOnMouseExited((t) -> {
-            editProfileBtn.setStyle(blueBgColor + bgRad + bgIns + whtTextFill);
+            editProfileBtn.setStyle(getElement.getBlueStyleBtn());
         });
         Button ExitBtn = new Button("Logout");
-        ExitBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        ExitBtn.setStyle(getElement.getRedStyleBtn());
         ExitBtn.setOnMouseEntered((t) -> {
-            ExitBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            ExitBtn.setStyle(getElement.getStyleBtnHover());
         });
         ExitBtn.setOnMouseExited((t) -> {
-            ExitBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            ExitBtn.setStyle(getElement.getRedStyleBtn());
         });
         TranferBtn.setOnAction((t) -> {
             Type = 't';
@@ -534,21 +498,21 @@ public class MiniProject extends Application {
         //Layout Scene forgot Password
         TextField ansField = new TextField();
         ansField.setMaxWidth(300);
-        ansField.setStyle(BorderText);
+        ansField.setStyle(getElement.BorderText);
         PasswordField FGpassField = new PasswordField();
         FGpassField.setMaxWidth(300);
-        FGpassField.setStyle(BorderText);
+        FGpassField.setStyle(getElement.BorderText);
         PasswordField cfFGpassField = new PasswordField();
         cfFGpassField.setMaxWidth(300);
-        cfFGpassField.setStyle(BorderText);
+        cfFGpassField.setStyle(getElement.BorderText);
 
         Button summitPassBtn = new Button("Submit");
-        summitPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        summitPassBtn.setStyle(getElement.getGrnStyleBtn());
         summitPassBtn.setOnMouseEntered((t) -> {
-            summitPassBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            summitPassBtn.setStyle(getElement.getStyleBtnHover());
         });
         summitPassBtn.setOnMouseExited((t) -> {
-            summitPassBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            summitPassBtn.setStyle(getElement.getGrnStyleBtn());
         });
         summitPassBtn.setOnAction((t) -> {
             try {
@@ -565,12 +529,12 @@ public class MiniProject extends Application {
             System.out.println("Summit please.");
         });
         Button cancelPassBtn = new Button("Cancel");
-        cancelPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        cancelPassBtn.setStyle(getElement.getRedStyleBtn());
         cancelPassBtn.setOnMouseEntered((t) -> {
-            cancelPassBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            cancelPassBtn.setStyle(getElement.getStyleBtnHover());
         });
         cancelPassBtn.setOnMouseExited((t) -> {
-            cancelPassBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            cancelPassBtn.setStyle(getElement.getRedStyleBtn());
         });
         cancelPassBtn.setOnAction((t) -> {
             stage.setScene(login);
@@ -584,31 +548,31 @@ public class MiniProject extends Application {
         //Layout Scene CFTransation
         CFTransactionbox.setAlignment(Pos.CENTER);
         Text TransactionText = new Text();
-        TransactionText.setStyle(blueTxColor2);
+        TransactionText.setStyle(getElement.blueTxColor2);
         //TransactionText = setStyleElement.setStyleText(TransactionText, 15, Color.BLACK, Color.WHITE);
         Text RandomText = new Text();
-        RandomText.setStyle(blueTxColor2);
+        RandomText.setStyle(getElement.blueTxColor2);
         //RandomText = setStyleElement.setStyleText(RandomText, 15, Color.BLACK, Color.WHITE);
         TextField CFTextField = new TextField();
         CFTextField.setMaxWidth(300);
-        CFTextField.setStyle(BorderText);
+        CFTextField.setStyle(getElement.BorderText);
         HBox solve = new HBox(10);
         solve.setAlignment(Pos.CENTER);
         Button CFTranferBtn = new Button("Confirm");
-        CFTranferBtn.setStyle(grnBgColor);
+        CFTranferBtn.setStyle(getElement.grnBgColor);
         CFTranferBtn.setOnMouseEntered((t) -> {
-            CFTranferBtn.setStyle(HoverY);
+            CFTranferBtn.setStyle(getElement.HoverY);
         });
         CFTranferBtn.setOnMouseExited((t) -> {
-            CFTranferBtn.setStyle(grnBgColor);
+            CFTranferBtn.setStyle(getElement.grnBgColor);
         });
         Button CancelTranferBtn = new Button("Cancel");
-        CancelTranferBtn.setStyle(redBgColor);
+        CancelTranferBtn.setStyle(getElement.redBgColor);
         CancelTranferBtn.setOnMouseEntered((t) -> {
-            CancelTranferBtn.setStyle(HoverY);
+            CancelTranferBtn.setStyle(getElement.HoverY);
         });
         CancelTranferBtn.setOnMouseExited((t) -> {
-            CancelTranferBtn.setStyle(redBgColor);
+            CancelTranferBtn.setStyle(getElement.redBgColor);
         });
         CFTranferBtn.setOnAction((t) -> {
             try {
@@ -634,11 +598,11 @@ public class MiniProject extends Application {
                     }
                     INFO.getChildren().clear();
                     Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                    userText.setStyle(nameTxColor1);
+                    userText.setStyle(getElement.nameTxColor1);
                     Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance() + "  " + "Baht");
-                    balanceText.setStyle(nameTxColor2);
+                    balanceText.setStyle(getElement.nameTxColor2);
                     Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  " + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  " + acDataList.get(AccId).getGender());
-                    Fullname.setStyle(nameTxColor1);
+                    Fullname.setStyle(getElement.nameTxColor1);
 
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
@@ -660,7 +624,7 @@ public class MiniProject extends Application {
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
                     Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle(blueTxColor3);
+                    Options.setStyle(getElement.blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(balanceText, Options, DeWi, Trans);
@@ -700,19 +664,19 @@ public class MiniProject extends Application {
 
         //Layout Scene Deposit/Withdraw
         Text TSamountText = new Text("Amount : ");
-        TSamountText.setStyle(blueTxColor2);
+        TSamountText.setStyle(getElement.blueTxColor2);
         TextField TSamountField = new TextField();
-        TSamountField.setStyle(BorderText);
+        TSamountField.setStyle(getElement.BorderText);
         TSamountField.setMaxWidth(300);
 //        Text TSaccountText = new Text("Tranfer to (name) : ");
 //        TextField TSaccountField = new TextField();
         Button TSconfirmBtn = new Button("Confirm");
-        TSconfirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        TSconfirmBtn.setStyle(getElement.getGrnStyleBtn());
         TSconfirmBtn.setOnMouseEntered((t) -> {
-            TSconfirmBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            TSconfirmBtn.setStyle(getElement.getStyleBtnHover());
         });
         TSconfirmBtn.setOnMouseExited((t) -> {
-            TSconfirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            TSconfirmBtn.setStyle(getElement.getGrnStyleBtn());
         });
         TSconfirmBtn.setOnAction((t) -> {
 
@@ -732,17 +696,17 @@ public class MiniProject extends Application {
                 switch (Type) {
                     case 'd':
                         TransactionText.setText("You want to deposit amount : " + amount + "  " + "baht");
-                        TransactionText.setStyle(blueTxColor2);
+                        TransactionText.setStyle(getElement.blueTxColor2);
                         break;
                     case 'w':
                         TransactionText.setText("You want to widthdraw amount : " + amount + "  " + "baht");
-                        TransactionText.setStyle(blueTxColor2);
+                        TransactionText.setStyle(getElement.blueTxColor2);
                         break;
                     default:
                         throw new Exception("input d : deposit\ninput w : withdraw");
                 }
                 Text TransactionText2 = new Text("Amount : ");
-                TransactionText2.setStyle(blueTxColor2);
+                TransactionText2.setStyle(getElement.blueTxColor2);
 
                 Random random = new Random();
                 r1 = random.nextInt(100);
@@ -766,12 +730,12 @@ public class MiniProject extends Application {
 
         });
         Button TScancelBtn = new Button("Cancel");
-        TScancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        TScancelBtn.setStyle(getElement.getRedStyleBtn());
         TScancelBtn.setOnMouseEntered((t) -> {
-            TScancelBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            TScancelBtn.setStyle(getElement.getStyleBtnHover());
         });
         TScancelBtn.setOnMouseExited((t) -> {
-            TScancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            TScancelBtn.setStyle(getElement.getRedStyleBtn());
         });
         TScancelBtn.setOnAction((t) -> {
             Type = 'n';
@@ -784,29 +748,29 @@ public class MiniProject extends Application {
         TSbox.setAlignment(Pos.CENTER);
         Topfinance.setTranslateY(-15);
         Text WarningTS = new Text("--- Maximum amount is 20,000 Baht. ---");
-        WarningTS.setStyle(nameTxColor2);
+        WarningTS.setStyle(getElement.nameTxColor2);
         TSbox.getChildren().addAll(Topfinance, WarningTS, TSamountText, TSamountField,
                 TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
 
         //Layout Scene Tranfer  
         Text amountText = new Text("Amount : ");
-        amountText.setStyle(blueTxColor2);
+        amountText.setStyle(getElement.blueTxColor2);
         TextField amountField = new TextField();
         amountField.setMaxWidth(300);
-        amountField.setStyle(BorderText);
+        amountField.setStyle(getElement.BorderText);
         Text accountText = new Text("Tranfer to (name) : ");
-        accountText.setStyle(blueTxColor2);
+        accountText.setStyle(getElement.blueTxColor2);
         TextField accountField = new TextField();
         accountField.setMaxWidth(300);
-        accountField.setStyle(BorderText);
+        accountField.setStyle(getElement.BorderText);
         Button confirmBtn = new Button("Confirm");
-        confirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        confirmBtn.setStyle(getElement.getGrnStyleBtn());
         confirmBtn.setOnMouseEntered((t) -> {
-            confirmBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            confirmBtn.setStyle(getElement.getStyleBtnHover());
         });
         confirmBtn.setOnMouseExited((t) -> {
-            confirmBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            confirmBtn.setStyle(getElement.getGrnStyleBtn());
         });
         confirmBtn.setOnAction((t) -> {
             try {
@@ -823,16 +787,16 @@ public class MiniProject extends Application {
                             r1 = random.nextInt(100);
                             r2 = random.nextInt(100);
                             RandomText.setText(r1 + " + " + r2 + " = (Please fill answer below.)");
-                            RandomText.setStyle(blueTxColor2);
+                            RandomText.setStyle(getElement.blueTxColor2);
                             amount = Double.parseDouble(amountField.getText());
                             //Text
                             TransactionText.setText(acDataList.get(AccId).getName() + " tranfers to "
                                     + acDataList.get(tfToAcc).getName());
-                            TransactionText.setStyle(blueTxColor2);
+                            TransactionText.setStyle(getElement.blueTxColor2);
                             System.out.println("Acc : " + AccId);
                             System.out.println("tf : " + tfToAcc);
                             Text TransactionText2 = new Text("Amount : ");
-                            TransactionText2.setStyle(blueTxColor2);
+                            TransactionText2.setStyle(getElement.blueTxColor2);
 
                             solve.getChildren().setAll(TransactionText2, RandomText);
 
@@ -862,12 +826,12 @@ public class MiniProject extends Application {
             System.out.println("Confirm press.");
         });
         Button cancelBtn = new Button("Cancel");
-        cancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        cancelBtn.setStyle(getElement.getRedStyleBtn());
         cancelBtn.setOnMouseEntered((t) -> {
-            cancelBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            cancelBtn.setStyle(getElement.getStyleBtnHover());
         });
         cancelBtn.setOnMouseExited((t) -> {
-            cancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            cancelBtn.setStyle(getElement.getRedStyleBtn());
         });
         cancelBtn.setOnAction((t) -> {
             stage.setScene(option);
@@ -880,7 +844,7 @@ public class MiniProject extends Application {
         transferTop.getChildren().addAll(getImageView(logo), tran);
         transferTop.setAlignment(Pos.CENTER);
         Text warn = new Text("Please make sure that you put a correct username.");
-        warn.setStyle(nameTxColor2);
+        warn.setStyle(getElement.nameTxColor2);
         TFbox.getChildren().addAll(transferTop, warn, accountText, accountField, amountText, amountField, confirmBtn, cancelBtn);
         TFbox.setAlignment(Pos.CENTER);
         //Layout Scene Tranfer  
@@ -892,14 +856,14 @@ public class MiniProject extends Application {
         labell3.setScaleY(1.5);
         labell3.setStyle("-fx-font-size:16px;");
 
-        labell3.setStyle(blueTxColor);
+        labell3.setStyle(getElement.blueTxColor);
         labell3.setAlignment(Pos.TOP_CENTER);
 
         Label labell4 = new Label("Don't have an account. Try now?");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
         labell4.setStyle("-fx-font-size:15px;");
-        labell4.setStyle(redTexColor);
+        labell4.setStyle(getElement.redTexColor);
         labell4.setAlignment(Pos.CENTER);
 
         Text idTopic = new Text("Username : ");
@@ -908,21 +872,21 @@ public class MiniProject extends Application {
         TextField usernameField = new TextField();
         usernameField.setMaxWidth(300);
         usernameField.setAlignment(Pos.CENTER);
-        usernameField.setStyle(BorderText);
+        usernameField.setStyle(getElement.BorderText);
         Text passTopic = new Text("Password : ");
         passTopic.setFill(Color.WHITE);
         passTopic.setStyle("-fx-font-size:15px;");
         TextField passField = new PasswordField();
         passField.setMaxWidth(300);
         passField.setAlignment(Pos.CENTER);
-        passField.setStyle(BorderText);
+        passField.setStyle(getElement.BorderText);
         Button LIBtn = new Button("Login");
-        LIBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        LIBtn.setStyle(getElement.getGrnStyleBtn());
         LIBtn.setOnMouseEntered((t) -> {
-            LIBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            LIBtn.setStyle(getElement.getStyleBtnHover());
         });
         LIBtn.setOnMouseExited((t) -> {
-            LIBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            LIBtn.setStyle(getElement.getGrnStyleBtn());
         });
         LIBtn.setOnAction((var t) -> {
             for (Account account1 : acDataList) {
@@ -933,12 +897,12 @@ public class MiniProject extends Application {
                     System.out.println("Math! : " + account1.getId());
                     stage.setScene(option);
                     Text userText = new Text("Username : " + account1.getName());
-                    userText.setStyle(nameTxColor1);
+                    userText.setStyle(getElement.nameTxColor1);
                     Text balanceText = new Text("Balance : " + account1.getBalance() + "  " + "Baht");
-                    balanceText.setStyle(nameTxColor2);
+                    balanceText.setStyle(getElement.nameTxColor2);
 
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname() + "  " + "Gender : " + " " + account1.getGender());
-                    Fullname.setStyle(nameTxColor1);
+                    Fullname.setStyle(getElement.nameTxColor1);
 
                     //INFO-TOP
                     HBox nameBalance = new HBox(20);
@@ -960,7 +924,7 @@ public class MiniProject extends Application {
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
                     Label Options = new Label("       Welcome to system.\n Please choose your options.");
-                    Options.setStyle(blueTxColor3);
+                    Options.setStyle(getElement.blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     VBox CENTER = new VBox(20);
                     CENTER.getChildren().addAll(balanceText, Options, DeWi, Trans);
@@ -989,12 +953,12 @@ public class MiniProject extends Application {
             System.out.println("Login Press.\n");
         });
         Button RGBtn = new Button("Register");
-        RGBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        RGBtn.setStyle(getElement.getRedStyleBtn());
         RGBtn.setOnMouseEntered((t) -> {
-            RGBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            RGBtn.setStyle(getElement.getStyleBtnHover());
         });
         RGBtn.setOnMouseExited((t) -> {
-            RGBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            RGBtn.setStyle(getElement.getRedStyleBtn());
         });
         RGBtn.setOnAction((ActionEvent t) -> {
             stage.setScene(register);
@@ -1008,25 +972,25 @@ public class MiniProject extends Application {
             System.out.println("Size : " + acDataList.size());
         });
         Button FGPBtn = new Button("Forgot Password.");
-        FGPBtn.setStyle(yelBgColor + bgRad + bgIns + whtTextFill);
+        FGPBtn.setStyle(getElement.getYelStyleBtn());
         FGPBtn.setOnMouseEntered((t) -> {
-            FGPBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            FGPBtn.setStyle(getElement.getStyleBtnHover());
         });
         FGPBtn.setOnMouseExited((t) -> {
-            FGPBtn.setStyle(yelBgColor + bgRad + bgIns + whtTextFill);
+            FGPBtn.setStyle(getElement.getYelStyleBtn());
         });
         FGPBtn.setOnAction((t) -> {
             AccId = Data.findData(usernameField.getText(), acDataList);
             if (AccId >= 0) {
                 FGPbox.getChildren().clear();
                 Text PassQThint = new Text("Question : " + acDataList.get(AccId).getQTPassHint());
-                PassQThint.setStyle(blueTxColor2);
+                PassQThint.setStyle(getElement.blueTxColor2);
                 Text answer2 = new Text("Answer :");
-                answer2.setStyle(blueTxColor2);
+                answer2.setStyle(getElement.blueTxColor2);
                 Text pass1 = new Text("New-Password : ");
-                pass1.setStyle(blueTxColor2);
+                pass1.setStyle(getElement.blueTxColor2);
                 Text cfpass1 = new Text("Confirm New-Password : ");
-                cfpass1.setStyle(blueTxColor2);
+                cfpass1.setStyle(getElement.blueTxColor2);
                 stage.setScene(forgotPassword);
                 FGPbox.getChildren().addAll(PassQThint,
                         answer2, ansField,
@@ -1050,51 +1014,51 @@ public class MiniProject extends Application {
 
         //Layout Scene Register 
         Text usernameR = new Text("Username : ");
-        usernameR.setStyle(blueTxColor2);
+        usernameR.setStyle(getElement.blueTxColor2);
         Text userDeal = new Text("(user must not be the same)");
         userDeal.setFill(Color.RED);
         HBox userR = new HBox(3);
         userR.getChildren().addAll(usernameR, userDeal);
         userR.setAlignment(Pos.CENTER);
         Text passwordR = new Text("Password : ");
-        passwordR.setStyle(blueTxColor2);
+        passwordR.setStyle(getElement.blueTxColor2);
         Text passDeal = new Text("(must be between 4-16 digits)");
         passDeal.setFill(Color.RED);
         HBox passR = new HBox(3);
         passR.getChildren().addAll(passwordR, passDeal);
         passR.setAlignment(Pos.CENTER);
         Text name = new Text("Name : ");
-        name.setStyle(blueTxColor2);
+        name.setStyle(getElement.blueTxColor2);
         Text surname = new Text("Surname : ");
-        surname.setStyle(blueTxColor2);
+        surname.setStyle(getElement.blueTxColor2);
         Text question = new Text("Question : ");
-        question.setStyle(blueTxColor2);
+        question.setStyle(getElement.blueTxColor2);
         Text answer = new Text("Answer : ");
-        answer.setStyle(blueTxColor2);
+        answer.setStyle(getElement.blueTxColor2);
 
         TextField usernameField2 = new TextField();
         usernameField2.setMaxWidth(300);
-        usernameField2.setStyle(BorderText);
+        usernameField2.setStyle(getElement.BorderText);
         PasswordField passField2 = new PasswordField();
         passField2.setMaxWidth(300);
-        passField2.setStyle(BorderText);
+        passField2.setStyle(getElement.BorderText);
         TextField realnameTextField = new TextField();
         realnameTextField.setMaxWidth(300);
-        realnameTextField.setStyle(BorderText);
+        realnameTextField.setStyle(getElement.BorderText);
         TextField surnameField = new TextField();
         surnameField.setMaxWidth(300);
-        surnameField.setStyle(BorderText);
+        surnameField.setStyle(getElement.BorderText);
         TextField qtPassHintField = new TextField();
         qtPassHintField.setMaxWidth(300);
-        qtPassHintField.setStyle(BorderText);
+        qtPassHintField.setStyle(getElement.BorderText);
         TextField ansPassHintField = new TextField();
         ansPassHintField.setMaxWidth(300);
-        ansPassHintField.setStyle(BorderText);
+        ansPassHintField.setStyle(getElement.BorderText);
 
         CheckBox mGender = new CheckBox("Male");
-        mGender.setStyle(blueTxColor);
+        mGender.setStyle(getElement.blueTxColor);
         CheckBox fmGender = new CheckBox("Female");
-        fmGender.setStyle(blueTxColor);
+        fmGender.setStyle(getElement.blueTxColor);
         HBox gender = new HBox(20);
         gender.getChildren().addAll(mGender, fmGender);
         gender.setAlignment(Pos.CENTER);
@@ -1112,20 +1076,20 @@ public class MiniProject extends Application {
         });
 
         Button SMBtn = new Button("Submit");
-        SMBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        SMBtn.setStyle(getElement.getGrnStyleBtn());
         SMBtn.setOnMouseEntered((t) -> {
-            SMBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            SMBtn.setStyle(getElement.getStyleBtnHover());
         });
         SMBtn.setOnMouseExited((t) -> {
-            SMBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            SMBtn.setStyle(getElement.getGrnStyleBtn());
         });
         Button CancelBtn = new Button("Cancel");
-        CancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        CancelBtn.setStyle(getElement.getRedStyleBtn());
         CancelBtn.setOnMouseEntered((t) -> {
-            CancelBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+            CancelBtn.setStyle(getElement.getStyleBtnHover());
         });
         CancelBtn.setOnMouseExited((t) -> {
-            CancelBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            CancelBtn.setStyle(getElement.getRedStyleBtn());
         });
         SMBtn.setOnAction((ActionEvent t) -> {
 
@@ -1183,6 +1147,8 @@ public class MiniProject extends Application {
                 answer, ansPassHintField,
                 RegisChoice);
         //Layout Scene Register 
+        
+        
 
         login = new Scene(LIbox, stageWidth, stageHeight);
         register = new Scene(RGbox, stageWidth, stageHeight);
