@@ -1,5 +1,6 @@
 package GUI;
 
+import static GUI.getElement.*;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,16 +22,8 @@ import miniproject.Transaction;
 public class informationBox {
 
     static boolean ans;
-    static public String pathPic = "resource\\Pictures\\";
+    final static public String pathPic = "resource\\Pictures\\";
     static int id = -1;
-    static String redBgColor = "-fx-background-color: linear-gradient(#ff5400, #be1d00);\n";
-    static String grnBgColor = "-fx-background-color: linear-gradient(#59ff00, #3cbe00);\n";
-    static String bgRad = "    -fx-background-radius: 30;\n";
-    static String bgIns = "    -fx-background-radius: 30;\n";
-    static String whtTextFill = "    -fx-text-fill: white;";
-    static String redTexColor = "-fx-text-fill: linear-gradient(#f12711, #f5af19);\n";
-    static String blueTxColor = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n";
-    static String HoverY = "-fx-background-color: linear-gradient(#ffdd00, #ffdd00);\n";
 
     public static void displayAlertBox(String title, String message, Image logo, Background background) {
         Stage window = new Stage();
@@ -41,12 +34,18 @@ public class informationBox {
 
         Label label = new Label(message);
         Label label2 = new Label("Please try again.");
-        VBox layout = new VBox(10);
+        VBox layout = new VBox(20);
         label = setStyleElement.setStyleLabel(label, redTexColor);
         label2 = setStyleElement.setStyleLabel(label2, redTexColor);
 
         Button closeBT = new Button("OK");
-        closeBT.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+        closeBT.setStyle(getGrnStyleBtn());
+        closeBT.setOnMouseEntered((t) -> {
+            closeBT.setStyle(getStyleBtnHover());
+        });
+        closeBT.setOnMouseExited((t) -> {
+            closeBT.setStyle(getGrnStyleBtn());
+        });
         closeBT.setOnAction(e -> window.close());
 
         layout.getChildren().addAll(label, label2, closeBT);
@@ -78,7 +77,13 @@ public class informationBox {
         label.setStyle(blueTxColor);
 
         Button closeBT = new Button("OK");
-        closeBT.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        closeBT.setStyle(getGrnStyleBtn());
+        closeBT.setOnMouseEntered((t) -> {
+            closeBT.setStyle(getStyleBtnHover());
+        });
+        closeBT.setOnMouseExited((t) -> {
+            closeBT.setStyle(getGrnStyleBtn());
+        });
         closeBT.setOnAction(e -> window.close());
 
         ScrollPane trPane = new ScrollPane();
@@ -121,7 +126,13 @@ public class informationBox {
         label.setStyle(blueTxColor);
 
         Button closeBT = new Button("Accept");
-        closeBT.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+        closeBT.setStyle(getGrnStyleBtn());
+        closeBT.setOnMouseEntered((t) -> {
+            closeBT.setStyle(getStyleBtnHover());
+        });
+        closeBT.setOnMouseExited((t) -> {
+            closeBT.setStyle(getGrnStyleBtn());
+        });
         closeBT.setOnAction(e -> window.close());
 
         ScrollPane cdPane = new ScrollPane();
@@ -162,12 +173,12 @@ public class informationBox {
             label1 = setStyleElement.setStyleLabel(label1, blueTxColor);
 
             Button yesBtn = new Button("Confirm");
-            yesBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+            yesBtn.setStyle(getGrnStyleBtn());
             yesBtn.setOnMouseEntered((t) -> {
-                yesBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+                yesBtn.setStyle(getStyleBtnHover());
             });
             yesBtn.setOnMouseExited((t) -> {
-                yesBtn.setStyle(grnBgColor + bgRad + bgIns + whtTextFill);
+                yesBtn.setStyle(getGrnStyleBtn());
             });
             yesBtn.setOnAction(e -> {
                 ans = true;
@@ -175,12 +186,12 @@ public class informationBox {
             });
 
             Button noBtn = new Button("Cancel");
-            noBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+            noBtn.setStyle(getRedStyleBtn());
             noBtn.setOnMouseEntered((t) -> {
-                noBtn.setStyle(HoverY + bgRad + bgIns + whtTextFill);
+                noBtn.setStyle(getStyleBtnHover());
             });
             noBtn.setOnMouseExited((t) -> {
-                noBtn.setStyle(redBgColor + bgRad + bgIns + whtTextFill);
+                noBtn.setStyle(getRedStyleBtn());
             });
             noBtn.setOnAction(e -> {
                 ans = false;
@@ -207,4 +218,5 @@ public class informationBox {
 
         return ans;
     }
+
 }

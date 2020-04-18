@@ -1,6 +1,5 @@
 package GUI;
 
-import static GUI.informationBox.blueTxColor;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
