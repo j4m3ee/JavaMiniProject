@@ -137,7 +137,8 @@ public class MiniProject extends Application {
 
         //combo box
         cbBox = new ComboBox<>();
-        cbBox.setMaxWidth(400);
+        cbBox.setMaxWidth(200);
+        cbBox.setMinWidth(200);
         cbBox.setStyle(getPurpleStyleBtn());
         cbBox.setOnMouseEntered((t) -> {
             cbBox.setStyle(getStyleBtnHover());
@@ -302,9 +303,12 @@ public class MiniProject extends Application {
 
         deleteAcBtn.setOnAction((t) -> {
             try {
-                if (acDataList.get(AccId).getBalance() > 0.0) {
-                    throw new Exception("Please clear your balance");
+                for (Bank bk : acDataList.get(AccId).getBank()) {
+                    if (bk.getBalance() > 0.0) {
+                        throw new Exception("Please clear your balance in "+ bk.getId() +" bank.");
+                    }
                 }
+
                 if (informationBox.confirmAlert("Confirm", "Are you sure?", logo, background)) {
                     acDataList.remove(AccId);
                     for (int i = 0; i < acDataList.size(); i++) {
@@ -367,17 +371,16 @@ public class MiniProject extends Application {
                     throw new Exception("Enter id.");
                 }
 
-                for (Account ac : acDataList) {
-                    for (Bank bank : ac.getBank()) {
-                        if (bankIdFiled.getText().equals(bank.getBankId())
-                                && bank.getNameBank().equals((String) cbAllBox.getValue())) {
-                            throw new Exception("This id is already in this bank.");
-                        }
-                    }
-                }
-
                 switch (TypeBank) {
                     case 'r':
+                        for (Account ac : acDataList) {
+                            for (Bank bank : ac.getBank()) {
+                                if (bankIdFiled.getText().equals(bank.getBankId())
+                                        && bank.getNameBank().equals((String) cbAllBox.getValue())) {
+                                    throw new Exception("This id is already in this bank.");
+                                }
+                            }
+                        }
                         Bank bk = new Bank((String) cbAllBox.getValue(),
                                 bankIdFiled.getText(), bankNameIdFiled.getText(),
                                 acDataList.get(AccId).getBank().size() + 1);
@@ -911,7 +914,14 @@ public class MiniProject extends Application {
 
                     CENTER.setAlignment(Pos.CENTER);
 
+                    //DECISSION-BOTTOM
+                    HBox decission = new HBox(25);
+                    decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
+                    decission.setTranslateX(165);
+                    decission.setTranslateY(-25);
+
                     INFO.setCenter(CENTER);
+                    INFO.setBottom(decission);
 
                     Type = 'n';
                     window.setScene(option);
@@ -1397,9 +1407,9 @@ public class MiniProject extends Application {
                     throw new Exception("Please select gender.");
                 }
                 if (mGender.isSelected() == true) {
-                    Gender = 'M';
+                    Gender = 'm';
                 } else {
-                    Gender = 'F';
+                    Gender = 'f';
                 }
                 acDataList.add(new Account(usernameField2.getText(), passField2.getText(),
                         acDataList.size() + 1,
