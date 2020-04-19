@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import miniproject.Account;
+import miniproject.Bank;
 import miniproject.Transaction;
 
 /**
@@ -59,7 +60,7 @@ public class informationBox {
         window.showAndWait();
     }
 
-    public static void displayTransactionBox(Account tr, Image logo, Background background) {
+    public static void displayTransactionBox(Bank tr, Image logo, Background background) {
         Stage window = new Stage();
         String s = "";
 
@@ -69,7 +70,7 @@ public class informationBox {
         Label label = new Label();
         VBox layout = new VBox(10);
 
-        label.setText("Name : " + tr.getName() + " Id<" + tr.getId() + ">");
+        label.setText("Name : " + tr.getNameIdBank()+ " Id<" + tr.getId() + ">");
         label.setMinSize(50, 0);
         label.setScaleX(1.5);
         label.setScaleY(1.5);

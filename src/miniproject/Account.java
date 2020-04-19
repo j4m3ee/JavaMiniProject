@@ -17,11 +17,13 @@ public class Account implements Encryption, Serializable {
     private double annualInterestRate;
     private Date dateCreated;
     private ArrayList<Transaction> tr;
+    private ArrayList<Bank> bank;
     private char gender;
 
     Account() {
         dateCreated = new Date();
         tr = new ArrayList<>();
+        bank = new ArrayList<>();
         balance = 500;
     }
 
@@ -60,6 +62,10 @@ public class Account implements Encryption, Serializable {
 
     public void addTransaction(Transaction tr) {
         this.tr.add(tr);
+    }
+
+    public void addBank(Bank bank) {
+        this.bank.add(bank);
     }
 
     public void showTransaction() {
@@ -215,6 +221,10 @@ public class Account implements Encryption, Serializable {
 
     public ArrayList<Transaction> getTr() {
         return tr;
+    }
+
+    public ArrayList<Bank> getBank() {
+        return bank;
     }
 
     public void setSurname(String Surname) {
