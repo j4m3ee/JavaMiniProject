@@ -138,14 +138,19 @@ public class MiniProject extends Application {
         //combo box
         cbBox = new ComboBox<>();
         cbBox.setMaxWidth(400);
+        cbBox.setStyle(getPurpleStyleBtn());
+        cbBox.setOnMouseEntered((t) -> {cbBox.setStyle(getStyleBtnHover());});
+        cbBox.setOnMouseExited((t) -> {cbBox.setStyle(getPurpleStyleBtn());});
         cbAllBox = new ComboBox<>();
         cbAllBox.setMaxWidth(200);
+        cbAllBox.setStyle(getPurpleStyleBtn());
         cbAllBox.getItems().clear();
         for (String bank : Bank.nameBankList) {
             cbAllBox.getItems().add(bank);
         }
         cbTfBox = new ComboBox<>();
         cbTfBox.setMaxWidth(200);
+        cbTfBox.setStyle(getPurpleStyleBtn());
         cbTfBox.getItems().clear();
         for (String bank : Bank.nameBankList) {
             cbTfBox.getItems().add(bank);
@@ -625,21 +630,21 @@ public class MiniProject extends Application {
                     }
 
                     //FINANCE-CENTER
-                    Text balanceText = new Text("Select your bank to show balance.");
-                    balanceText.setStyle(nameTxColor2);
-                    HBox DeWi = new HBox(15);
+                    Text balanceText = new Text("Please select your bank to show balance.");
+                    balanceText.setStyle(nameTxColor2big);
+                    HBox DeWi = new HBox(25);
                     DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
                     DeWi.setAlignment(Pos.CENTER);
-                    HBox Trans = new HBox(15);
+                    HBox Trans = new HBox(25);
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                    Label Options = new Label("Please choose your options.");
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     HBox bankOptionBar = new HBox(15);
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
-                    VBox CENTER = new VBox(20);
+                    VBox CENTER = new VBox(25);
                     CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
@@ -743,22 +748,22 @@ public class MiniProject extends Application {
             AcBankId = cbBox.getValue().getId() - 1;
 
             //FINANCE-CENTER
-            Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBank().
+            Text balanceText = new Text("Your balance : " + acDataList.get(AccId).getBank().
                     get(AcBankId).getBalance() + "  " + "Baht");
-            balanceText.setStyle(nameTxColor2);
-            HBox DeWi = new HBox(15);
+            balanceText.setStyle(nameTxColor2big);
+            HBox DeWi = new HBox(25);
             DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
             DeWi.setAlignment(Pos.CENTER);
-            HBox Trans = new HBox(15);
+            HBox Trans = new HBox(25);
             Trans.getChildren().addAll(TranferBtn, TransactionBtn);
             Trans.setAlignment(Pos.CENTER);
-            Label Options = new Label("       Welcome to system.\n Please choose your options.");
+            Label Options = new Label("Please choose your options.");
             Options.setStyle(blueTxColor3);
             Options.setTextFill(Color.BLACK);
             HBox bankOptionBar = new HBox(15);
             bankOptionBar.setAlignment(Pos.CENTER);
             bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
-            VBox CENTER = new VBox(20);
+            VBox CENTER = new VBox(25);
             CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
 
             CENTER.setAlignment(Pos.CENTER);
@@ -875,22 +880,22 @@ public class MiniProject extends Application {
                     }
 
                     //FINANCE-CENTER
-                    Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBank().
+                    Text balanceText = new Text("Your balance : " + acDataList.get(AccId).getBank().
                             get(AcBankId).getBalance() + "  " + "Baht");
                     balanceText.setStyle(nameTxColor2);
-                    HBox DeWi = new HBox(15);
+                    HBox DeWi = new HBox(25);
                     DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
                     DeWi.setAlignment(Pos.CENTER);
-                    HBox Trans = new HBox(15);
+                    HBox Trans = new HBox(25);
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                    Label Options = new Label("Please choose your options.");
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     HBox bankOptionBar = new HBox(15);
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
-                    VBox CENTER = new VBox(20);
+                    VBox CENTER = new VBox(25);
                     CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
 
                     CENTER.setAlignment(Pos.CENTER);
@@ -1187,21 +1192,21 @@ public class MiniProject extends Application {
                     TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
-                    Text balanceText = new Text("Select your bank to show balance.");
-                    balanceText.setStyle(nameTxColor2);
-                    HBox DeWi = new HBox(15);
+                    Text balanceText = new Text("Please select your bank to show balance.");
+                    balanceText.setStyle(nameTxColor2big);
+                    HBox DeWi = new HBox(25);
                     DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
                     DeWi.setAlignment(Pos.CENTER);
-                    HBox Trans = new HBox(15);
+                    HBox Trans = new HBox(25);
                     Trans.getChildren().addAll(TranferBtn, TransactionBtn);
                     Trans.setAlignment(Pos.CENTER);
-                    Label Options = new Label("       Welcome to system.\n Please choose your options.");
+                    Label Options = new Label("Please choose your options.");
                     Options.setStyle(blueTxColor3);
                     Options.setTextFill(Color.BLACK);
                     HBox bankOptionBar = new HBox(15);
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
-                    VBox CENTER = new VBox(20);
+                    VBox CENTER = new VBox(25);
                     CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
 
                     CENTER.setAlignment(Pos.CENTER);
@@ -1210,7 +1215,7 @@ public class MiniProject extends Application {
                     HBox decission = new HBox(25);
                     decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
                     decission.setTranslateX(165);
-                    decission.setTranslateY(-10);
+                    decission.setTranslateY(-25);
 
                     INFO.setTop(TOP);
                     INFO.setCenter(CENTER);
