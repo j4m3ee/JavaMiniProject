@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 
 public class getElement {
 
+    final static public String nameTxColor2big = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 18px;\n";
     final static public String nameTxColor2 = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 14px;\n";
     final static public String nameTxColor1 = "-fx-fill: linear-gradient(#40e0d0, #ff8c00, #ff0080);\n" + "    -fx-font-size: 15px;\n";
     final static public String blueTxColor3 = "-fx-text-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 19px;\n";
