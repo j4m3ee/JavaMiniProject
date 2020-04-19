@@ -139,8 +139,12 @@ public class MiniProject extends Application {
         cbBox = new ComboBox<>();
         cbBox.setMaxWidth(400);
         cbBox.setStyle(getPurpleStyleBtn());
-        cbBox.setOnMouseEntered((t) -> {cbBox.setStyle(getStyleBtnHover());});
-        cbBox.setOnMouseExited((t) -> {cbBox.setStyle(getPurpleStyleBtn());});
+        cbBox.setOnMouseEntered((t) -> {
+            cbBox.setStyle(getStyleBtnHover());
+        });
+        cbBox.setOnMouseExited((t) -> {
+            cbBox.setStyle(getPurpleStyleBtn());
+        });
         cbAllBox = new ComboBox<>();
         cbAllBox.setMaxWidth(200);
         cbAllBox.setStyle(getPurpleStyleBtn());
@@ -768,7 +772,14 @@ public class MiniProject extends Application {
 
             CENTER.setAlignment(Pos.CENTER);
 
+            //DECISSION-BOTTOM
+            HBox decission = new HBox(25);
+            decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
+            decission.setTranslateX(165);
+            decission.setTranslateY(-25);
+
             INFO.setCenter(CENTER);
+            INFO.setBottom(decission);
 
             window.setScene(option);
 
@@ -1043,8 +1054,8 @@ public class MiniProject extends Application {
                     tfToAcc = -1;
                     for (Account account : acDataList) {
                         for (Bank bank : account.getBank()) {
-                            if (bank.getBankId().equals(accountField.getText()) &&
-                                    bank.getNameBank().equals(cbTfBox.getValue())) {
+                            if (bank.getBankId().equals(accountField.getText())
+                                    && bank.getNameBank().equals(cbTfBox.getValue())) {
                                 tfToAcc = account.getId() - 1;
                                 tfToAccBank = bank.getId() - 1;
                                 if (AcBankId == tfToAccBank) {
