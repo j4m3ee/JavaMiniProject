@@ -21,11 +21,9 @@ public class Transaction implements Serializable{
     }
     
     public Transaction(char type, double amount, double balance, String description) {
-        this.type = type;
-        this.amount = amount;
-        this.balance = balance;
+        this(type,amount,balance);
         this.description = description;
-        date = new Date();
+
     }
 
     public Date getDate() {
