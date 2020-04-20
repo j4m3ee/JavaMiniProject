@@ -115,18 +115,18 @@ public class informationBox {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Account conditions");
+        window.setTitle("O-PLUS Agreement");
 
         Label label = new Label();
         VBox layout = new VBox(10);
-        label.setText("Account conditions (must read!!)");
+        label.setText("O-PLUS Agreement (Important!!)");
         label.setMinSize(50, 0);
         label.setScaleX(1.5);
         label.setScaleY(1.5);
         label.setStyle("-fx-font-size:16px;");
         label.setStyle(blueTxColor);
 
-        Button closeBT = new Button("Accept");
+        Button closeBT = new Button("Close");
         closeBT.setStyle(getGrnStyleBtn());
         closeBT.setOnMouseEntered((t) -> {
             closeBT.setStyle(getStyleBtnHover());
@@ -138,11 +138,11 @@ public class informationBox {
 
         ScrollPane cdPane = new ScrollPane();
         Label labelContent = new Label(""
-                + "                                     WELCOME TO O-PLUS SERVICE. PLEASE READ.\n"
-                + "1.When user starts O-PlUS sevice.User will achieve 500 baht.\n"
-                + "2.In this platform.User can extremly deposit 20000 baht.\n"
-                + "3.In this platform.User can extremly widthdraw 20000 baht.\n"
-                + "4.If user want to delete and account.User should replace money to another account.\n"
+                + "                                    WELCOME TO O-PLUS SERVICE. PLEASE READ.\n"
+                + "1.When user start O-PLUS sevice.User will achieve 500 baht.\n"
+                + "2.Maximum amount you can deposit is 20,000 baht/time.\n"
+                + "3.Maximum amount you can withdraw is 20,000 baht/time.\n"
+                + "4.Before delete an account, transfer money to another account first.\n"
                 + "5.User should follow the rules strictly.\n"
                 + "                                                     --THANK YOU--");
         labelContent.setAlignment(Pos.CENTER);
