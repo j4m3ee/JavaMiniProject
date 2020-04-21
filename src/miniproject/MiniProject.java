@@ -291,6 +291,7 @@ public class MiniProject extends Application {
                 //INFO-TOP
                 VBox userInfo = new VBox(12);
                 userInfo.getChildren().addAll(userText, Fullname);
+                profileImage = getImageView(userimage);
                 try {
                     if (!acDataList.get(AccId).getPictureFile().canRead()) {
                         profileImage = getImageView(userimage);
@@ -1230,6 +1231,7 @@ public class MiniProject extends Application {
                     nameBalance.getChildren().addAll(userText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
+                    profileImage = getImageView(userimage);
                     try {
                         if (!acDataList.get(AccId).getPictureFile().canRead()) {
                             profileImage = getImageView(userimage);
