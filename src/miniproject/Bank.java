@@ -132,8 +132,8 @@ public class Bank implements Serializable {
         Bank b1 = ac.get(acId).getBank().get(bankId);
         Bank b2 = ac.get(acToId).getBank().get(bankToId);
         String s = "";
-        s += "Tranfer from : " + b1.getBankId() + " (" + b1.getNameBank() + ")\n"+
-                "To : " + b2.getBankId() + " (" + b2.getNameBank() +")";
+        s += "Tranfer from : " + b1.getNameIdBank() + " (" + b1.getNameBank() + ")\n"+
+                "To : " + b2.getNameIdBank() + " (" + b2.getNameBank() +")";
         return s;
     }
 

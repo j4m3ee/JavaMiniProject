@@ -149,7 +149,7 @@ public class informationBox {
         cdPane.setContent(labelContent);
         cdPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         cdPane.setPannable(true);
-        layout.getChildren().addAll(label, cdPane, closeBT);
+        layout.getChildren().addAll(getImageView(logo), label, cdPane, closeBT);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(background);
 

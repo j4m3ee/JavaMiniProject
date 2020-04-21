@@ -8,7 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class getElement {
-
+    
+    final static public String amountblueTxColor2 = "-fx-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 17px;\n";
+    final static public String nameTxColor4 = "-fx-fill: linear-gradient(#40e0d0, #ff8c00, #ff0080);\n" + "    -fx-font-size: 19px;\n";
+    final static public String welcomeTx = "-fx-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 23px;\n";
     final static public String nameTxColor2big = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 18px;\n";
     final static public String nameTxColor2 = "-fx-fill: linear-gradient(#ee0979, #ff6a00);\n" + "    -fx-font-size: 14px;\n";
     final static public String nameTxColor1 = "-fx-fill: linear-gradient(#40e0d0, #ff8c00, #ff0080);\n" + "    -fx-font-size: 15px;\n";
@@ -109,8 +112,8 @@ public class getElement {
     public static ImageView getProfile(Image logo) {
         ImageView LOGO = new ImageView(logo);
         //logo.get
-        LOGO.setFitHeight(120);
-        LOGO.setFitWidth(120);
+        LOGO.setFitWidth(80);
+        LOGO.setFitHeight(80);
         LOGO.setPreserveRatio(true);
         return LOGO;
     }

@@ -46,7 +46,7 @@ public class MiniProject extends Application {
     public Stage window;
     public String pathPic = "resource\\Pictures\\";
     int AccId = -1, tfToAcc = -1, AcBankId = -1, tfToAccBank = -1;
-    double amount = 0.0, stageWidth = 600, stageHeight = 650;
+    double amount = 0.0, stageWidth = 600, stageHeight = 650, regisHeight = 800;
     Scene login, option, tranfer, register, fixPassword, forgotPassword,
             editProfile, makeTransaction, CFTransactionScene, bankRegister;
     ArrayList<Account> acDataList = new ArrayList<>();
@@ -140,8 +140,8 @@ public class MiniProject extends Application {
 
         //combo box
         cbBox = new ComboBox<>();
-        cbBox.setMaxWidth(200);
-        cbBox.setMinWidth(200);
+        cbBox.setMaxWidth(250);
+        cbBox.setMinWidth(250);
         cbBox.setStyle(getPurpleStyleBtn());
         cbBox.setOnMouseEntered((t) -> {
             cbBox.setStyle(getStyleBtnHover());
@@ -150,14 +150,14 @@ public class MiniProject extends Application {
             cbBox.setStyle(getPurpleStyleBtn());
         });
         cbAllBox = new ComboBox<>();
-        cbAllBox.setMaxWidth(200);
+        cbAllBox.setMaxWidth(250);
         cbAllBox.setStyle(getPurpleStyleBtn());
         cbAllBox.getItems().clear();
         for (String bank : Bank.nameBankList) {
             cbAllBox.getItems().add(bank);
         }
         cbTfBox = new ComboBox<>();
-        cbTfBox.setMaxWidth(200);
+        cbTfBox.setMaxWidth(250);
         cbTfBox.setStyle(getPurpleStyleBtn());
         cbTfBox.getItems().clear();
         for (String bank : Bank.nameBankList) {
@@ -280,9 +280,9 @@ public class MiniProject extends Application {
                 acDataList = Data.updateFile(Data.f, acDataList);
 
                 Text userText = new Text("Username : " + acDataList.get(AccId).getName());
-                userText.setStyle(nameTxColor1);
+                userText.setStyle(nameTxColor4);
                 Text balanceText = new Text("Balance : " + acDataList.get(AccId).getBalance() + "  " + "Baht");
-                balanceText.setStyle(nameTxColor1);
+                balanceText.setStyle(nameTxColor4);
                 Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  "
                         + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  "
                         + acDataList.get(AccId).getGender());
@@ -364,11 +364,11 @@ public class MiniProject extends Application {
 
         //Layout Scene bank register
         Text bankSelecText = new Text("Select your bank : ");
-        bankSelecText.setStyle(nameTxColor1);
+        bankSelecText.setStyle(nameTxColor4);
         Text bankIdText = new Text("Bank ID : ");
-        bankIdText.setStyle(nameTxColor1);
+        bankIdText.setStyle(nameTxColor4);
         Text bankNameIdText = new Text("Name of Bank ID : ");
-        bankNameIdText.setStyle(nameTxColor1);
+        bankNameIdText.setStyle(nameTxColor4);
         TextField bankIdFiled = new TextField();
         bankIdFiled.setStyle(BorderText);
         bankIdFiled.setMaxWidth(300);
@@ -473,7 +473,13 @@ public class MiniProject extends Application {
         dicisBgBox.setAlignment(Pos.CENTER);
         dicisBgBox.getChildren().addAll(smBgBtn, ccBgBtn);
         bankRGbox.setAlignment(Pos.CENTER);
-        bankRGbox.getChildren().addAll(bankSelecText, cbAllBox, bankIdText,
+        Text BankTx = new Text("Bank information");
+        BankTx.setFill(Color.WHITE);
+        BankTx.setStyle("-fx-font-size:20px;");
+        HBox TopBank = new HBox(15);
+        TopBank.getChildren().addAll(getImageView(logo), BankTx);
+        TopBank.setAlignment(Pos.CENTER);
+        bankRGbox.getChildren().addAll(TopBank, bankSelecText, cbAllBox, bankIdText,
                 bankIdFiled, bankNameIdText, bankNameIdFiled, dicisBgBox);
         //Layout Scene bank register
 
@@ -528,7 +534,13 @@ public class MiniProject extends Application {
         HBox disiFixPassBtn = new HBox(15);
         disiFixPassBtn.getChildren().addAll(SMFixPassBtn, CancelFixPassBtn);
         disiFixPassBtn.setAlignment(Pos.CENTER);
-        FPbox.getChildren().addAll(getImageView(logo), oldPassText, oldPassTextField, newPassText,
+        Text FixPassTx = new Text("Change password");
+        FixPassTx.setFill(Color.WHITE);
+        FixPassTx.setStyle("-fx-font-size: 20px;");
+        HBox FixTop = new HBox(15);
+        FixTop.getChildren().addAll(getImageView(logo),FixPassTx);
+        FixTop.setAlignment(Pos.CENTER);
+        FPbox.getChildren().addAll(FixTop, oldPassText, oldPassTextField, newPassText,
                 newPassTextField, CFnewPassText, CFnewPassTextField, disiFixPassBtn);
         FPbox.setAlignment(Pos.CENTER);
         //Layout Scene fixPassword
@@ -663,6 +675,8 @@ public class MiniProject extends Application {
                     }
 
                     //FINANCE-CENTER
+                    Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
+                    WelcomeTx.setStyle(welcomeTx);
                     Text balanceText = new Text("Please select your bank to show balance.");
                     balanceText.setStyle(nameTxColor2big);
                     HBox DeWi = new HBox(25);
@@ -678,7 +692,7 @@ public class MiniProject extends Application {
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
                     VBox CENTER = new VBox(25);
-                    CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
                     CENTER.setAlignment(Pos.CENTER);
 
                     AcBankId = -1;
@@ -768,7 +782,13 @@ public class MiniProject extends Application {
             realnameTextField2.setText(acDataList.get(AccId).getRealName());
             surnameField2.setText(acDataList.get(AccId).getSurname());
             Type = acDataList.get(AccId).getGender();
-            editProfilebox.getChildren().setAll(importPicbtn, userR2, usernameField3,
+            Text EditTx = new Text("Edit profile");
+            EditTx.setFill(Color.WHITE);
+            EditTx.setStyle("-fx-font-size : 20px;");
+            HBox EditTop = new HBox(15);
+            EditTop.getChildren().addAll(getImageView(logo), EditTx);
+            EditTop.setAlignment(Pos.CENTER);
+            editProfilebox.getChildren().setAll(EditTop, importPicbtn, userR2, usernameField3,
                     nameTag, realnameTextField2,
                     surnameTag, surnameField2,
                     gender2,
@@ -781,6 +801,8 @@ public class MiniProject extends Application {
             AcBankId = cbBox.getValue().getId() - 1;
 
             //FINANCE-CENTER
+            Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
+            WelcomeTx.setStyle(welcomeTx);
             Text balanceText = new Text("Your balance : " + acDataList.get(AccId).getBank().
                     get(AcBankId).getBalance() + "  " + "Baht");
             balanceText.setStyle(nameTxColor2big);
@@ -797,7 +819,7 @@ public class MiniProject extends Application {
             bankOptionBar.setAlignment(Pos.CENTER);
             bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
             VBox CENTER = new VBox(25);
-            CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
+            CENTER.getChildren().addAll(WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
 
             CENTER.setAlignment(Pos.CENTER);
 
@@ -815,9 +837,12 @@ public class MiniProject extends Application {
             System.out.println("Combo box Prease. " + cbBox.getValue());
             System.out.println(cbBox.getValue().getId() + " " + cbBox.getValue().getBalance());
         });
-
         //Layout Scene Option
+        
         //Layout Scene forgot Password
+        Text fgPass = new Text("Forgot password");
+        fgPass.setFill(Color.WHITE);
+        fgPass.setStyle("-fx-font-size: 20px;");
         TextField ansField = new TextField();
         ansField.setMaxWidth(300);
         ansField.setStyle(BorderText);
@@ -920,9 +945,11 @@ public class MiniProject extends Application {
                     }
 
                     //FINANCE-CENTER
+                    Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
+                    WelcomeTx.setStyle(welcomeTx);
                     Text balanceText = new Text("Your balance : " + acDataList.get(AccId).getBank().
                             get(AcBankId).getBalance() + "  " + "Baht");
-                    balanceText.setStyle(nameTxColor2);
+                    balanceText.setStyle(nameTxColor2big);
                     HBox DeWi = new HBox(25);
                     DeWi.getChildren().addAll(DepositBtn, WidthdrawBtn);
                     DeWi.setAlignment(Pos.CENTER);
@@ -936,7 +963,7 @@ public class MiniProject extends Application {
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
                     VBox CENTER = new VBox(25);
-                    CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
 
                     CENTER.setAlignment(Pos.CENTER);
 
@@ -972,6 +999,9 @@ public class MiniProject extends Application {
         //LayOut Scene CFTransation
 
         //Layout Scene Deposit/Withdraw
+        Text DWtx = new Text();
+        DWtx.setStyle("-fx-font-size: 20px;");
+        DWtx.setFill(Color.WHITE);
         Text TSamountText = new Text("Amount : ");
         TSamountText.setStyle(blueTxColor2);
         TextField TSamountField = new TextField();
@@ -1005,26 +1035,32 @@ public class MiniProject extends Application {
                 switch (Type) {
                     case 'd':
                         TransactionText.setText("You want to deposit amount : " + amount + "  " + "baht");
-                        TransactionText.setStyle(blueTxColor2);
+                        TransactionText.setStyle(amountblueTxColor2);
+                        DWtx.setText("Deposit");
                         break;
                     case 'w':
                         TransactionText.setText("You want to widthdraw amount : " + amount + "  " + "baht");
-                        TransactionText.setStyle(blueTxColor2);
+                        TransactionText.setStyle(amountblueTxColor2);
+                        DWtx.setText("Widthdraw");
                         break;
                     default:
                         throw new Exception("input d : deposit\ninput w : withdraw");
                 }
                 Text TransactionText2 = new Text("Amount : ");
-                TransactionText2.setStyle(blueTxColor2);
+                TransactionText2.setStyle(amountblueTxColor2);
 
                 Random random = new Random();
                 r1 = random.nextInt(30);
                 r2 = random.nextInt(30);
                 RandomText.setText(r1 + " + " + r2 + " = (Please fill answer below.)");
+                RandomText.setStyle(amountblueTxColor2);
 
                 solve.getChildren().setAll(TransactionText2, RandomText);
+                HBox DWTop = new HBox(15);
+                DWTop.getChildren().addAll(getImageView(logo), DWtx);
+                DWTop.setAlignment(Pos.CENTER);
 
-                CFTransactionbox.getChildren().setAll(getImageView(logo), TransactionText, solve,
+                CFTransactionbox.getChildren().setAll(DWTop, TransactionText, solve,
                         CFTextField, CFTranferBtn, CancelTranferBtn);
                 window.setScene(CFTransactionScene);
                 System.out.println("Confirm press.");
@@ -1057,7 +1093,7 @@ public class MiniProject extends Application {
         TSbox.setAlignment(Pos.CENTER);
         Topfinance.setTranslateY(-15);
         Text WarningTS = new Text("--- Maximum amount is 20,000 Baht. ---");
-        WarningTS.setStyle(nameTxColor2);
+        WarningTS.setStyle(nameTxColor4);
         TSbox.getChildren().addAll(Topfinance, WarningTS, TSamountText, TSamountField,
                 TSconfirmBtn, TScancelBtn);
         //Layout Scene Deposit/Withdraw
@@ -1102,17 +1138,22 @@ public class MiniProject extends Application {
                                 r1 = random.nextInt(30);
                                 r2 = random.nextInt(30);
                                 RandomText.setText(r1 + " + " + r2 + " = (Please fill answer below.)");
-                                RandomText.setStyle(blueTxColor2);
+                                RandomText.setStyle(amountblueTxColor2);
                                 amount = Double.parseDouble(amountField.getText());
                                 //Text
                                 TransactionText.setText(Bank.getMessageTranfer(AccId, AcBankId, tfToAcc, tfToAccBank));
-                                TransactionText.setStyle(blueTxColor2);
+                                TransactionText.setStyle(amountblueTxColor2);
                                 Text TransactionText2 = new Text("Amount : ");
-                                TransactionText2.setStyle(blueTxColor2);
+                                TransactionText2.setStyle(amountblueTxColor2);
 
                                 solve.getChildren().setAll(TransactionText2, RandomText);
-
-                                CFTransactionbox.getChildren().setAll(getImageView(logo), TransactionText, solve,
+                                Text TranferTx = new Text("Tranfer");
+                                TranferTx.setFill(Color.WHITE);
+                                TranferTx.setStyle("-fx-font-size:20px;");
+                                HBox trantop = new HBox(15);
+                                trantop.getChildren().addAll(getImageView(logo), TranferTx);
+                                trantop.setAlignment(Pos.CENTER);
+                                CFTransactionbox.getChildren().setAll(trantop, TransactionText, solve,
                                         CFTextField, CFTranferBtn, CancelTranferBtn);
 
                                 window.setScene(CFTransactionScene);
@@ -1160,7 +1201,7 @@ public class MiniProject extends Application {
         transferTop.getChildren().addAll(getImageView(logo), tran);
         transferTop.setAlignment(Pos.CENTER);
         Text warn = new Text("Please make sure that you put a correct username.");
-        warn.setStyle(nameTxColor2);
+        warn.setStyle(nameTxColor4);
 
         tfToDicisBox.getChildren().addAll(confirmBtn, cancelBtn);
         TFbox.getChildren().addAll(transferTop, warn, selecttfBank, cbTfBox,
@@ -1181,8 +1222,8 @@ public class MiniProject extends Application {
         Label labell4 = new Label("Don't have an account. Try now?");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
-        labell4.setStyle("-fx-font-size:15px;");
-        labell4.setStyle(redTexColor);
+        labell4.setStyle("-fx-font-size:14px;");
+        labell4.setTextFill(Color.RED);
         labell4.setAlignment(Pos.CENTER);
 
         Text idTopic = new Text("Username : ");
@@ -1216,10 +1257,10 @@ public class MiniProject extends Application {
                     System.out.println("Math! : " + account1.getId());
                     window.setScene(option);
                     Text userText = new Text("Username : " + account1.getName());
-                    userText.setStyle(nameTxColor1);
+                    userText.setStyle(nameTxColor4);
 
                     Text Fullname = new Text("Name : " + account1.getRealName() + "  " + account1.getSurname() + "  " + "Gender : " + " " + account1.getGender());
-                    Fullname.setStyle(nameTxColor1);
+                    Fullname.setStyle(nameTxColor4);
 
                     cbBox.getItems().clear();
                     for (Bank bank : acDataList.get(AccId).getBank()) {
@@ -1249,6 +1290,8 @@ public class MiniProject extends Application {
                     TOP.setTranslateY(10);
 
                     //FINANCE-CENTER
+                    Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
+                    WelcomeTx.setStyle(welcomeTx);
                     Text balanceText = new Text("Please select your bank to show balance.");
                     balanceText.setStyle(nameTxColor2big);
                     HBox DeWi = new HBox(25);
@@ -1264,7 +1307,7 @@ public class MiniProject extends Application {
                     bankOptionBar.setAlignment(Pos.CENTER);
                     bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
                     VBox CENTER = new VBox(25);
-                    CENTER.getChildren().addAll(balanceText, bankOptionBar, Options, DeWi, Trans);
+                    CENTER.getChildren().addAll(WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
 
                     CENTER.setAlignment(Pos.CENTER);
 
@@ -1329,7 +1372,10 @@ public class MiniProject extends Application {
                 Text cfpass1 = new Text("Confirm New-Password : ");
                 cfpass1.setStyle(blueTxColor2);
                 window.setScene(forgotPassword);
-                FGPbox.getChildren().addAll(PassQThint,
+                HBox Forgottop = new HBox(15);
+                Forgottop.getChildren().addAll(getImageView(logo), fgPass);
+                Forgottop.setAlignment(Pos.CENTER);
+                FGPbox.getChildren().addAll(Forgottop, PassQThint,
                         answer2, ansField,
                         pass1, FGpassField,
                         cfpass1, cfFGpassField,
@@ -1350,6 +1396,9 @@ public class MiniProject extends Application {
         //Layout Scene Login
 
         //Layout Scene Register 
+        Text RegisTx = new Text("Register");
+        RegisTx.setStyle("-fx-font-size: 20px;");
+        RegisTx.setFill(Color.WHITE);
         Text usernameR = new Text("Username : ");
         usernameR.setStyle(blueTxColor2);
         Text userDeal = new Text("(user must not be the same)");
@@ -1481,7 +1530,10 @@ public class MiniProject extends Application {
         HBox RegisChoice = new HBox(15);
         RegisChoice.getChildren().addAll(SMBtn, CancelBtn);
         RegisChoice.setAlignment(Pos.CENTER);
-        RGbox.getChildren().addAll(userR, usernameField2,
+        HBox Registop = new HBox(15);
+        Registop.getChildren().addAll(getImageView(logo), RegisTx);
+        Registop.setAlignment(Pos.CENTER);
+        RGbox.getChildren().addAll(Registop, userR, usernameField2,
                 passR, passField2,
                 name, realnameTextField,
                 surname, surnameField,
@@ -1492,7 +1544,7 @@ public class MiniProject extends Application {
         //Layout Scene Register 
 
         login = new Scene(LIbox, stageWidth, stageHeight);
-        register = new Scene(RGbox, stageWidth, stageHeight);
+        register = new Scene(RGbox, stageWidth, regisHeight);
         option = new Scene(INFO, stageWidth, stageHeight);
         tranfer = new Scene(TFbox, stageWidth, stageHeight);
         fixPassword = new Scene(FPbox, stageWidth, stageHeight);
