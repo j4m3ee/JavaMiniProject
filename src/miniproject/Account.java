@@ -1,5 +1,6 @@
 package miniproject;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,12 +14,13 @@ public class Account implements Encryption, Serializable {
     private String Username, password = "0000";
     private String QTPassHint, ASWPasshint, Surname, realName;
     private int id;
-    private double balance,maxTransaction = 20000.0;
+    private double balance, maxTransaction = 20000.0;
     private double annualInterestRate;
     private Date dateCreated;
     private ArrayList<Transaction> tr;
     private ArrayList<Bank> bank;
     private char gender;
+    private File PictureFile = null;
 
     Account() {
         dateCreated = new Date();
@@ -51,7 +53,7 @@ public class Account implements Encryption, Serializable {
      * @throws Exception
      */
     Account(String name, String password, int id, String realName, String Surname,
-            char gender,String QTPassHint, String ASWPasshint) throws Exception {
+            char gender, String QTPassHint, String ASWPasshint) throws Exception {
         this(name, password, id);
         this.QTPassHint = QTPassHint;
         this.ASWPasshint = ASWPasshint;
@@ -77,6 +79,14 @@ public class Account implements Encryption, Serializable {
             System.out.println("Balance : " + transaction.getBalance());
             System.out.println("Description : " + transaction.getDescription() + "\n");
         }
+    }
+
+    public File getPictureFile() {
+        return PictureFile;
+    }
+
+    public void setPictureFile(File PictureFile) {
+        this.PictureFile = PictureFile;
     }
 
     public void setId(int newId) {
@@ -214,7 +224,7 @@ public class Account implements Encryption, Serializable {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-    
+
     public String SMS(String sms) {
         return new String(encrypt(sms.getBytes()));
     }
@@ -229,17 +239,17 @@ public class Account implements Encryption, Serializable {
 
     public void setSurname(String Surname) {
         Surname = Surname.toLowerCase();
-        Surname = Surname.substring(0,1).toUpperCase()+Surname.substring(1);
+        Surname = Surname.substring(0, 1).toUpperCase() + Surname.substring(1);
         this.Surname = Surname;
     }
 
     public void setRealName(String realName) {
         realName = realName.toLowerCase();
-        realName = realName.substring(0,1).toUpperCase()+realName.substring(1);
+        realName = realName.substring(0, 1).toUpperCase() + realName.substring(1);
         this.realName = realName;
     }
-    
-    public void setProfile(String username,String name,String surname,char gender){
+
+    public void setProfile(String username, String name, String surname, char gender) {
         setName(username);
         setRealName(name);
         setSurname(surname);
@@ -249,9 +259,6 @@ public class Account implements Encryption, Serializable {
     public void setGender(char gender) {
         this.gender = gender;
     }
-    
-    
-    
 
     public static void menu() {
         System.out.println("");

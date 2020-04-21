@@ -18,13 +18,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.stage.FileChooser;
 
 /**
  *
  * @author ASUS
  */
 public class Data {
-    
+
     public static File f = new File("resource\\Data\\Accout.dat");
 
     public static ArrayList<Account> readFile(File f)
@@ -35,7 +36,7 @@ public class Data {
 
     public static void writeFile(File f, ArrayList<Account> acNew)
             throws FileNotFoundException, IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
+        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(f))) {
             out.writeObject(acNew);
         }
     }
@@ -115,4 +116,20 @@ public class Data {
         }
         return id;
     }
+
+    public static File UploadPic() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Picture");
+        String defaultSaveName = "mySave";
+        fileChooser.setInitialFileName(defaultSaveName); //set the default name for file to be saved
+        File selectedFile = fileChooser.showOpenDialog(null);
+//        fileChooser.getExtensionFilters().addAll(
+//                new FileChooser.ExtensionFilter("pdf Files", "*.pdf"),
+//                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
+        //System.out.println(selectedFile.getAbsolutePath());
+
+        return selectedFile.getAbsoluteFile();
+
+    }
+
 }
