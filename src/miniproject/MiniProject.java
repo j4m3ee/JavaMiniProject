@@ -56,10 +56,9 @@ public class MiniProject extends Application {
 
     int r1 = 0, r2 = 0;
     ImageView profileImage;
-    FileInputStream InputPic;
 
     //139,255,37 green
-    //(#E2F0CB) 226,240,203 pastel yellow green
+    //(#E2F0CB) 226,240,203 pastel   yellow green
     //(#B5EAD7) 181,234,215 pastel green
     //(#FF9AA2) 255,154,162 pastel red
     @Override
@@ -290,25 +289,20 @@ public class MiniProject extends Application {
                 Fullname.setStyle(nameTxColor1);
 
                 //INFO-TOP
-                HBox nameBalance = new HBox(20);
-                nameBalance.getChildren().addAll(userText, balanceText);
                 VBox userInfo = new VBox(12);
-                userInfo.getChildren().addAll(nameBalance, Fullname);
-                HBox doubleLogo = new HBox(15);
-                doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                userInfo.getChildren().addAll(userText, Fullname);
                 try {
                     if (!acDataList.get(AccId).getPictureFile().canRead()) {
                         profileImage = getImageView(userimage);
                     } else {
                         profileImage = getProfile(new Image(acDataList.get(AccId).getPictureFile().toURI().toString()));
                     }
-                    doubleLogo.getChildren().setAll(getImageView(logo), profileImage);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
                 HBox TOP = new HBox(40);
 
-                TOP.getChildren().addAll(doubleLogo, userInfo);
+                TOP.getChildren().addAll(profileImage, userInfo);
                 TOP.setTranslateX(45);
                 TOP.setTranslateY(10);
 
@@ -1236,22 +1230,19 @@ public class MiniProject extends Application {
                     nameBalance.getChildren().addAll(userText);
                     VBox userInfo = new VBox(12);
                     userInfo.getChildren().addAll(nameBalance, Fullname);
-                    HBox doubleLogo = new HBox(15);
-                    doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
                     try {
                         if (!acDataList.get(AccId).getPictureFile().canRead()) {
                             profileImage = getImageView(userimage);
                         } else {
                             profileImage = getProfile(new Image(acDataList.get(AccId).getPictureFile().toURI().toString()));
                         }               
-                        doubleLogo.getChildren().setAll(getImageView(logo), profileImage);
 
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
 
                     HBox TOP = new HBox(40);
-                    TOP.getChildren().addAll(doubleLogo, userInfo);
+                    TOP.getChildren().addAll(profileImage, userInfo);
                     TOP.setTranslateX(45);
                     TOP.setTranslateY(10);
 

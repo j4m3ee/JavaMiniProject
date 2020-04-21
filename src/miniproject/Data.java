@@ -120,13 +120,12 @@ public class Data {
     public static File UploadPic() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Picture");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Picture Files", "*.jpg","*.png","*.gif"));
         String defaultSaveName = "mySave";
         fileChooser.setInitialFileName(defaultSaveName); //set the default name for file to be saved
         File selectedFile = fileChooser.showOpenDialog(null);
-//        fileChooser.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("pdf Files", "*.pdf"),
-//                new FileChooser.ExtensionFilter("Text Files", "*.txt"));
-        //System.out.println(selectedFile.getAbsolutePath());
+        
 
         return selectedFile.getAbsoluteFile();
 
