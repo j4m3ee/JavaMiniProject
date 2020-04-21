@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -38,6 +39,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.InputMap;
 
 public class MiniProject extends Application {
 
@@ -53,6 +55,8 @@ public class MiniProject extends Application {
     ComboBox<String> cbAllBox, cbTfBox;
 
     int r1 = 0, r2 = 0;
+    ImageView profileImage;
+    FileInputStream InputPic;
 
     //139,255,37 green
     //(#E2F0CB) 226,240,203 pastel yellow green
@@ -235,6 +239,22 @@ public class MiniProject extends Application {
         deleteAcBtn.setOnMouseExited((t) -> {
             deleteAcBtn.setStyle(getRedStyleBtn());
         });
+        Button importPicbtn = new Button("Edit Picture");
+        importPicbtn.setStyle(getGrnStyleBtn());
+        importPicbtn.setOnMouseEntered((t) -> {
+            importPicbtn.setStyle(getStyleBtnHover());
+        });
+        importPicbtn.setOnMouseExited((t) -> {
+            importPicbtn.setStyle(getGrnStyleBtn());
+        });
+        importPicbtn.setOnAction((t) -> {
+            acDataList.get(AccId).setPictureFile(Data.UploadPic());
+            try {
+                acDataList = Data.updateFile(Data.f, acDataList);
+            } catch (IOException | ClassNotFoundException ex) {
+                System.out.println(ex);
+            }
+        });
         SMBtn2.setOnAction((ActionEvent t) -> {
             char Gender = 'n';
             try {
@@ -276,7 +296,18 @@ public class MiniProject extends Application {
                 userInfo.getChildren().addAll(nameBalance, Fullname);
                 HBox doubleLogo = new HBox(15);
                 doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                try {
+                    if (!acDataList.get(AccId).getPictureFile().canRead()) {
+                        profileImage = getImageView(userimage);
+                    } else {
+                        profileImage = getProfile(new Image(acDataList.get(AccId).getPictureFile().toURI().toString()));
+                    }
+                    doubleLogo.getChildren().setAll(getImageView(logo), profileImage);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
                 HBox TOP = new HBox(40);
+
                 TOP.getChildren().addAll(doubleLogo, userInfo);
                 TOP.setTranslateX(45);
                 TOP.setTranslateY(10);
@@ -305,7 +336,7 @@ public class MiniProject extends Application {
             try {
                 for (Bank bk : acDataList.get(AccId).getBank()) {
                     if (bk.getBalance() > 0.0) {
-                        throw new Exception("Please clear your balance in "+ bk.getId() +" bank.");
+                        throw new Exception("Please clear your balance in " + bk.getId() + " bank.");
                     }
                 }
 
@@ -742,7 +773,7 @@ public class MiniProject extends Application {
             realnameTextField2.setText(acDataList.get(AccId).getRealName());
             surnameField2.setText(acDataList.get(AccId).getSurname());
             Type = acDataList.get(AccId).getGender();
-            editProfilebox.getChildren().setAll(userR2, usernameField3,
+            editProfilebox.getChildren().setAll(importPicbtn, userR2, usernameField3,
                     nameTag, realnameTextField2,
                     surnameTag, surnameField2,
                     gender2,
@@ -1207,6 +1238,18 @@ public class MiniProject extends Application {
                     userInfo.getChildren().addAll(nameBalance, Fullname);
                     HBox doubleLogo = new HBox(15);
                     doubleLogo.getChildren().addAll(getImageView(logo), getImageView(userimage));
+                    try {
+                        if (!acDataList.get(AccId).getPictureFile().canRead()) {
+                            profileImage = getImageView(userimage);
+                        } else {
+                            profileImage = getProfile(new Image(acDataList.get(AccId).getPictureFile().toURI().toString()));
+                        }               
+                        doubleLogo.getChildren().setAll(getImageView(logo), profileImage);
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
                     HBox TOP = new HBox(40);
                     TOP.getChildren().addAll(doubleLogo, userInfo);
                     TOP.setTranslateX(45);

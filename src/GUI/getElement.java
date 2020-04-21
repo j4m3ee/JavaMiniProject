@@ -106,4 +106,12 @@ public class getElement {
         return LOGO;
     }
 
+    public static ImageView getProfile(Image logo) {
+        ImageView LOGO = new ImageView(logo);
+        //logo.get
+        LOGO.setFitHeight(120);
+        LOGO.setFitWidth(120);
+        LOGO.setPreserveRatio(true);
+        return LOGO;
+    }
 }
