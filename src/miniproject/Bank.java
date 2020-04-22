@@ -122,6 +122,16 @@ public class Bank implements Serializable {
         }
     }
 
+    public double getMaxTransaction() {
+        return maxTransaction;
+    }
+
+    public void setMaxTransaction(double maxTransaction) {
+        this.maxTransaction = maxTransaction;
+    }
+    
+    
+
     @Override
     public String toString() {
         return id + ". " + getBankId() + " " + getNameBank() + " (" + getNameIdBank() + ")";

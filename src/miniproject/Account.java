@@ -9,7 +9,7 @@ import java.util.Date;
  *
  * @author ASUS
  */
-public class Account implements Encryption, Serializable {
+public class Account implements Serializable {
 
     private String Username, password = "0000";
     private String QTPassHint, ASWPasshint, Surname, realName;
@@ -17,14 +17,12 @@ public class Account implements Encryption, Serializable {
     private double balance, maxTransaction = 20000.0;
     private double annualInterestRate;
     private Date dateCreated;
-    private ArrayList<Transaction> tr;
     private ArrayList<Bank> bank;
     private char gender;
     private File PictureFile = null;
 
     Account() {
         dateCreated = new Date();
-        tr = new ArrayList<>();
         bank = new ArrayList<>();
         balance = 500;
     }
@@ -62,23 +60,8 @@ public class Account implements Encryption, Serializable {
         this.gender = gender;
     }
 
-    public void addTransaction(Transaction tr) {
-        this.tr.add(tr);
-    }
-
     public void addBank(Bank bank) {
         this.bank.add(bank);
-    }
-
-    public void showTransaction() {
-        System.out.println("\nTransaction ID <" + id + "> Name : " + Username);
-        for (Transaction transaction : tr) {
-            System.out.println("Date : " + transaction.getDate());
-            System.out.println("Type : " + transaction.getType());
-            System.out.println("Amount : " + transaction.getAmount());
-            System.out.println("Balance : " + transaction.getBalance());
-            System.out.println("Description : " + transaction.getDescription() + "\n");
-        }
     }
 
     public File getPictureFile() {
@@ -133,30 +116,6 @@ public class Account implements Encryption, Serializable {
 
     public double getMonthlyInterest() {
         return balance * getMonthlyInterestRate();
-    }
-
-    public void withdraw(double value) {
-        balance -= value;
-        this.tr.add(new Transaction('W', value, balance));
-    }
-
-    public void deposit(double value) {
-        balance += value;
-        this.tr.add(new Transaction('D', value, balance));
-    }
-
-    public void makeTransaction(char type, double value) throws Exception {
-        type = Character.toLowerCase(type);
-        switch (type) {
-            case 'd':
-                deposit(value);
-                break;
-            case 'w':
-                withdraw(value);
-                break;
-            default:
-                throw new Exception("input d : deposit\ninput w : withdraw");
-        }
     }
 
     public String getName() {
@@ -225,14 +184,6 @@ public class Account implements Encryption, Serializable {
         this.dateCreated = dateCreated;
     }
 
-    public String SMS(String sms) {
-        return new String(encrypt(sms.getBytes()));
-    }
-
-    public ArrayList<Transaction> getTr() {
-        return tr;
-    }
-
     public ArrayList<Bank> getBank() {
         return bank;
     }
@@ -258,16 +209,6 @@ public class Account implements Encryption, Serializable {
 
     public void setGender(char gender) {
         this.gender = gender;
-    }
-
-    public static void menu() {
-        System.out.println("");
-        System.out.println("Main menu");
-        System.out.println("1: check balance");
-        System.out.println("2: withdraw");
-        System.out.println("3: deposit");
-        System.out.println("4: transaction");
-        System.out.println("5: exit");
     }
 
     private static String Encrypt(String text) {
@@ -297,28 +238,6 @@ public class Account implements Encryption, Serializable {
     @Override
     public String toString() {
         return "Account{" + "Username=" + Username + ", password=" + password + ", QTPassHint=" + QTPassHint + ", ASWPasshint=" + ASWPasshint + ", Surname=" + Surname + ", realName=" + realName + ", id=" + id + ", balance=" + balance + ", dateCreated=" + dateCreated + '}';
-    }
-
-    @Override
-    public byte[] encrypt(byte[] data) {
-        byte[] enc = new byte[data.length];
-
-        for (int i = 0; i < data.length; i++) {
-            enc[i] = (byte) ((i % 2 == 0) ? data[i] + 1 : data[i] - 1);
-        }
-
-        return enc;
-    }
-
-    @Override
-    public byte[] decrypt(byte[] data) {
-        byte[] dec = new byte[data.length];
-
-        for (int i = 0; i < data.length; i++) {
-            dec[i] = (byte) ((i % 2 == 0) ? data[i] - 1 : data[i] + 1);
-        }
-
-        return dec;
     }
 
 }

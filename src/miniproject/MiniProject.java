@@ -738,7 +738,6 @@ public class MiniProject extends Application {
             if (AcBankId == -1) {
                 informationBox.displayAlertBox("Error", "Select your bank.", logo, background);
             } else {
-                acDataList.get(AccId).showTransaction();
                 informationBox.displayTransactionBox(acDataList.get(AccId).getBank().get(AcBankId), logo, background);
             }
             System.out.println("TraTransaction Press.");
@@ -896,10 +895,8 @@ public class MiniProject extends Application {
         CFTransactionbox.setAlignment(Pos.CENTER);
         Text TransactionText = new Text();
         TransactionText.setStyle(blueTxColor2);
-        //TransactionText = setStyleElement.setStyleText(TransactionText, 15, Color.BLACK, Color.WHITE);
         Text RandomText = new Text();
         RandomText.setStyle(blueTxColor2);
-        //RandomText = setStyleElement.setStyleText(RandomText, 15, Color.BLACK, Color.WHITE);
         TextField CFTextField = new TextField();
         CFTextField.setMaxWidth(300);
         CFTextField.setStyle(BorderText);
@@ -1326,7 +1323,7 @@ public class MiniProject extends Application {
             }
             if (AccId == -1) //If didn't have id in account list.
             {
-                informationBox.displayAlertBox("O+ O PLUS", "Wrong unsername or password.", logo, background);
+                informationBox.displayAlertBox("O+ O PLUS", "Wrong username or password.", logo, background);
             }
             usernameField.clear();
             passField.clear();
@@ -1345,11 +1342,6 @@ public class MiniProject extends Application {
             usernameField.clear();
             passField.clear();
             System.out.println("Register Press.");
-        });
-        Button ChkListBtn = new Button("Check list");
-        ChkListBtn.setOnAction((ActionEvent t) -> {
-            showList(acDataList);
-            System.out.println("Size : " + acDataList.size());
         });
         Button FGPBtn = new Button("Forgot Password.");
         FGPBtn.setStyle(getYelStyleBtn());
@@ -1557,17 +1549,6 @@ public class MiniProject extends Application {
         window.setScene(login);
         window.setResizable(false);
         window.show();
-    }
-
-    public static void showList(ArrayList<Account> ac) {
-        for (Account acc : ac) {
-            System.out.println("Id <" + acc.getId() + ">");
-            System.out.println("Username : " + acc.getName());
-            System.out.println("Password : " + acc.getPassword());
-            System.out.println("Balance : " + acc.getBalance());
-            System.out.println("Date created : " + acc.getDateCreated());
-            System.out.println("");
-        }
     }
 
     public static void main(String[] args)
