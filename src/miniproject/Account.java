@@ -85,7 +85,7 @@ public class Account implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return Encrypt(password);
     }
 
     public void setBalance(double newBalance) {
@@ -144,6 +144,8 @@ public class Account implements Serializable {
 
     public void setPassword(String oldPassword, String npassword, String cfPassword)
             throws Exception {
+        npassword = Encrypt(npassword);
+        cfPassword = Encrypt(cfPassword);
         if (this.password.equals(oldPassword)) {
             if (npassword.length() >= 4 && npassword.length() <= 16) {
                 if (npassword.equals(cfPassword)) {

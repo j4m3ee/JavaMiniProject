@@ -68,15 +68,12 @@ public class MiniProject extends Application {
         window.setTitle("O+ O PLUS");
         Image logo = new Image(new FileInputStream(pathPic + "Logo.png"));
         Image userimage = new Image(new FileInputStream(pathPic + "User1.png"));
-        File imageFile1 = new File(pathPic + "Bucks.png");
-        Image Buck = new Image(imageFile1.toURI().toString());
         File depositFile = new File(pathPic + "depo.png");
         Image Depo = new Image(depositFile.toURI().toString());
         File withdrawFile = new File(pathPic + "with.png");
         Image With = new Image(withdrawFile.toURI().toString());
         File transactionFile = new File(pathPic + "tran.png");
         Image Tran = new Image(transactionFile.toURI().toString());
-        File historyFile = new File(pathPic + "hist.png");
         Image Hist = new Image(depositFile.toURI().toString());
         window.getIcons().add(logo);
         Label tsLabel = new Label();
