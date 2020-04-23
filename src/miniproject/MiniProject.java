@@ -1470,6 +1470,16 @@ public class MiniProject extends Application {
 
             char Gender = 'n';
             try {
+                if(usernameField2.getText().isBlank()) throw new Exception("Please field username.");
+                if(passField2.getText().isBlank()) throw new Exception("Please field password.");
+                if(realnameTextField.getText().isBlank()) throw new Exception("Please field name.");
+                if(surnameField.getText().isBlank()) throw new Exception("Please field surname.");
+                if (mGender.isSelected() == false && fmGender.isSelected() == false) {
+                    throw new Exception("Please select gender.");
+                }
+                if(qtPassHintField.getText().isBlank()) throw new Exception("Please field question.");
+                if(ansPassHintField.getText().isBlank()) throw new Exception("Please field answer.");
+                
                 acDataList = Data.readFile(Data.f);
                 for (Account account : acDataList) {
                     if (usernameField2.getText().equals(account.getName())) {
@@ -1477,9 +1487,7 @@ public class MiniProject extends Application {
                     }
                 }
 
-                if (mGender.isSelected() == false && fmGender.isSelected() == false) {
-                    throw new Exception("Please select gender.");
-                }
+                
                 if (mGender.isSelected() == true) {
                     Gender = 'm';
                 } else {
