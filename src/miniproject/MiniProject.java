@@ -74,7 +74,10 @@ public class MiniProject extends Application {
         Image With = new Image(withdrawFile.toURI().toString());
         File transactionFile = new File(pathPic + "tran.png");
         Image Tran = new Image(transactionFile.toURI().toString());
-        Image Hist = new Image(depositFile.toURI().toString());
+        File histFile = new File(pathPic + "hist.png");
+        Image Hist = new Image(histFile.toURI().toString());
+        
+        
         window.getIcons().add(logo);
         Label tsLabel = new Label();
         tsLabel.setTextFill(Color.WHITE);
