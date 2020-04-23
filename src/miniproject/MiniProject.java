@@ -489,10 +489,16 @@ public class MiniProject extends Application {
         Text BankTx = new Text("Bank information");
         BankTx.setFill(Color.WHITE);
         BankTx.setStyle("-fx-font-size:20px;");
+        HBox Banks2 = new HBox(15);
+        Banks2.getChildren().addAll(getLogoView1(KBANK), getLogoView2(KTB), getLogoView3(SCB),
+                getLogoView4(GSB), getLogoView5(UOB), getLogoView6(TMB));
+        Banks2.setAlignment(Pos.CENTER);
+        Banks2.setTranslateY(-10);
+        Banks2.setOpacity(0.8);
         HBox TopBank = new HBox(15);
         TopBank.getChildren().addAll(getImageView(logo), BankTx);
         TopBank.setAlignment(Pos.CENTER);
-        bankRGbox.getChildren().addAll(TopBank, bankSelecText, cbAllBox, bankIdText,
+        bankRGbox.getChildren().addAll(Banks2, TopBank, bankSelecText, cbAllBox, bankIdText,
                 bankIdFiled, bankNameIdText, bankNameIdFiled, dicisBgBox);
         //Layout Scene bank register
 
