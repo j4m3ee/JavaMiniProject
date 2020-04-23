@@ -148,6 +148,7 @@ public class Account implements Serializable {
             throws Exception {
         npassword = Encrypt(npassword);
         cfPassword = Encrypt(cfPassword);
+        oldPassword = Encrypt(oldPassword);
         if (this.password.equals(oldPassword)) {
             if (npassword.length() >= 4 && npassword.length() <= 16) {
                 if (npassword.equals(cfPassword)) {

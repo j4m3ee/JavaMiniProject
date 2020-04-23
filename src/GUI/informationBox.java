@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import miniproject.Account;
@@ -86,7 +88,7 @@ public class informationBox {
             closeBT.setStyle(getGrnStyleBtn());
         });
         closeBT.setOnAction(e -> window.close());
-
+        
         ScrollPane trPane = new ScrollPane();
         for (Transaction trList : tr.getTr()) {
             s += "Date : " + trList.getDate() + "\n";
@@ -96,15 +98,17 @@ public class informationBox {
             s += "Description : " + trList.getDescription() + "\n";
             s += "\n";
         }
+        
         Label labelContent = new Label(s);
         trPane.setContent(labelContent);
         trPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         trPane.setPannable(true);
-        layout.getChildren().addAll(label, trPane, closeBT);
+        trPane.setPrefSize(300, 500);
+        layout.getChildren().addAll(getImageView(logo),label, trPane, closeBT);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(background);
 
-        Scene scene = new Scene(layout, 300, 750);
+        Scene scene = new Scene(layout, 400, 650);
         window.getIcons().add(logo);
         window.setScene(scene);
         window.setResizable(false);
@@ -142,8 +146,10 @@ public class informationBox {
                 + "1.When user start O-PLUS sevice.User will achieve 500 baht.\n"
                 + "2.Maximum amount you can deposit is 20,000 baht/time.\n"
                 + "3.Maximum amount you can withdraw is 20,000 baht/time.\n"
-                + "4.Before delete an account, transfer money to another account first.\n"
-                + "5.User should follow the rules strictly.\n"
+                + "4.If user loan to the different banks. user will be charged for 10 baht.\n"
+                + "5.Before delete an account, transfer money to another account first.\n"               
+                + "6.Before delete a user, user must be clear a balance in every bank.\n"
+                + "7.User should follow the rules strictly.\n "
                 + "                                                     --THANK YOU--");
         labelContent.setAlignment(Pos.CENTER);
         cdPane.setContent(labelContent);

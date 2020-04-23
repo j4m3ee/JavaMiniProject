@@ -299,7 +299,7 @@ public class MiniProject extends Application {
                 Text Fullname = new Text("Name : " + acDataList.get(AccId).getRealName() + "  "
                         + acDataList.get(AccId).getSurname() + "  " + "Gender : " + "  "
                         + acDataList.get(AccId).getGender());
-                Fullname.setStyle(nameTxColor1);
+                Fullname.setStyle(nameTxColor4);
 
                 //INFO-TOP
                 VBox userInfo = new VBox(12);
@@ -1203,11 +1203,13 @@ public class MiniProject extends Application {
         HBox transferTop = new HBox(15);
         transferTop.getChildren().addAll(getImageView(logo), tran);
         transferTop.setAlignment(Pos.CENTER);
+        Text Charge = new Text("Loaning between a differnt banks will charge you at 10 baht.");
+        Charge.setStyle(nameTxColor4);
         Text warn = new Text("Please make sure that you put a correct username.");
         warn.setStyle(nameTxColor4);
 
         tfToDicisBox.getChildren().addAll(confirmBtn, cancelBtn);
-        TFbox.getChildren().addAll(transferTop, warn, selecttfBank, cbTfBox,
+        TFbox.getChildren().addAll(transferTop, Charge, warn, selecttfBank, cbTfBox,
                 accountText, accountField, amountText, amountField, tfToDicisBox);
         TFbox.setAlignment(Pos.CENTER);
         //Layout Scene Tranfer  
