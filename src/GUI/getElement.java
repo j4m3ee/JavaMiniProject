@@ -117,4 +117,52 @@ public class getElement {
         LOGO.setPreserveRatio(true);
         return LOGO;
     }
+    
+    public static ImageView getLogoView1(Image KBANK) {
+        ImageView kbank = new ImageView(KBANK);
+        kbank.setFitHeight(60);
+        kbank.setFitWidth(60);
+        kbank.setPreserveRatio(true);
+        return kbank;
+    }
+    
+    public static ImageView getLogoView2(Image SCB) {
+        ImageView scb = new ImageView(SCB);
+        scb.setFitHeight(60);
+        scb.setFitWidth(60);
+        scb.setPreserveRatio(true);
+        return scb;
+    }
+    
+    public static ImageView getLogoView3(Image UOB) {
+        ImageView uob = new ImageView(UOB);
+        uob.setFitHeight(60);
+        uob.setFitWidth(60);
+        uob.setPreserveRatio(true);
+        return uob;
+    }
+    
+    public static ImageView getLogoView4(Image KTB) {
+        ImageView ktb = new ImageView(KTB);
+        ktb.setFitHeight(60);
+        ktb.setFitWidth(60);
+        ktb.setPreserveRatio(true);
+        return ktb;
+    }
+    
+    public static ImageView getLogoView5(Image GSB) {
+        ImageView gsb = new ImageView(GSB);
+        gsb.setFitHeight(60);
+        gsb.setFitWidth(60);
+        gsb.setPreserveRatio(true);
+        return gsb;
+    }
+    
+    public static ImageView getLogoView6(Image TMB) {
+        ImageView tmb = new ImageView(TMB);
+        tmb.setFitHeight(60);
+        tmb.setFitWidth(60);
+        tmb.setPreserveRatio(true);
+        return tmb;
+    }
 }

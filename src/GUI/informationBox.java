@@ -104,7 +104,7 @@ public class informationBox {
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(background);
 
-        Scene scene = new Scene(layout, 300, 300);
+        Scene scene = new Scene(layout, 300, 750);
         window.getIcons().add(logo);
         window.setScene(scene);
         window.setResizable(false);

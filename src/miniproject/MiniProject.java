@@ -77,6 +77,18 @@ public class MiniProject extends Application {
         File histFile = new File(pathPic + "hist.png");
         Image Hist = new Image(histFile.toURI().toString());
         
+        // BANKS
+        Image KBANK = new Image(new FileInputStream(pathPic + "KBANK.png"));
+        Image KTB = new Image(new FileInputStream(pathPic + "KTB.png"));
+        Image SCB = new Image(new FileInputStream(pathPic + "SCB.png"));
+        Image TMB = new Image(new FileInputStream(pathPic + "TMB.png"));
+        Image UOB = new Image(new FileInputStream(pathPic + "UOB.png"));
+        Image GSB = new Image(new FileInputStream(pathPic + "GSB.png"));
+        HBox Banks = new HBox(15);
+        Banks.getChildren().addAll(getLogoView1(KBANK), getLogoView2(KTB), getLogoView3(SCB),
+                getLogoView4(GSB), getLogoView5(UOB), getLogoView6(TMB));
+        Banks.setAlignment(Pos.CENTER);
+        Banks.setTranslateY(20);
         
         window.getIcons().add(logo);
         Label tsLabel = new Label();
@@ -1384,7 +1396,7 @@ public class MiniProject extends Application {
         LIFGBtn.getChildren().addAll(LIBtn, FGPBtn);
         LIFGBtn.setAlignment(Pos.CENTER);
         LIbox.getChildren().addAll(getImageView(logo), labell3, idTopic, usernameField, passTopic,
-                passField, LIFGBtn, labell4, RGBtn);
+                passField, LIFGBtn, labell4, RGBtn, Banks);
         //Layout Scene Login
 
         //Layout Scene Register 
