@@ -76,7 +76,7 @@ public class MiniProject extends Application {
         Image Tran = new Image(transactionFile.toURI().toString());
         File histFile = new File(pathPic + "hist.png");
         Image Hist = new Image(histFile.toURI().toString());
-        
+
         // BANKS
         Image KBANK = new Image(new FileInputStream(pathPic + "KBANK.png"));
         Image KTB = new Image(new FileInputStream(pathPic + "KTB.png"));
@@ -89,8 +89,8 @@ public class MiniProject extends Application {
                 getLogoView4(GSB), getLogoView5(UOB), getLogoView6(TMB));
         Banks.setAlignment(Pos.CENTER);
         Banks.setTranslateY(20);
-        Banks.setOpacity(0.80);
-        
+        Banks.setOpacity(0.75);
+
         window.getIcons().add(logo);
         Label tsLabel = new Label();
         tsLabel.setTextFill(Color.WHITE);
@@ -551,7 +551,7 @@ public class MiniProject extends Application {
         FixPassTx.setFill(Color.WHITE);
         FixPassTx.setStyle("-fx-font-size: 20px;");
         HBox FixTop = new HBox(15);
-        FixTop.getChildren().addAll(getImageView(logo),FixPassTx);
+        FixTop.getChildren().addAll(getImageView(logo), FixPassTx);
         FixTop.setAlignment(Pos.CENTER);
         FPbox.getChildren().addAll(FixTop, oldPassText, oldPassTextField, newPassText,
                 newPassTextField, CFnewPassText, CFnewPassTextField, disiFixPassBtn);
@@ -672,6 +672,9 @@ public class MiniProject extends Application {
         deleteBankBtn.setOnAction((t) -> {
 
             try {
+                if (AcBankId == -1) {
+                    throw new Exception("Please select your bank.");
+                }
                 if (acDataList.get(AccId).getBank().get(AcBankId).getBalance() > 0.0) {
                     throw new Exception("Please clear your balance");
                 }
@@ -850,7 +853,7 @@ public class MiniProject extends Application {
             System.out.println(cbBox.getValue().getId() + " " + cbBox.getValue().getBalance());
         });
         //Layout Scene Option
-        
+
         //Layout Scene forgot Password
         Text fgPass = new Text("Forgot password");
         fgPass.setFill(Color.WHITE);
@@ -935,24 +938,14 @@ public class MiniProject extends Application {
             try {
                 if (r1 + r2 == Integer.parseInt(CFTextField.getText())) {
                     if (Type == 't') {
-                        acDataList.get(AccId).getBank().get(AcBankId).withdraw(amount);
-                        acDataList.get(tfToAcc).getBank().get(tfToAccBank).deposit(amount);
+                        acDataList = Account.tranfer(AccId, AcBankId, tfToAcc, tfToAccBank, amount);
                     } else if (Type == 'd' || Type == 'w') {
-                        try {
-                            acDataList.get(AccId).getBank().get(AcBankId).makeTransaction(Type, amount);
-                        } catch (Exception ex) {
-                            System.out.println(ex);
-                        }
-                    }
+                        acDataList.get(AccId).getBank().get(AcBankId).makeTransaction(Type, amount);
 
-                    System.out.println("Amount : " + amount);
-                    try {
-                        acDataList = Data.updateFile(Data.f, acDataList);
-                    } catch (IOException ex) {
-                        System.out.println(ex);
-                    } catch (ClassNotFoundException ex) {
-                        System.out.println(ex);
                     }
+                    acDataList = Data.updateFile(Data.f, acDataList);
+                    
+                    System.out.println("Amount : " + amount);
 
                     //FINANCE-CENTER
                     Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
@@ -1060,8 +1053,8 @@ public class MiniProject extends Application {
                 TransactionText2.setStyle(amountblueTxColor2);
 
                 Random random = new Random();
-                r1 = random.nextInt(30);
-                r2 = random.nextInt(30);
+                r1 = random.nextInt(20);
+                r2 = random.nextInt(20);
                 RandomText.setText(r1 + " + " + r2 + " = (Please fill answer below.)");
                 RandomText.setStyle(amountblueTxColor2);
 
@@ -1145,13 +1138,13 @@ public class MiniProject extends Application {
                                 }
 
                                 Random random = new Random();
-                                r1 = random.nextInt(30);
-                                r2 = random.nextInt(30);
+                                r1 = random.nextInt(20);
+                                r2 = random.nextInt(20);
                                 RandomText.setText(r1 + " + " + r2 + " = (Please fill answer below.)");
                                 RandomText.setStyle(amountblueTxColor2);
                                 amount = Double.parseDouble(amountField.getText());
                                 //Text
-                                TransactionText.setText(Bank.getMessageTranfer(AccId, AcBankId, tfToAcc, tfToAccBank));
+                                TransactionText.setText(Data.getMessageTranfer(AccId, AcBankId, tfToAcc, tfToAccBank));
                                 TransactionText.setStyle(amountblueTxColor2);
                                 Text TransactionText2 = new Text("Amount : ");
                                 TransactionText2.setStyle(amountblueTxColor2);
@@ -1288,7 +1281,7 @@ public class MiniProject extends Application {
                             profileImage = getImageView(userimage);
                         } else {
                             profileImage = getProfile(new Image(acDataList.get(AccId).getPictureFile().toURI().toString()));
-                        }               
+                        }
 
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -1486,16 +1479,28 @@ public class MiniProject extends Application {
 
             char Gender = 'n';
             try {
-                if(usernameField2.getText().isBlank()) throw new Exception("Please field username.");
-                if(passField2.getText().isBlank()) throw new Exception("Please field password.");
-                if(realnameTextField.getText().isBlank()) throw new Exception("Please field name.");
-                if(surnameField.getText().isBlank()) throw new Exception("Please field surname.");
+                if (usernameField2.getText().isBlank()) {
+                    throw new Exception("Please field username.");
+                }
+                if (passField2.getText().isBlank()) {
+                    throw new Exception("Please field password.");
+                }
+                if (realnameTextField.getText().isBlank()) {
+                    throw new Exception("Please field name.");
+                }
+                if (surnameField.getText().isBlank()) {
+                    throw new Exception("Please field surname.");
+                }
                 if (mGender.isSelected() == false && fmGender.isSelected() == false) {
                     throw new Exception("Please select gender.");
                 }
-                if(qtPassHintField.getText().isBlank()) throw new Exception("Please field question.");
-                if(ansPassHintField.getText().isBlank()) throw new Exception("Please field answer.");
-                
+                if (qtPassHintField.getText().isBlank()) {
+                    throw new Exception("Please field question.");
+                }
+                if (ansPassHintField.getText().isBlank()) {
+                    throw new Exception("Please field answer.");
+                }
+
                 acDataList = Data.readFile(Data.f);
                 for (Account account : acDataList) {
                     if (usernameField2.getText().equals(account.getName())) {
@@ -1503,7 +1508,6 @@ public class MiniProject extends Application {
                     }
                 }
 
-                
                 if (mGender.isSelected() == true) {
                     Gender = 'm';
                 } else {

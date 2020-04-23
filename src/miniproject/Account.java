@@ -1,6 +1,8 @@
 package miniproject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -240,6 +242,17 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "Account{" + "Username=" + Username + ", password=" + password + ", QTPassHint=" + QTPassHint + ", ASWPasshint=" + ASWPasshint + ", Surname=" + Surname + ", realName=" + realName + ", id=" + id + ", balance=" + balance + ", dateCreated=" + dateCreated + '}';
+    }
+    
+    public static ArrayList<Account> tranfer(int fromAc,int fromBank,int toAc,int toBank,double  amount) 
+            throws IOException, FileNotFoundException, ClassNotFoundException{
+        ArrayList<Account> ac = Data.readFile(Data.f);
+        ac.get(toAc).getBank().get(toBank).deposit(amount);
+        Bank b1 = ac.get(fromAc).getBank().get(fromBank);
+        Bank b2 = ac.get(toAc).getBank().get(toBank);
+        if(!b1.getNameBank().equals(b2.getNameBank())) amount+=10.0; 
+        ac.get(fromAc).getBank().get(fromBank).withdraw(amount);
+        return ac;
     }
 
 }

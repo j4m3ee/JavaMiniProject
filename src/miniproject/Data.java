@@ -130,5 +130,15 @@ public class Data {
         return selectedFile.getAbsoluteFile();
 
     }
+    
+    public static String getMessageTranfer(int acId, int bankId,int acToId, int bankToId) throws IOException, FileNotFoundException, ClassNotFoundException {
+        ArrayList<Account> ac = Data.readFile(Data.f);
+        Bank b1 = ac.get(acId).getBank().get(bankId);
+        Bank b2 = ac.get(acToId).getBank().get(bankToId);
+        String s = "";
+        s += "Tranfer from : " + b1.getNameIdBank() + " (" + b1.getNameBank() + ")\n"+
+                "To : " + b2.getNameIdBank() + " (" + b2.getNameBank() +")";
+        return s;
+    }
 
 }
