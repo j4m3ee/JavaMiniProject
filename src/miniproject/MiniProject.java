@@ -89,6 +89,7 @@ public class MiniProject extends Application {
                 getLogoView4(GSB), getLogoView5(UOB), getLogoView6(TMB));
         Banks.setAlignment(Pos.CENTER);
         Banks.setTranslateY(20);
+        Banks.setOpacity(0.80);
         
         window.getIcons().add(logo);
         Label tsLabel = new Label();
