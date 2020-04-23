@@ -26,7 +26,7 @@ import javafx.stage.FileChooser;
  */
 public class Data {
 
-    public static File f = new File("resource\\Data\\Accout.dat");
+    public static File f = new File("resource\\Data\\Account.dat");
 
     public static ArrayList<Account> readFile(File f)
             throws FileNotFoundException, IOException, ClassNotFoundException {

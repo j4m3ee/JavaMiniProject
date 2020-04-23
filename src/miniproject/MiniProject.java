@@ -1124,7 +1124,7 @@ public class MiniProject extends Application {
                                     && bank.getNameBank().equals(cbTfBox.getValue())) {
                                 tfToAcc = account.getId() - 1;
                                 tfToAccBank = bank.getId() - 1;
-                                if (AcBankId == tfToAccBank) {
+                                if (AcBankId == tfToAccBank && AccId == AcBankId) {
                                     throw new Exception("You tranfer to same bank.");
                                 }
 
