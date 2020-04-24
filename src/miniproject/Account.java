@@ -34,7 +34,7 @@ public class Account implements Serializable {
         this.Username = name;
         this.id = id;
         try {
-            setPassword("0000", password, password);
+            setPassword(Encrypt("0000"), password, password);
         } catch (Exception ex) {
             System.out.println(ex);
             throw ex;
