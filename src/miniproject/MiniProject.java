@@ -1586,6 +1586,7 @@ public class MiniProject extends Application {
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException, ClassNotFoundException, Exception {
+        //System.out.println(Data.readFile(Data.f).);
         launch(args);
     }
 }

@@ -171,7 +171,7 @@ public class Account implements Serializable {
     public void setPassword(String ans, String npassword, String cfPassword, int i)
             throws Exception {
         if (ans.equals(ASWPasshint)) {
-            setPassword(password, npassword, cfPassword);
+            setPassword(Encrypt(password), npassword, cfPassword);
         } else {
             throw new Exception("Wrong Answer.");
         }
