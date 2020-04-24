@@ -1488,25 +1488,25 @@ public class MiniProject extends Application {
             char Gender = 'n';
             try {
                 if (usernameField2.getText().isBlank()) {
-                    throw new Exception("Please field username.");
+                    throw new Exception("Please fill username.");
                 }
                 if (passField2.getText().isBlank()) {
-                    throw new Exception("Please field password.");
+                    throw new Exception("Please fill password.");
                 }
                 if (realnameTextField.getText().isBlank()) {
-                    throw new Exception("Please field name.");
+                    throw new Exception("Please fill name.");
                 }
                 if (surnameField.getText().isBlank()) {
-                    throw new Exception("Please field surname.");
+                    throw new Exception("Please fill surname.");
                 }
                 if (mGender.isSelected() == false && fmGender.isSelected() == false) {
                     throw new Exception("Please select gender.");
                 }
                 if (qtPassHintField.getText().isBlank()) {
-                    throw new Exception("Please field question.");
+                    throw new Exception("Please fill question.");
                 }
                 if (ansPassHintField.getText().isBlank()) {
-                    throw new Exception("Please field answer.");
+                    throw new Exception("Please fill answer.");
                 }
 
                 acDataList = Data.readFile(Data.f);
