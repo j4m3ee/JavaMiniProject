@@ -9,6 +9,10 @@ import javafx.scene.image.ImageView;
 
 public class getElement {
     
+    final static public String WiTxColor2 = "-fx-fill: linear-gradient(#f12711, #f5af19);\n" + "    -fx-font-size: 14px;\n";
+    final static public String DeTxColor2 = "-fx-fill: linear-gradient(#FDFC47, #24FE41);\n" + "    -fx-font-size: 14px;\n";
+    final static public String borderColor2 = "-fx-border-color: #ffdd00;\n" + "-fx-border-width : 2px;\n" + "-fx-background-color: linear-gradient(#41295a,#2F0743);\n";
+    final static public String borderColor = "-fx-border-color: #00ffff;\n" + "-fx-border-width : 2px;\n";
     final static public String amountblueTxColor2 = "-fx-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 17px;\n";
     final static public String nameTxColor4 = "-fx-fill: linear-gradient(#40e0d0, #ff8c00, #ff0080);\n" + "    -fx-font-size: 19px;\n";
     final static public String welcomeTx = "-fx-fill: linear-gradient(#00c3ff, #ffff1c);\n" + "    -fx-font-size: 23px;\n";
@@ -124,7 +128,7 @@ public class getElement {
         kbank.setFitWidth(60);
         kbank.setPreserveRatio(true);
         return kbank;
-    }
+    }    
     
     public static ImageView getLogoView2(Image SCB) {
         ImageView scb = new ImageView(SCB);

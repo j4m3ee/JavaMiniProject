@@ -1,6 +1,8 @@
 package GUI;
 
 import static GUI.getElement.*;
+import java.util.HashSet;
+import java.util.Set;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,9 +11,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import miniproject.Account;
@@ -89,26 +92,73 @@ public class informationBox {
         });
         closeBT.setOnAction(e -> window.close());
         
+        TilePane trPane2 = new TilePane();
         ScrollPane trPane = new ScrollPane();
         for (Transaction trList : tr.getTr()) {
-            s += "Date : " + trList.getDate() + "\n";
-            s += "Type : " + trList.getType() + "\n";
-            s += "Amount : " + trList.getAmount() + "\n";
-            s += "Balance : " + trList.getBalance() + "\n";
-            s += "Description : " + trList.getDescription() + "\n";
-            s += "\n";
+            Text Date2 = new Text(" " + trList.getDate() + "\n");
+            Date2.setStyle(blueTxColor2);
+            Text Type2 = new Text(" " + trList.getType() + "\n");
+            Text Amount2 = new Text(" " + trList.getAmount() + "\n");
+            Amount2.setStyle(blueTxColor2);
+            Text Balance2 = new Text(" " + trList.getBalance() + "\n");
+            Balance2.setStyle(blueTxColor2);
+            Text Des2 = new Text(" " + trList.getDescription() + "\n" + "---------------------------------------------------------------------" + "\n");
+            Des2.setStyle(blueTxColor2);
+            
+            if(trList.getType() == "withdraw"){
+                Type2.setStyle(WiTxColor2);
+            }
+            else if(trList.getType() == "deposit"){
+                Type2.setStyle(DeTxColor2);
+            }
+            
+            Text Date = new Text("Date :");
+            Date.setStyle(blueTxColor2);
+            Text Type = new Text("Type :");
+            Type.setStyle(blueTxColor2);
+            Text Amount = new Text("Amount :");
+            Amount.setStyle(blueTxColor2);
+            Text Balance = new Text("Current balance :");
+            Balance.setStyle(blueTxColor2);
+            Text Description = new Text("Description :");
+            Description.setStyle(blueTxColor2);
+        
+            HBox DATE = new HBox();
+            DATE.getChildren().addAll(Date, Date2);
+            HBox TYPE = new HBox();
+            TYPE.getChildren().addAll(Type, Type2);
+            HBox AMOUNT = new HBox();
+            AMOUNT.getChildren().addAll(Amount, Amount2);
+            HBox BALANCE = new HBox();
+            BALANCE.getChildren().addAll(Balance, Balance2);
+            HBox DES = new HBox();
+            DES.getChildren().addAll(Description, Des2);
+            
+            VBox TRAN = new VBox();
+            TRAN.getChildren().addAll(DATE, TYPE, AMOUNT, BALANCE, DES);
+//            s += "Date : " + trList.getDate() + "\n";
+//            s += "Type : " + trList.getType() + "\n";
+//            s += "Amount : " + trList.getAmount() + "\n";
+//            s += "Balance : " + trList.getBalance() + "\n";
+//            s += "Description : " + trList.getDescription() + "\n";
+//            s += "---------------------------------------------------------------------";
+//            s += "\n";
+            trPane2.getChildren().addAll(TRAN);
+            trPane2.setStyle(borderColor2);
         }
         
-        Label labelContent = new Label(s);
-        trPane.setContent(labelContent);
+//        Label labelContent = new Label(s);
+        trPane.setContent(trPane2);
         trPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         trPane.setPannable(true);
+        trPane.setFitToWidth(true);
         trPane.setPrefSize(300, 500);
+        trPane.setStyle(borderColor);
         layout.getChildren().addAll(getImageView(logo),label, trPane, closeBT);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(background);
 
-        Scene scene = new Scene(layout, 400, 650);
+        Scene scene = new Scene(layout, 350, 650);
         window.getIcons().add(logo);
         window.setScene(scene);
         window.setResizable(false);
@@ -141,7 +191,7 @@ public class informationBox {
         closeBT.setOnAction(e -> window.close());
 
         ScrollPane cdPane = new ScrollPane();
-        Label labelContent = new Label(""
+        Text labelContent = new Text(""
                 + "                                    WELCOME TO O-PLUS SERVICE. PLEASE READ.\n"
                 + "1.When user start O-PLUS sevice.User will achieve 500 baht.\n"
                 + "2.Maximum amount you can deposit is 20,000 baht/time.\n"
@@ -151,10 +201,12 @@ public class informationBox {
                 + "6.Before delete a user, user must be clear a balance in every bank.\n"
                 + "7.User should follow the rules strictly.\n "
                 + "                                                     --THANK YOU--");
-        labelContent.setAlignment(Pos.CENTER);
+//        labelContent.setAlignment(Pos.CENTER);
+        labelContent.setStyle(borderColor);
         cdPane.setContent(labelContent);
         cdPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         cdPane.setPannable(true);
+        cdPane.setStyle(borderColor2);
         layout.getChildren().addAll(getImageView(logo), label, cdPane, closeBT);
         layout.setAlignment(Pos.CENTER);
         layout.setBackground(background);

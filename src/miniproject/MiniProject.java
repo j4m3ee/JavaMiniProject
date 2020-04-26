@@ -89,7 +89,6 @@ public class MiniProject extends Application {
                 getLogoView4(GSB), getLogoView5(UOB), getLogoView6(TMB));
         Banks.setAlignment(Pos.CENTER);
         Banks.setTranslateY(20);
-        Banks.setOpacity(0.75);
 
         window.getIcons().add(logo);
         Label tsLabel = new Label();
@@ -468,7 +467,7 @@ public class MiniProject extends Application {
                 System.out.println(ex);
             }
 
-            System.out.println("Submit prease.");
+            System.out.println("Submit press.");
         });
         Button ccBgBtn = new Button("Cancel");
         ccBgBtn.setStyle(getRedStyleBtn());
@@ -500,6 +499,11 @@ public class MiniProject extends Application {
         TopBank.setAlignment(Pos.CENTER);
         bankRGbox.getChildren().addAll(Banks2, TopBank, bankSelecText, cbAllBox, bankIdText,
                 bankIdFiled, bankNameIdText, bankNameIdFiled, dicisBgBox);
+        cbAllBox.setOnAction((t) -> {
+            if(cbAllBox.getValue().equals("KBANK")){
+                
+            }
+        });
         //Layout Scene bank register
 
         //Layout Scene fixPassword
@@ -820,7 +824,7 @@ public class MiniProject extends Application {
 
         cbBox.setOnAction((t) -> {
             AcBankId = cbBox.getValue().getId() - 1;
-
+            
             //FINANCE-CENTER
             Text WelcomeTx = new Text("WELCOME TO O+ SYSTEM.");
             WelcomeTx.setStyle(welcomeTx);
@@ -840,10 +844,36 @@ public class MiniProject extends Application {
             bankOptionBar.setAlignment(Pos.CENTER);
             bankOptionBar.getChildren().setAll(cbBox, bankRegisBtn, bankEditBtn, deleteBankBtn);
             VBox CENTER = new VBox(25);
-            CENTER.getChildren().addAll(WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
 
+            if(cbBox.getValue().getNameBank().equals("KBANK")){
+                CENTER.getChildren().setAll(getLogoView1(KBANK), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else if(cbBox.getValue().getNameBank().equals("GSB")){
+                CENTER.getChildren().setAll(getLogoView5(GSB), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else if(cbBox.getValue().getNameBank().equals("SCB")){
+                CENTER.getChildren().setAll(getLogoView2(SCB), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else if(cbBox.getValue().getNameBank().equals("KTB")){
+                CENTER.getChildren().setAll(getLogoView4(KTB), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else if(cbBox.getValue().getNameBank().equals("UOB")){
+                CENTER.getChildren().setAll(getLogoView3(UOB), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else if(cbBox.getValue().getNameBank().equals("TMB")){
+                CENTER.getChildren().setAll(getLogoView6(TMB), WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+                CENTER.setTranslateY(-20);
+            }
+            else{
+                CENTER.getChildren().setAll( WelcomeTx, balanceText, bankOptionBar, Options, DeWi, Trans);
+            }
             CENTER.setAlignment(Pos.CENTER);
-
+            
             //DECISSION-BOTTOM
             HBox decission = new HBox(25);
             decission.getChildren().addAll(ExitBtn, editProfileBtn, ConditionsBtn);
@@ -1233,7 +1263,7 @@ public class MiniProject extends Application {
         Label labell4 = new Label("Don't have an account. Try now?");
         labell4.setScaleX(1);
         labell4.setScaleY(1);
-        labell4.setStyle("-fx-font-size:14px;");
+        labell4.setStyle("-fx-font-size:17px;");
         labell4.setTextFill(Color.RED);
         labell4.setAlignment(Pos.CENTER);
 
@@ -1397,6 +1427,7 @@ public class MiniProject extends Application {
         HBox LIFGBtn = new HBox(15);
         LIFGBtn.getChildren().addAll(LIBtn, FGPBtn);
         LIFGBtn.setAlignment(Pos.CENTER);
+        Banks.setOpacity(0.75);
         LIbox.getChildren().addAll(getImageView(logo), labell3, idTopic, usernameField, passTopic,
                 passField, LIFGBtn, labell4, RGBtn, Banks);
         //Layout Scene Login
@@ -1568,16 +1599,16 @@ public class MiniProject extends Application {
                 RegisChoice);
         //Layout Scene Register 
 
-        login = new Scene(LIbox, stageWidth, stageHeight);
+        login = new Scene(LIbox, stageWidth, regisHeight);
         register = new Scene(RGbox, stageWidth, regisHeight);
-        option = new Scene(INFO, stageWidth, stageHeight);
-        tranfer = new Scene(TFbox, stageWidth, stageHeight);
-        fixPassword = new Scene(FPbox, stageWidth, stageHeight);
-        forgotPassword = new Scene(FGPbox, stageWidth, stageHeight);
-        makeTransaction = new Scene(TSbox, stageWidth, stageHeight);
-        CFTransactionScene = new Scene(CFTransactionbox, stageWidth, stageHeight);
-        editProfile = new Scene(editProfilebox, stageWidth, stageHeight);
-        bankRegister = new Scene(bankRGbox, stageWidth, stageHeight);
+        option = new Scene(INFO, stageWidth, regisHeight);
+        tranfer = new Scene(TFbox, stageWidth, regisHeight);
+        fixPassword = new Scene(FPbox, stageWidth, regisHeight);
+        forgotPassword = new Scene(FGPbox, stageWidth, regisHeight);
+        makeTransaction = new Scene(TSbox, stageWidth, regisHeight);
+        CFTransactionScene = new Scene(CFTransactionbox, stageWidth, regisHeight);
+        editProfile = new Scene(editProfilebox, stageWidth, regisHeight);
+        bankRegister = new Scene(bankRGbox, stageWidth, regisHeight);
 
         window.setScene(login);
         window.setResizable(false);
